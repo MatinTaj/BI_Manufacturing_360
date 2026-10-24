@@ -1,0 +1,20 @@
+test_combined_linear (test_reference.ReferenceTests.test_combined_linear) ... ok
+test_direct_labor_only (test_reference.ReferenceTests.test_direct_labor_only) ... ok
+test_exact_half_cent_tie_direct_first (test_reference.ReferenceTests.test_exact_half_cent_tie_direct_first) ... ok
+test_full_issue_conserves_parts (test_reference.ReferenceTests.test_full_issue_conserves_parts) ... ok
+test_invalid_parameters (test_reference.ReferenceTests.test_invalid_parameters) ... ok
+test_invalid_pool (test_reference.ReferenceTests.test_invalid_pool) ... ok
+test_negative_base_profit_percentage_is_defined (test_reference.ReferenceTests.test_negative_base_profit_percentage_is_defined) ... ok
+test_no_shipments_preserve_direct_inventory (test_reference.ReferenceTests.test_no_shipments_preserve_direct_inventory) ... ok
+test_outbound_does_not_change_gp (test_reference.ReferenceTests.test_outbound_does_not_change_gp) ... ok
+test_price_variable_selling_response (test_reference.ReferenceTests.test_price_variable_selling_response) ... ok
+test_sales_tie_uses_stable_key (test_reference.ReferenceTests.test_sales_tie_uses_stable_key) ... ok
+test_unknown_initial_inventory_rejected (test_reference.ReferenceTests.test_unknown_initial_inventory_rejected) ... ok
+test_zero_pool (test_reference.ReferenceTests.test_zero_pool) ... ok
+test_zero_revenue_profit_ratios_are_none (test_reference.ReferenceTests.test_zero_revenue_profit_ratios_are_none) ... ok
+test_zero_setting (test_reference.ReferenceTests.test_zero_setting) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.001s
+
+OK

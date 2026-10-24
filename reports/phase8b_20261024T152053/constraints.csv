@@ -1,0 +1,615 @@
+conname,contype,convalidated,table_name,definition
+audit_expected_files_dataset_not_null,n,True,audit_expected_files,NOT NULL dataset
+audit_expected_files_pkey,p,True,audit_expected_files,PRIMARY KEY (dataset)
+audit_expected_files_row_count_check,c,True,audit_expected_files,CHECK ((row_count >= 0))
+audit_expected_files_row_count_not_null,n,True,audit_expected_files,NOT NULL row_count
+audit_expected_files_sha256_check,c,True,audit_expected_files,CHECK ((sha256 ~ '^[a-f0-9]{64}$'::text))
+audit_expected_files_sha256_not_null,n,True,audit_expected_files,NOT NULL sha256
+audit_expected_pnl_administrative_expenses_not_null,n,True,audit_expected_pnl,NOT NULL administrative_expenses
+audit_expected_pnl_cogs_not_null,n,True,audit_expected_pnl,NOT NULL cogs
+audit_expected_pnl_gross_margin_pct_not_null,n,True,audit_expected_pnl,NOT NULL gross_margin_pct
+audit_expected_pnl_gross_profit_not_null,n,True,audit_expected_pnl,NOT NULL gross_profit
+audit_expected_pnl_idle_cost_not_null,n,True,audit_expected_pnl,NOT NULL idle_cost
+audit_expected_pnl_operating_margin_pct_not_null,n,True,audit_expected_pnl,NOT NULL operating_margin_pct
+audit_expected_pnl_operating_profit_not_null,n,True,audit_expected_pnl,NOT NULL operating_profit
+audit_expected_pnl_outbound_freight_not_null,n,True,audit_expected_pnl,NOT NULL outbound_freight
+audit_expected_pnl_period_not_null,n,True,audit_expected_pnl,NOT NULL period
+audit_expected_pnl_pkey,p,True,audit_expected_pnl,PRIMARY KEY (period)
+audit_expected_pnl_production_loss_not_null,n,True,audit_expected_pnl,NOT NULL production_loss
+audit_expected_pnl_revenue_not_null,n,True,audit_expected_pnl,NOT NULL revenue
+audit_expected_pnl_selling_expenses_not_null,n,True,audit_expected_pnl,NOT NULL selling_expenses
+bom_material_id_not_null,n,True,bom,NOT NULL material_id
+bom_pkey,p,True,bom,"PRIMARY KEY (product_id, material_id)"
+bom_product_id_not_null,n,True,bom,NOT NULL product_id
+bom_quantity_kg_per_unit_not_null,n,True,bom,NOT NULL quantity_kg_per_unit
+ck_bom_00,c,True,bom,CHECK ((length(btrim(product_id)) > 0))
+ck_bom_01,c,True,bom,CHECK ((length(btrim(material_id)) > 0))
+ck_bom_02,c,True,bom,CHECK (((quantity_kg_per_unit >= (0)::numeric) AND (quantity_kg_per_unit < 'Infinity'::numeric)))
+ck_bom_03,c,True,bom,CHECK ((quantity_kg_per_unit > (0)::numeric))
+fk_bom_0,f,True,bom,FOREIGN KEY (product_id) REFERENCES manufacturing_v2.products(product_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_bom_1,f,True,bom,FOREIGN KEY (material_id) REFERENCES manufacturing_v2.materials(material_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+ck_customers_00,c,True,customers,CHECK ((length(btrim(customer_id)) > 0))
+ck_customers_01,c,True,customers,CHECK ((length(btrim(customer_name)) > 0))
+ck_customers_02,c,True,customers,CHECK ((length(btrim(segment)) > 0))
+ck_customers_03,c,True,customers,"CHECK ((segment = ANY (ARRAY['OEM'::text, 'Tier 1'::text, 'Aftermarket'::text])))"
+customers_customer_id_not_null,n,True,customers,NOT NULL customer_id
+customers_customer_name_not_null,n,True,customers,NOT NULL customer_name
+customers_pkey,p,True,customers,PRIMARY KEY (customer_id)
+customers_segment_not_null,n,True,customers,NOT NULL segment
+ck_finished_goods_inventory_00,c,True,finished_goods_inventory,CHECK ((length(btrim(product_id)) > 0))
+ck_finished_goods_inventory_01,c,True,finished_goods_inventory,CHECK ((opening_units >= 0))
+ck_finished_goods_inventory_02,c,True,finished_goods_inventory,CHECK ((good_production_units >= 0))
+ck_finished_goods_inventory_03,c,True,finished_goods_inventory,CHECK ((demand_units >= 0))
+ck_finished_goods_inventory_04,c,True,finished_goods_inventory,CHECK ((shipped_units >= 0))
+ck_finished_goods_inventory_05,c,True,finished_goods_inventory,CHECK ((unfulfilled_units >= 0))
+ck_finished_goods_inventory_06,c,True,finished_goods_inventory,CHECK ((closing_units >= 0))
+ck_finished_goods_inventory_07,c,True,finished_goods_inventory,CHECK (((opening_value_eur >= (0)::numeric) AND (opening_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_08,c,True,finished_goods_inventory,CHECK (((production_value_eur >= (0)::numeric) AND (production_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_09,c,True,finished_goods_inventory,CHECK (((cogs_eur >= (0)::numeric) AND (cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_10,c,True,finished_goods_inventory,CHECK (((closing_value_eur >= (0)::numeric) AND (closing_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_11,c,True,finished_goods_inventory,CHECK (((weighted_average_unit_cost_eur >= (0)::numeric) AND (weighted_average_unit_cost_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_12,c,True,finished_goods_inventory,CHECK (((opening_material_value_eur >= (0)::numeric) AND (opening_material_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_13,c,True,finished_goods_inventory,CHECK (((opening_inbound_freight_value_eur >= (0)::numeric) AND (opening_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_14,c,True,finished_goods_inventory,CHECK (((opening_labor_value_eur >= (0)::numeric) AND (opening_labor_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_15,c,True,finished_goods_inventory,CHECK (((opening_energy_value_eur >= (0)::numeric) AND (opening_energy_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_16,c,True,finished_goods_inventory,CHECK (((opening_overhead_value_eur >= (0)::numeric) AND (opening_overhead_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_17,c,True,finished_goods_inventory,CHECK (((production_material_value_eur >= (0)::numeric) AND (production_material_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_18,c,True,finished_goods_inventory,CHECK (((production_inbound_freight_value_eur >= (0)::numeric) AND (production_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_19,c,True,finished_goods_inventory,CHECK (((production_labor_value_eur >= (0)::numeric) AND (production_labor_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_20,c,True,finished_goods_inventory,CHECK (((production_energy_value_eur >= (0)::numeric) AND (production_energy_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_21,c,True,finished_goods_inventory,CHECK (((production_overhead_value_eur >= (0)::numeric) AND (production_overhead_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_22,c,True,finished_goods_inventory,CHECK (((closing_material_value_eur >= (0)::numeric) AND (closing_material_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_23,c,True,finished_goods_inventory,CHECK (((closing_inbound_freight_value_eur >= (0)::numeric) AND (closing_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_24,c,True,finished_goods_inventory,CHECK (((closing_labor_value_eur >= (0)::numeric) AND (closing_labor_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_25,c,True,finished_goods_inventory,CHECK (((closing_energy_value_eur >= (0)::numeric) AND (closing_energy_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_26,c,True,finished_goods_inventory,CHECK (((closing_overhead_value_eur >= (0)::numeric) AND (closing_overhead_value_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_27,c,True,finished_goods_inventory,CHECK (((material_cogs_eur >= (0)::numeric) AND (material_cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_28,c,True,finished_goods_inventory,CHECK (((inbound_freight_cogs_eur >= (0)::numeric) AND (inbound_freight_cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_29,c,True,finished_goods_inventory,CHECK (((labor_cogs_eur >= (0)::numeric) AND (labor_cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_30,c,True,finished_goods_inventory,CHECK (((energy_cogs_eur >= (0)::numeric) AND (energy_cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_31,c,True,finished_goods_inventory,CHECK (((overhead_cogs_eur >= (0)::numeric) AND (overhead_cogs_eur < 'Infinity'::numeric)))
+ck_finished_goods_inventory_32,c,True,finished_goods_inventory,CHECK ((closing_units = ((opening_units + good_production_units) - shipped_units)))
+ck_finished_goods_inventory_33,c,True,finished_goods_inventory,"CHECK ((shipped_units = LEAST(demand_units, (opening_units + good_production_units))))"
+ck_finished_goods_inventory_34,c,True,finished_goods_inventory,CHECK ((unfulfilled_units = (demand_units - shipped_units)))
+ck_finished_goods_inventory_35,c,True,finished_goods_inventory,CHECK ((closing_value_eur = ((opening_value_eur + production_value_eur) - cogs_eur)))
+ck_finished_goods_inventory_36,c,True,finished_goods_inventory,CHECK ((opening_value_eur = ((((opening_material_value_eur + opening_inbound_freight_value_eur) + opening_labor_value_eur) + opening_energy_value_eur) + opening_overhead_value_eur)))
+ck_finished_goods_inventory_37,c,True,finished_goods_inventory,CHECK ((production_value_eur = ((((production_material_value_eur + production_inbound_freight_value_eur) + production_labor_value_eur) + production_energy_value_eur) + production_overhead_value_eur)))
+ck_finished_goods_inventory_38,c,True,finished_goods_inventory,CHECK ((closing_value_eur = ((((closing_material_value_eur + closing_inbound_freight_value_eur) + closing_labor_value_eur) + closing_energy_value_eur) + closing_overhead_value_eur)))
+ck_finished_goods_inventory_39,c,True,finished_goods_inventory,CHECK ((cogs_eur = ((((material_cogs_eur + inbound_freight_cogs_eur) + labor_cogs_eur) + energy_cogs_eur) + overhead_cogs_eur)))
+ck_finished_goods_inventory_40,c,True,finished_goods_inventory,CHECK ((closing_material_value_eur = ((opening_material_value_eur + production_material_value_eur) - material_cogs_eur)))
+ck_finished_goods_inventory_41,c,True,finished_goods_inventory,CHECK ((closing_inbound_freight_value_eur = ((opening_inbound_freight_value_eur + production_inbound_freight_value_eur) - inbound_freight_cogs_eur)))
+ck_finished_goods_inventory_42,c,True,finished_goods_inventory,CHECK ((closing_labor_value_eur = ((opening_labor_value_eur + production_labor_value_eur) - labor_cogs_eur)))
+ck_finished_goods_inventory_43,c,True,finished_goods_inventory,CHECK ((closing_energy_value_eur = ((opening_energy_value_eur + production_energy_value_eur) - energy_cogs_eur)))
+ck_finished_goods_inventory_44,c,True,finished_goods_inventory,CHECK ((closing_overhead_value_eur = ((opening_overhead_value_eur + production_overhead_value_eur) - overhead_cogs_eur)))
+finished_goods_inventory_closing_energy_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL closing_energy_value_eur
+finished_goods_inventory_closing_inbound_freight_value_not_null,n,True,finished_goods_inventory,NOT NULL closing_inbound_freight_value_eur
+finished_goods_inventory_closing_labor_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL closing_labor_value_eur
+finished_goods_inventory_closing_material_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL closing_material_value_eur
+finished_goods_inventory_closing_overhead_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL closing_overhead_value_eur
+finished_goods_inventory_closing_units_not_null,n,True,finished_goods_inventory,NOT NULL closing_units
+finished_goods_inventory_closing_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL closing_value_eur
+finished_goods_inventory_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL cogs_eur
+finished_goods_inventory_demand_units_not_null,n,True,finished_goods_inventory,NOT NULL demand_units
+finished_goods_inventory_energy_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL energy_cogs_eur
+finished_goods_inventory_good_production_units_not_null,n,True,finished_goods_inventory,NOT NULL good_production_units
+finished_goods_inventory_inbound_freight_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL inbound_freight_cogs_eur
+finished_goods_inventory_labor_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL labor_cogs_eur
+finished_goods_inventory_material_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL material_cogs_eur
+finished_goods_inventory_month_id_not_null,n,True,finished_goods_inventory,NOT NULL month_id
+finished_goods_inventory_opening_energy_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL opening_energy_value_eur
+finished_goods_inventory_opening_inbound_freight_value_not_null,n,True,finished_goods_inventory,NOT NULL opening_inbound_freight_value_eur
+finished_goods_inventory_opening_labor_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL opening_labor_value_eur
+finished_goods_inventory_opening_material_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL opening_material_value_eur
+finished_goods_inventory_opening_overhead_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL opening_overhead_value_eur
+finished_goods_inventory_opening_units_not_null,n,True,finished_goods_inventory,NOT NULL opening_units
+finished_goods_inventory_opening_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL opening_value_eur
+finished_goods_inventory_overhead_cogs_eur_not_null,n,True,finished_goods_inventory,NOT NULL overhead_cogs_eur
+finished_goods_inventory_pkey,p,True,finished_goods_inventory,"PRIMARY KEY (month_id, product_id)"
+finished_goods_inventory_product_id_not_null,n,True,finished_goods_inventory,NOT NULL product_id
+finished_goods_inventory_production_energy_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL production_energy_value_eur
+finished_goods_inventory_production_inbound_freight_va_not_null,n,True,finished_goods_inventory,NOT NULL production_inbound_freight_value_eur
+finished_goods_inventory_production_labor_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL production_labor_value_eur
+finished_goods_inventory_production_material_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL production_material_value_eur
+finished_goods_inventory_production_overhead_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL production_overhead_value_eur
+finished_goods_inventory_production_value_eur_not_null,n,True,finished_goods_inventory,NOT NULL production_value_eur
+finished_goods_inventory_shipped_units_not_null,n,True,finished_goods_inventory,NOT NULL shipped_units
+finished_goods_inventory_unfulfilled_units_not_null,n,True,finished_goods_inventory,NOT NULL unfulfilled_units
+finished_goods_inventory_weighted_average_unit_cost_eu_not_null,n,True,finished_goods_inventory,NOT NULL weighted_average_unit_cost_eur
+fk_finished_goods_inventory_0,f,True,finished_goods_inventory,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_finished_goods_inventory_1,f,True,finished_goods_inventory,"FOREIGN KEY (month_id, product_id) REFERENCES manufacturing_v2.production(month_id, product_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+ck_line_month_capacity_00,c,True,line_month_capacity,CHECK ((length(btrim(line_id)) > 0))
+ck_line_month_capacity_01,c,True,line_month_capacity,CHECK ((nominal_capacity_units >= 0))
+ck_line_month_capacity_02,c,True,line_month_capacity,CHECK (((downtime_pct >= (0)::numeric) AND (downtime_pct < 'Infinity'::numeric)))
+ck_line_month_capacity_03,c,True,line_month_capacity,CHECK ((effective_capacity_units >= 0))
+ck_line_month_capacity_04,c,True,line_month_capacity,CHECK ((downtime_pct <= (100)::numeric))
+ck_line_month_capacity_05,c,True,line_month_capacity,CHECK (((effective_capacity_units)::numeric = floor(((nominal_capacity_units)::numeric * ((1)::numeric - (downtime_pct / (100)::numeric))))))
+fk_line_month_capacity_0,f,True,line_month_capacity,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_line_month_capacity_1,f,True,line_month_capacity,FOREIGN KEY (line_id) REFERENCES manufacturing_v2.production_lines(line_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+line_month_capacity_downtime_pct_not_null,n,True,line_month_capacity,NOT NULL downtime_pct
+line_month_capacity_effective_capacity_units_not_null,n,True,line_month_capacity,NOT NULL effective_capacity_units
+line_month_capacity_line_id_not_null,n,True,line_month_capacity,NOT NULL line_id
+line_month_capacity_month_id_not_null,n,True,line_month_capacity,NOT NULL month_id
+line_month_capacity_nominal_capacity_units_not_null,n,True,line_month_capacity,NOT NULL nominal_capacity_units
+line_month_capacity_pkey,p,True,line_month_capacity,"PRIMARY KEY (month_id, line_id)"
+ck_manufacturing_costs_00,c,True,manufacturing_costs,CHECK ((length(btrim(line_id)) > 0))
+ck_manufacturing_costs_01,c,True,manufacturing_costs,CHECK ((attempted_units >= 0))
+ck_manufacturing_costs_02,c,True,manufacturing_costs,CHECK (((labor_hours >= (0)::numeric) AND (labor_hours < 'Infinity'::numeric)))
+ck_manufacturing_costs_03,c,True,manufacturing_costs,CHECK (((hourly_rate_eur >= (0)::numeric) AND (hourly_rate_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_04,c,True,manufacturing_costs,CHECK (((energy_kwh >= (0)::numeric) AND (energy_kwh < 'Infinity'::numeric)))
+ck_manufacturing_costs_05,c,True,manufacturing_costs,CHECK (((energy_tariff_eur >= (0)::numeric) AND (energy_tariff_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_06,c,True,manufacturing_costs,CHECK (((labor_cost_eur >= (0)::numeric) AND (labor_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_07,c,True,manufacturing_costs,CHECK (((energy_cost_eur >= (0)::numeric) AND (energy_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_08,c,True,manufacturing_costs,CHECK (((manufacturing_overhead_eur >= (0)::numeric) AND (manufacturing_overhead_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_09,c,True,manufacturing_costs,CHECK (((total_conversion_cost_eur >= (0)::numeric) AND (total_conversion_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_10,c,True,manufacturing_costs,CHECK (((idle_cost_eur >= (0)::numeric) AND (idle_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_11,c,True,manufacturing_costs,CHECK (((production_labor_hours >= (0)::numeric) AND (production_labor_hours < 'Infinity'::numeric)))
+ck_manufacturing_costs_12,c,True,manufacturing_costs,CHECK (((support_labor_hours >= (0)::numeric) AND (support_labor_hours < 'Infinity'::numeric)))
+ck_manufacturing_costs_13,c,True,manufacturing_costs,CHECK (((activity_energy_kwh >= (0)::numeric) AND (activity_energy_kwh < 'Infinity'::numeric)))
+ck_manufacturing_costs_14,c,True,manufacturing_costs,CHECK (((base_energy_kwh >= (0)::numeric) AND (base_energy_kwh < 'Infinity'::numeric)))
+ck_manufacturing_costs_15,c,True,manufacturing_costs,CHECK (((production_labor_cost_eur >= (0)::numeric) AND (production_labor_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_16,c,True,manufacturing_costs,CHECK (((support_labor_cost_eur >= (0)::numeric) AND (support_labor_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_17,c,True,manufacturing_costs,CHECK (((activity_energy_cost_eur >= (0)::numeric) AND (activity_energy_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_18,c,True,manufacturing_costs,CHECK (((standby_energy_cost_eur >= (0)::numeric) AND (standby_energy_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_19,c,True,manufacturing_costs,CHECK (((idle_labor_cost_eur >= (0)::numeric) AND (idle_labor_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_20,c,True,manufacturing_costs,CHECK (((idle_energy_cost_eur >= (0)::numeric) AND (idle_energy_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_21,c,True,manufacturing_costs,CHECK (((idle_overhead_cost_eur >= (0)::numeric) AND (idle_overhead_cost_eur < 'Infinity'::numeric)))
+ck_manufacturing_costs_22,c,True,manufacturing_costs,CHECK ((labor_hours = (production_labor_hours + support_labor_hours)))
+ck_manufacturing_costs_23,c,True,manufacturing_costs,CHECK ((energy_kwh = (activity_energy_kwh + base_energy_kwh)))
+ck_manufacturing_costs_24,c,True,manufacturing_costs,"CHECK (((labor_cost_eur = round((labor_hours * hourly_rate_eur), 2)) OR ((mod(((labor_hours * hourly_rate_eur) * (100)::numeric), (1)::numeric) = 0.5) AND (labor_cost_eur = (round((labor_hours * hourly_rate_eur), 2) - 0.01)))))"
+ck_manufacturing_costs_25,c,True,manufacturing_costs,"CHECK (((energy_cost_eur = round((energy_kwh * energy_tariff_eur), 2)) OR ((mod(((energy_kwh * energy_tariff_eur) * (100)::numeric), (1)::numeric) = 0.5) AND (energy_cost_eur = (round((energy_kwh * energy_tariff_eur), 2) - 0.01)))))"
+ck_manufacturing_costs_26,c,True,manufacturing_costs,CHECK ((labor_cost_eur = (production_labor_cost_eur + support_labor_cost_eur)))
+ck_manufacturing_costs_27,c,True,manufacturing_costs,CHECK ((energy_cost_eur = (activity_energy_cost_eur + standby_energy_cost_eur)))
+ck_manufacturing_costs_28,c,True,manufacturing_costs,CHECK ((total_conversion_cost_eur = ((labor_cost_eur + energy_cost_eur) + manufacturing_overhead_eur)))
+ck_manufacturing_costs_29,c,True,manufacturing_costs,CHECK ((idle_cost_eur = ((idle_labor_cost_eur + idle_energy_cost_eur) + idle_overhead_cost_eur)))
+ck_manufacturing_costs_30,c,True,manufacturing_costs,"CHECK ((idle_cost_eur =
+CASE
+    WHEN (attempted_units = 0) THEN total_conversion_cost_eur
+    ELSE (0)::numeric
+END))"
+fk_manufacturing_costs_0,f,True,manufacturing_costs,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_manufacturing_costs_1,f,True,manufacturing_costs,"FOREIGN KEY (month_id, line_id) REFERENCES manufacturing_v2.line_month_capacity(month_id, line_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+manufacturing_costs_activity_energy_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL activity_energy_cost_eur
+manufacturing_costs_activity_energy_kwh_not_null,n,True,manufacturing_costs,NOT NULL activity_energy_kwh
+manufacturing_costs_attempted_units_not_null,n,True,manufacturing_costs,NOT NULL attempted_units
+manufacturing_costs_base_energy_kwh_not_null,n,True,manufacturing_costs,NOT NULL base_energy_kwh
+manufacturing_costs_energy_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL energy_cost_eur
+manufacturing_costs_energy_kwh_not_null,n,True,manufacturing_costs,NOT NULL energy_kwh
+manufacturing_costs_energy_tariff_eur_not_null,n,True,manufacturing_costs,NOT NULL energy_tariff_eur
+manufacturing_costs_hourly_rate_eur_not_null,n,True,manufacturing_costs,NOT NULL hourly_rate_eur
+manufacturing_costs_idle_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL idle_cost_eur
+manufacturing_costs_idle_energy_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL idle_energy_cost_eur
+manufacturing_costs_idle_labor_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL idle_labor_cost_eur
+manufacturing_costs_idle_overhead_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL idle_overhead_cost_eur
+manufacturing_costs_labor_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL labor_cost_eur
+manufacturing_costs_labor_hours_not_null,n,True,manufacturing_costs,NOT NULL labor_hours
+manufacturing_costs_line_id_not_null,n,True,manufacturing_costs,NOT NULL line_id
+manufacturing_costs_manufacturing_overhead_eur_not_null,n,True,manufacturing_costs,NOT NULL manufacturing_overhead_eur
+manufacturing_costs_month_id_not_null,n,True,manufacturing_costs,NOT NULL month_id
+manufacturing_costs_pkey,p,True,manufacturing_costs,"PRIMARY KEY (month_id, line_id)"
+manufacturing_costs_production_labor_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL production_labor_cost_eur
+manufacturing_costs_production_labor_hours_not_null,n,True,manufacturing_costs,NOT NULL production_labor_hours
+manufacturing_costs_standby_energy_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL standby_energy_cost_eur
+manufacturing_costs_support_labor_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL support_labor_cost_eur
+manufacturing_costs_support_labor_hours_not_null,n,True,manufacturing_costs,NOT NULL support_labor_hours
+manufacturing_costs_total_conversion_cost_eur_not_null,n,True,manufacturing_costs,NOT NULL total_conversion_cost_eur
+ck_material_consumption_00,c,True,material_consumption,CHECK ((length(btrim(production_id)) > 0))
+ck_material_consumption_01,c,True,material_consumption,CHECK ((length(btrim(material_id)) > 0))
+ck_material_consumption_02,c,True,material_consumption,CHECK (((required_kg >= (0)::numeric) AND (required_kg < 'Infinity'::numeric)))
+ck_material_consumption_03,c,True,material_consumption,CHECK (((extra_waste_kg >= (0)::numeric) AND (extra_waste_kg < 'Infinity'::numeric)))
+ck_material_consumption_04,c,True,material_consumption,CHECK (((consumed_kg >= (0)::numeric) AND (consumed_kg < 'Infinity'::numeric)))
+ck_material_consumption_05,c,True,material_consumption,CHECK (((issued_material_value_eur >= (0)::numeric) AND (issued_material_value_eur < 'Infinity'::numeric)))
+ck_material_consumption_06,c,True,material_consumption,CHECK (((weighted_average_unit_cost_eur >= (0)::numeric) AND (weighted_average_unit_cost_eur < 'Infinity'::numeric)))
+ck_material_consumption_07,c,True,material_consumption,CHECK (((issued_purchase_material_value_eur >= (0)::numeric) AND (issued_purchase_material_value_eur < 'Infinity'::numeric)))
+ck_material_consumption_08,c,True,material_consumption,CHECK (((issued_inbound_freight_eur >= (0)::numeric) AND (issued_inbound_freight_eur < 'Infinity'::numeric)))
+ck_material_consumption_09,c,True,material_consumption,CHECK (((weighted_average_purchase_unit_cost_eur >= (0)::numeric) AND (weighted_average_purchase_unit_cost_eur < 'Infinity'::numeric)))
+ck_material_consumption_10,c,True,material_consumption,CHECK (((weighted_average_inbound_freight_unit_cost_eur >= (0)::numeric) AND (weighted_average_inbound_freight_unit_cost_eur < 'Infinity'::numeric)))
+ck_material_consumption_11,c,True,material_consumption,CHECK ((consumed_kg = (required_kg + extra_waste_kg)))
+ck_material_consumption_12,c,True,material_consumption,CHECK ((issued_material_value_eur = (issued_purchase_material_value_eur + issued_inbound_freight_eur)))
+fk_material_consumption_0,f,True,material_consumption,FOREIGN KEY (production_id) REFERENCES manufacturing_v2.production(production_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_material_consumption_1,f,True,material_consumption,FOREIGN KEY (material_id) REFERENCES manufacturing_v2.materials(material_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+material_consumption_consumed_kg_not_null,n,True,material_consumption,NOT NULL consumed_kg
+material_consumption_extra_waste_kg_not_null,n,True,material_consumption,NOT NULL extra_waste_kg
+material_consumption_issued_inbound_freight_eur_not_null,n,True,material_consumption,NOT NULL issued_inbound_freight_eur
+material_consumption_issued_material_value_eur_not_null,n,True,material_consumption,NOT NULL issued_material_value_eur
+material_consumption_issued_purchase_material_value_eu_not_null,n,True,material_consumption,NOT NULL issued_purchase_material_value_eur
+material_consumption_material_id_not_null,n,True,material_consumption,NOT NULL material_id
+material_consumption_pkey,p,True,material_consumption,"PRIMARY KEY (production_id, material_id)"
+material_consumption_production_id_not_null,n,True,material_consumption,NOT NULL production_id
+material_consumption_required_kg_not_null,n,True,material_consumption,NOT NULL required_kg
+material_consumption_weighted_average_inbound_freight__not_null,n,True,material_consumption,NOT NULL weighted_average_inbound_freight_unit_cost_eur
+material_consumption_weighted_average_purchase_unit_co_not_null,n,True,material_consumption,NOT NULL weighted_average_purchase_unit_cost_eur
+material_consumption_weighted_average_unit_cost_eur_not_null,n,True,material_consumption,NOT NULL weighted_average_unit_cost_eur
+ck_material_receipts_00,c,True,material_receipts,CHECK ((length(btrim(receipt_id)) > 0))
+ck_material_receipts_01,c,True,material_receipts,CHECK ((length(btrim(po_line_id)) > 0))
+ck_material_receipts_02,c,True,material_receipts,CHECK (((received_kg >= (0)::numeric) AND (received_kg < 'Infinity'::numeric)))
+ck_material_receipts_03,c,True,material_receipts,CHECK (((landed_unit_cost_eur >= (0)::numeric) AND (landed_unit_cost_eur < 'Infinity'::numeric)))
+ck_material_receipts_04,c,True,material_receipts,CHECK (((receipt_value_eur >= (0)::numeric) AND (receipt_value_eur < 'Infinity'::numeric)))
+ck_material_receipts_05,c,True,material_receipts,CHECK (((purchase_unit_cost_eur >= (0)::numeric) AND (purchase_unit_cost_eur < 'Infinity'::numeric)))
+ck_material_receipts_06,c,True,material_receipts,CHECK (((purchase_value_eur >= (0)::numeric) AND (purchase_value_eur < 'Infinity'::numeric)))
+ck_material_receipts_07,c,True,material_receipts,CHECK (((inbound_freight_rate_eur_per_kg >= (0)::numeric) AND (inbound_freight_rate_eur_per_kg < 'Infinity'::numeric)))
+ck_material_receipts_08,c,True,material_receipts,CHECK (((inbound_freight_eur >= (0)::numeric) AND (inbound_freight_eur < 'Infinity'::numeric)))
+ck_material_receipts_09,c,True,material_receipts,CHECK (((landed_receipt_value_eur >= (0)::numeric) AND (landed_receipt_value_eur < 'Infinity'::numeric)))
+ck_material_receipts_10,c,True,material_receipts,CHECK ((purchase_value_eur = receipt_value_eur))
+ck_material_receipts_11,c,True,material_receipts,CHECK ((landed_receipt_value_eur = (purchase_value_eur + inbound_freight_eur)))
+ck_material_receipts_12,c,True,material_receipts,"CHECK ((purchase_value_eur = round((received_kg * purchase_unit_cost_eur), 2)))"
+ck_material_receipts_13,c,True,material_receipts,"CHECK ((inbound_freight_eur = round((received_kg * inbound_freight_rate_eur_per_kg), 2)))"
+ck_material_receipts_14,c,True,material_receipts,"CHECK ((abs((landed_unit_cost_eur - COALESCE((landed_receipt_value_eur / NULLIF(received_kg, (0)::numeric)), (0)::numeric))) <= 0.0000000051))"
+ck_material_receipts_15,c,True,material_receipts,CHECK (((received_kg > (0)::numeric) OR (landed_receipt_value_eur = (0)::numeric)))
+fk_material_receipts_0,f,True,material_receipts,FOREIGN KEY (po_line_id) REFERENCES manufacturing_v2.purchase_order_lines(po_line_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+material_receipts_inbound_freight_eur_not_null,n,True,material_receipts,NOT NULL inbound_freight_eur
+material_receipts_inbound_freight_rate_eur_per_kg_not_null,n,True,material_receipts,NOT NULL inbound_freight_rate_eur_per_kg
+material_receipts_landed_receipt_value_eur_not_null,n,True,material_receipts,NOT NULL landed_receipt_value_eur
+material_receipts_landed_unit_cost_eur_not_null,n,True,material_receipts,NOT NULL landed_unit_cost_eur
+material_receipts_pkey,p,True,material_receipts,PRIMARY KEY (receipt_id)
+material_receipts_po_line_id_not_null,n,True,material_receipts,NOT NULL po_line_id
+material_receipts_purchase_unit_cost_eur_not_null,n,True,material_receipts,NOT NULL purchase_unit_cost_eur
+material_receipts_purchase_value_eur_not_null,n,True,material_receipts,NOT NULL purchase_value_eur
+material_receipts_receipt_date_not_null,n,True,material_receipts,NOT NULL receipt_date
+material_receipts_receipt_id_not_null,n,True,material_receipts,NOT NULL receipt_id
+material_receipts_receipt_value_eur_not_null,n,True,material_receipts,NOT NULL receipt_value_eur
+material_receipts_received_kg_not_null,n,True,material_receipts,NOT NULL received_kg
+uq_material_receipts_0,u,True,material_receipts,UNIQUE (po_line_id)
+ck_material_suppliers_00,c,True,material_suppliers,CHECK ((length(btrim(material_id)) > 0))
+ck_material_suppliers_01,c,True,material_suppliers,CHECK ((length(btrim(supplier_id)) > 0))
+fk_material_suppliers_0,f,True,material_suppliers,FOREIGN KEY (material_id) REFERENCES manufacturing_v2.materials(material_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_material_suppliers_1,f,True,material_suppliers,FOREIGN KEY (supplier_id) REFERENCES manufacturing_v2.suppliers(supplier_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+material_suppliers_material_id_not_null,n,True,material_suppliers,NOT NULL material_id
+material_suppliers_pkey,p,True,material_suppliers,"PRIMARY KEY (material_id, supplier_id)"
+material_suppliers_supplier_id_not_null,n,True,material_suppliers,NOT NULL supplier_id
+ck_materials_00,c,True,materials,CHECK ((length(btrim(material_id)) > 0))
+ck_materials_01,c,True,materials,CHECK ((length(btrim(material_name)) > 0))
+ck_materials_02,c,True,materials,CHECK ((length(btrim(unit)) > 0))
+ck_materials_03,c,True,materials,CHECK (((base_unit_cost_eur >= (0)::numeric) AND (base_unit_cost_eur < 'Infinity'::numeric)))
+ck_materials_04,c,True,materials,CHECK ((unit = 'kg'::text))
+ck_materials_05,c,True,materials,CHECK ((base_unit_cost_eur > (0)::numeric))
+materials_base_unit_cost_eur_not_null,n,True,materials,NOT NULL base_unit_cost_eur
+materials_material_id_not_null,n,True,materials,NOT NULL material_id
+materials_material_name_not_null,n,True,materials,NOT NULL material_name
+materials_pkey,p,True,materials,PRIMARY KEY (material_id)
+materials_unit_not_null,n,True,materials,NOT NULL unit
+ck_months_00,c,True,months,CHECK ((year >= 0))
+ck_months_01,c,True,months,CHECK ((quarter >= 0))
+ck_months_02,c,True,months,CHECK ((month_number >= 0))
+ck_months_03,c,True,months,CHECK ((days_in_month >= 0))
+ck_months_04,c,True,months,"CHECK ((month_id = (date_trunc('month'::text, (month_id)::timestamp with time zone))::date))"
+ck_months_05,c,True,months,CHECK (((year)::numeric = EXTRACT(year FROM month_id)))
+ck_months_06,c,True,months,CHECK (((quarter)::numeric = EXTRACT(quarter FROM month_id)))
+ck_months_07,c,True,months,CHECK (((month_number)::numeric = EXTRACT(month FROM month_id)))
+ck_months_08,c,True,months,CHECK (((days_in_month)::numeric = EXTRACT(day FROM (month_id + '1 mon -1 days'::interval))))
+months_days_in_month_not_null,n,True,months,NOT NULL days_in_month
+months_month_id_not_null,n,True,months,NOT NULL month_id
+months_month_number_not_null,n,True,months,NOT NULL month_number
+months_pkey,p,True,months,PRIMARY KEY (month_id)
+months_quarter_not_null,n,True,months,NOT NULL quarter
+months_year_not_null,n,True,months,NOT NULL year
+ck_operating_expenses_00,c,True,operating_expenses,CHECK ((length(btrim(expense_category)) > 0))
+ck_operating_expenses_01,c,True,operating_expenses,CHECK (((amount_eur >= (0)::numeric) AND (amount_eur < 'Infinity'::numeric)))
+ck_operating_expenses_02,c,True,operating_expenses,CHECK (((fixed_amount_eur >= (0)::numeric) AND (fixed_amount_eur < 'Infinity'::numeric)))
+ck_operating_expenses_03,c,True,operating_expenses,CHECK (((variable_rate_pct >= (0)::numeric) AND (variable_rate_pct < 'Infinity'::numeric)))
+ck_operating_expenses_04,c,True,operating_expenses,CHECK (((variable_driver_amount_eur >= (0)::numeric) AND (variable_driver_amount_eur < 'Infinity'::numeric)))
+ck_operating_expenses_05,c,True,operating_expenses,CHECK (((variable_amount_eur >= (0)::numeric) AND (variable_amount_eur < 'Infinity'::numeric)))
+ck_operating_expenses_06,c,True,operating_expenses,"CHECK ((expense_category = ANY (ARRAY['selling'::text, 'administration'::text])))"
+ck_operating_expenses_07,c,True,operating_expenses,CHECK ((variable_rate_pct <= (100)::numeric))
+ck_operating_expenses_08,c,True,operating_expenses,CHECK ((amount_eur = (fixed_amount_eur + variable_amount_eur)))
+ck_operating_expenses_09,c,True,operating_expenses,"CHECK ((variable_amount_eur = round(((variable_driver_amount_eur * variable_rate_pct) / (100)::numeric), 2)))"
+ck_operating_expenses_10,c,True,operating_expenses,CHECK (((expense_category <> 'administration'::text) OR ((variable_rate_pct = (0)::numeric) AND (variable_driver_amount_eur = (0)::numeric) AND (variable_amount_eur = (0)::numeric))))
+fk_operating_expenses_0,f,True,operating_expenses,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+operating_expenses_amount_eur_not_null,n,True,operating_expenses,NOT NULL amount_eur
+operating_expenses_expense_category_not_null,n,True,operating_expenses,NOT NULL expense_category
+operating_expenses_fixed_amount_eur_not_null,n,True,operating_expenses,NOT NULL fixed_amount_eur
+operating_expenses_month_id_not_null,n,True,operating_expenses,NOT NULL month_id
+operating_expenses_pkey,p,True,operating_expenses,"PRIMARY KEY (month_id, expense_category)"
+operating_expenses_variable_amount_eur_not_null,n,True,operating_expenses,NOT NULL variable_amount_eur
+operating_expenses_variable_driver_amount_eur_not_null,n,True,operating_expenses,NOT NULL variable_driver_amount_eur
+operating_expenses_variable_rate_pct_not_null,n,True,operating_expenses,NOT NULL variable_rate_pct
+ck_production_00,c,True,production,CHECK ((length(btrim(production_id)) > 0))
+ck_production_01,c,True,production,CHECK ((length(btrim(product_id)) > 0))
+ck_production_02,c,True,production,CHECK ((attempted_units >= 0))
+ck_production_03,c,True,production,CHECK ((defective_units >= 0))
+ck_production_04,c,True,production,CHECK ((good_units >= 0))
+ck_production_05,c,True,production,CHECK ((good_units = (attempted_units - defective_units)))
+fk_production_0,f,True,production,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_production_1,f,True,production,FOREIGN KEY (product_id) REFERENCES manufacturing_v2.products(product_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+production_attempted_units_not_null,n,True,production,NOT NULL attempted_units
+production_defective_units_not_null,n,True,production,NOT NULL defective_units
+production_good_units_not_null,n,True,production,NOT NULL good_units
+production_month_id_not_null,n,True,production,NOT NULL month_id
+production_pkey,p,True,production,PRIMARY KEY (production_id)
+production_product_id_not_null,n,True,production,NOT NULL product_id
+production_production_id_not_null,n,True,production,NOT NULL production_id
+uq_production_0,u,True,production,"UNIQUE (month_id, product_id)"
+uq_production_1,u,True,production,"UNIQUE (production_id, month_id, product_id)"
+ck_production_cost_allocation_00,c,True,production_cost_allocation,CHECK ((length(btrim(production_id)) > 0))
+ck_production_cost_allocation_01,c,True,production_cost_allocation,CHECK ((length(btrim(product_id)) > 0))
+ck_production_cost_allocation_02,c,True,production_cost_allocation,CHECK ((length(btrim(line_id)) > 0))
+ck_production_cost_allocation_03,c,True,production_cost_allocation,CHECK ((attempted_units >= 0))
+ck_production_cost_allocation_04,c,True,production_cost_allocation,CHECK ((good_units >= 0))
+ck_production_cost_allocation_05,c,True,production_cost_allocation,CHECK (((material_cost_eur >= (0)::numeric) AND (material_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_06,c,True,production_cost_allocation,CHECK (((labor_cost_eur >= (0)::numeric) AND (labor_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_07,c,True,production_cost_allocation,CHECK (((energy_cost_eur >= (0)::numeric) AND (energy_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_08,c,True,production_cost_allocation,CHECK (((manufacturing_overhead_eur >= (0)::numeric) AND (manufacturing_overhead_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_09,c,True,production_cost_allocation,CHECK (((total_manufacturing_cost_eur >= (0)::numeric) AND (total_manufacturing_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_10,c,True,production_cost_allocation,CHECK (((capitalized_production_cost_eur >= (0)::numeric) AND (capitalized_production_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_11,c,True,production_cost_allocation,CHECK (((production_loss_expense_eur >= (0)::numeric) AND (production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_12,c,True,production_cost_allocation,CHECK (((good_unit_manufacturing_cost_eur >= (0)::numeric) AND (good_unit_manufacturing_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_13,c,True,production_cost_allocation,CHECK (((production_labor_cost_eur >= (0)::numeric) AND (production_labor_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_14,c,True,production_cost_allocation,CHECK (((support_labor_cost_eur >= (0)::numeric) AND (support_labor_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_15,c,True,production_cost_allocation,CHECK (((activity_energy_cost_eur >= (0)::numeric) AND (activity_energy_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_16,c,True,production_cost_allocation,CHECK (((standby_energy_cost_eur >= (0)::numeric) AND (standby_energy_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_17,c,True,production_cost_allocation,CHECK (((purchase_material_cost_eur >= (0)::numeric) AND (purchase_material_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_18,c,True,production_cost_allocation,CHECK (((inbound_freight_cost_eur >= (0)::numeric) AND (inbound_freight_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_19,c,True,production_cost_allocation,CHECK (((capitalized_material_cost_eur >= (0)::numeric) AND (capitalized_material_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_20,c,True,production_cost_allocation,CHECK (((capitalized_inbound_freight_cost_eur >= (0)::numeric) AND (capitalized_inbound_freight_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_21,c,True,production_cost_allocation,CHECK (((capitalized_labor_cost_eur >= (0)::numeric) AND (capitalized_labor_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_22,c,True,production_cost_allocation,CHECK (((capitalized_energy_cost_eur >= (0)::numeric) AND (capitalized_energy_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_23,c,True,production_cost_allocation,CHECK (((capitalized_overhead_cost_eur >= (0)::numeric) AND (capitalized_overhead_cost_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_24,c,True,production_cost_allocation,CHECK (((material_production_loss_expense_eur >= (0)::numeric) AND (material_production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_25,c,True,production_cost_allocation,CHECK (((inbound_freight_production_loss_expense_eur >= (0)::numeric) AND (inbound_freight_production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_26,c,True,production_cost_allocation,CHECK (((labor_production_loss_expense_eur >= (0)::numeric) AND (labor_production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_27,c,True,production_cost_allocation,CHECK (((energy_production_loss_expense_eur >= (0)::numeric) AND (energy_production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_28,c,True,production_cost_allocation,CHECK (((overhead_production_loss_expense_eur >= (0)::numeric) AND (overhead_production_loss_expense_eur < 'Infinity'::numeric)))
+ck_production_cost_allocation_29,c,True,production_cost_allocation,CHECK ((good_units <= attempted_units))
+ck_production_cost_allocation_30,c,True,production_cost_allocation,CHECK ((material_cost_eur = (purchase_material_cost_eur + inbound_freight_cost_eur)))
+ck_production_cost_allocation_31,c,True,production_cost_allocation,CHECK ((labor_cost_eur = (production_labor_cost_eur + support_labor_cost_eur)))
+ck_production_cost_allocation_32,c,True,production_cost_allocation,CHECK ((energy_cost_eur = (activity_energy_cost_eur + standby_energy_cost_eur)))
+ck_production_cost_allocation_33,c,True,production_cost_allocation,CHECK ((total_manufacturing_cost_eur = ((((purchase_material_cost_eur + inbound_freight_cost_eur) + labor_cost_eur) + energy_cost_eur) + manufacturing_overhead_eur)))
+ck_production_cost_allocation_34,c,True,production_cost_allocation,CHECK ((total_manufacturing_cost_eur = (capitalized_production_cost_eur + production_loss_expense_eur)))
+ck_production_cost_allocation_35,c,True,production_cost_allocation,CHECK ((capitalized_production_cost_eur = ((((capitalized_material_cost_eur + capitalized_inbound_freight_cost_eur) + capitalized_labor_cost_eur) + capitalized_energy_cost_eur) + capitalized_overhead_cost_eur)))
+ck_production_cost_allocation_36,c,True,production_cost_allocation,CHECK ((production_loss_expense_eur = ((((material_production_loss_expense_eur + inbound_freight_production_loss_expense_eur) + labor_production_loss_expense_eur) + energy_production_loss_expense_eur) + overhead_production_loss_expense_eur)))
+ck_production_cost_allocation_37,c,True,production_cost_allocation,"CHECK ((abs((good_unit_manufacturing_cost_eur - COALESCE((total_manufacturing_cost_eur / (NULLIF(good_units, 0))::numeric), (0)::numeric))) <= 0.0000000051))"
+ck_production_cost_allocation_38,c,True,production_cost_allocation,"CHECK ((capitalized_material_cost_eur =
+CASE
+    WHEN (good_units > 0) THEN purchase_material_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_39,c,True,production_cost_allocation,"CHECK ((material_production_loss_expense_eur =
+CASE
+    WHEN (good_units = 0) THEN purchase_material_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_40,c,True,production_cost_allocation,"CHECK ((capitalized_inbound_freight_cost_eur =
+CASE
+    WHEN (good_units > 0) THEN inbound_freight_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_41,c,True,production_cost_allocation,"CHECK ((inbound_freight_production_loss_expense_eur =
+CASE
+    WHEN (good_units = 0) THEN inbound_freight_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_42,c,True,production_cost_allocation,"CHECK ((capitalized_labor_cost_eur =
+CASE
+    WHEN (good_units > 0) THEN labor_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_43,c,True,production_cost_allocation,"CHECK ((labor_production_loss_expense_eur =
+CASE
+    WHEN (good_units = 0) THEN labor_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_44,c,True,production_cost_allocation,"CHECK ((capitalized_energy_cost_eur =
+CASE
+    WHEN (good_units > 0) THEN energy_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_45,c,True,production_cost_allocation,"CHECK ((energy_production_loss_expense_eur =
+CASE
+    WHEN (good_units = 0) THEN energy_cost_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_46,c,True,production_cost_allocation,"CHECK ((capitalized_overhead_cost_eur =
+CASE
+    WHEN (good_units > 0) THEN manufacturing_overhead_eur
+    ELSE (0)::numeric
+END))"
+ck_production_cost_allocation_47,c,True,production_cost_allocation,"CHECK ((overhead_production_loss_expense_eur =
+CASE
+    WHEN (good_units = 0) THEN manufacturing_overhead_eur
+    ELSE (0)::numeric
+END))"
+fk_production_cost_allocation_0,f,True,production_cost_allocation,"FOREIGN KEY (production_id, month_id, product_id) REFERENCES manufacturing_v2.production(production_id, month_id, product_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+fk_production_cost_allocation_1,f,True,production_cost_allocation,"FOREIGN KEY (product_id, line_id) REFERENCES manufacturing_v2.products(product_id, line_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+fk_production_cost_allocation_2,f,True,production_cost_allocation,"FOREIGN KEY (month_id, line_id) REFERENCES manufacturing_v2.manufacturing_costs(month_id, line_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+production_cost_allocation_activity_energy_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL activity_energy_cost_eur
+production_cost_allocation_attempted_units_not_null,n,True,production_cost_allocation,NOT NULL attempted_units
+production_cost_allocation_capitalized_energy_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL capitalized_energy_cost_eur
+production_cost_allocation_capitalized_inbound_freight_not_null,n,True,production_cost_allocation,NOT NULL capitalized_inbound_freight_cost_eur
+production_cost_allocation_capitalized_labor_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL capitalized_labor_cost_eur
+production_cost_allocation_capitalized_material_cost_e_not_null,n,True,production_cost_allocation,NOT NULL capitalized_material_cost_eur
+production_cost_allocation_capitalized_overhead_cost_e_not_null,n,True,production_cost_allocation,NOT NULL capitalized_overhead_cost_eur
+production_cost_allocation_capitalized_production_cost_not_null,n,True,production_cost_allocation,NOT NULL capitalized_production_cost_eur
+production_cost_allocation_energy_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL energy_cost_eur
+production_cost_allocation_energy_production_loss_expe_not_null,n,True,production_cost_allocation,NOT NULL energy_production_loss_expense_eur
+production_cost_allocation_good_unit_manufacturing_cos_not_null,n,True,production_cost_allocation,NOT NULL good_unit_manufacturing_cost_eur
+production_cost_allocation_good_units_not_null,n,True,production_cost_allocation,NOT NULL good_units
+production_cost_allocation_inbound_freight_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL inbound_freight_cost_eur
+production_cost_allocation_inbound_freight_production__not_null,n,True,production_cost_allocation,NOT NULL inbound_freight_production_loss_expense_eur
+production_cost_allocation_labor_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL labor_cost_eur
+production_cost_allocation_labor_production_loss_expen_not_null,n,True,production_cost_allocation,NOT NULL labor_production_loss_expense_eur
+production_cost_allocation_line_id_not_null,n,True,production_cost_allocation,NOT NULL line_id
+production_cost_allocation_manufacturing_overhead_eur_not_null,n,True,production_cost_allocation,NOT NULL manufacturing_overhead_eur
+production_cost_allocation_material_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL material_cost_eur
+production_cost_allocation_material_production_loss_ex_not_null,n,True,production_cost_allocation,NOT NULL material_production_loss_expense_eur
+production_cost_allocation_month_id_not_null,n,True,production_cost_allocation,NOT NULL month_id
+production_cost_allocation_overhead_production_loss_ex_not_null,n,True,production_cost_allocation,NOT NULL overhead_production_loss_expense_eur
+production_cost_allocation_pkey,p,True,production_cost_allocation,PRIMARY KEY (production_id)
+production_cost_allocation_product_id_not_null,n,True,production_cost_allocation,NOT NULL product_id
+production_cost_allocation_production_id_not_null,n,True,production_cost_allocation,NOT NULL production_id
+production_cost_allocation_production_labor_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL production_labor_cost_eur
+production_cost_allocation_production_loss_expense_eur_not_null,n,True,production_cost_allocation,NOT NULL production_loss_expense_eur
+production_cost_allocation_purchase_material_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL purchase_material_cost_eur
+production_cost_allocation_standby_energy_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL standby_energy_cost_eur
+production_cost_allocation_support_labor_cost_eur_not_null,n,True,production_cost_allocation,NOT NULL support_labor_cost_eur
+production_cost_allocation_total_manufacturing_cost_eu_not_null,n,True,production_cost_allocation,NOT NULL total_manufacturing_cost_eur
+ck_production_lines_00,c,True,production_lines,CHECK ((length(btrim(line_id)) > 0))
+ck_production_lines_01,c,True,production_lines,CHECK ((length(btrim(line_name)) > 0))
+ck_production_lines_02,c,True,production_lines,CHECK ((monthly_capacity_units >= 0))
+ck_production_lines_03,c,True,production_lines,CHECK (((support_labor_hours_per_month >= (0)::numeric) AND (support_labor_hours_per_month < 'Infinity'::numeric)))
+ck_production_lines_04,c,True,production_lines,CHECK (((base_energy_kwh_per_month >= (0)::numeric) AND (base_energy_kwh_per_month < 'Infinity'::numeric)))
+ck_production_lines_05,c,True,production_lines,CHECK ((monthly_capacity_units > 0))
+ck_production_lines_06,c,True,production_lines,CHECK ((support_labor_hours_per_month > (0)::numeric))
+ck_production_lines_07,c,True,production_lines,CHECK ((base_energy_kwh_per_month > (0)::numeric))
+production_lines_base_energy_kwh_per_month_not_null,n,True,production_lines,NOT NULL base_energy_kwh_per_month
+production_lines_line_id_not_null,n,True,production_lines,NOT NULL line_id
+production_lines_line_name_not_null,n,True,production_lines,NOT NULL line_name
+production_lines_monthly_capacity_units_not_null,n,True,production_lines,NOT NULL monthly_capacity_units
+production_lines_pkey,p,True,production_lines,PRIMARY KEY (line_id)
+production_lines_support_labor_hours_per_month_not_null,n,True,production_lines,NOT NULL support_labor_hours_per_month
+ck_products_00,c,True,products,CHECK ((length(btrim(product_id)) > 0))
+ck_products_01,c,True,products,CHECK ((length(btrim(product_name)) > 0))
+ck_products_02,c,True,products,CHECK ((length(btrim(category)) > 0))
+ck_products_03,c,True,products,CHECK ((length(btrim(line_id)) > 0))
+ck_products_04,c,True,products,CHECK (((base_selling_price_eur >= (0)::numeric) AND (base_selling_price_eur < 'Infinity'::numeric)))
+ck_products_05,c,True,products,CHECK (((standard_labor_hours_per_attempt >= (0)::numeric) AND (standard_labor_hours_per_attempt < 'Infinity'::numeric)))
+ck_products_06,c,True,products,CHECK (((standard_energy_kwh_per_attempt >= (0)::numeric) AND (standard_energy_kwh_per_attempt < 'Infinity'::numeric)))
+ck_products_07,c,True,products,CHECK ((base_selling_price_eur > (0)::numeric))
+ck_products_08,c,True,products,CHECK ((standard_labor_hours_per_attempt > (0)::numeric))
+ck_products_09,c,True,products,CHECK ((standard_energy_kwh_per_attempt > (0)::numeric))
+fk_products_0,f,True,products,FOREIGN KEY (line_id) REFERENCES manufacturing_v2.production_lines(line_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+products_base_selling_price_eur_not_null,n,True,products,NOT NULL base_selling_price_eur
+products_category_not_null,n,True,products,NOT NULL category
+products_line_id_not_null,n,True,products,NOT NULL line_id
+products_pkey,p,True,products,PRIMARY KEY (product_id)
+products_product_id_not_null,n,True,products,NOT NULL product_id
+products_product_name_not_null,n,True,products,NOT NULL product_name
+products_standard_energy_kwh_per_attempt_not_null,n,True,products,NOT NULL standard_energy_kwh_per_attempt
+products_standard_labor_hours_per_attempt_not_null,n,True,products,NOT NULL standard_labor_hours_per_attempt
+uq_products_0,u,True,products,"UNIQUE (product_id, line_id)"
+ck_purchase_order_lines_00,c,True,purchase_order_lines,CHECK ((length(btrim(po_line_id)) > 0))
+ck_purchase_order_lines_01,c,True,purchase_order_lines,CHECK ((length(btrim(material_id)) > 0))
+ck_purchase_order_lines_02,c,True,purchase_order_lines,CHECK ((length(btrim(supplier_id)) > 0))
+ck_purchase_order_lines_03,c,True,purchase_order_lines,CHECK (((ordered_kg >= (0)::numeric) AND (ordered_kg < 'Infinity'::numeric)))
+ck_purchase_order_lines_04,c,True,purchase_order_lines,CHECK (((agreed_unit_cost_eur >= (0)::numeric) AND (agreed_unit_cost_eur < 'Infinity'::numeric)))
+ck_purchase_order_lines_05,c,True,purchase_order_lines,CHECK ((expected_receipt_date >= order_date))
+ck_purchase_order_lines_06,c,True,purchase_order_lines,CHECK ((agreed_unit_cost_eur > (0)::numeric))
+fk_purchase_order_lines_0,f,True,purchase_order_lines,"FOREIGN KEY (material_id, supplier_id) REFERENCES manufacturing_v2.material_suppliers(material_id, supplier_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+purchase_order_lines_agreed_unit_cost_eur_not_null,n,True,purchase_order_lines,NOT NULL agreed_unit_cost_eur
+purchase_order_lines_expected_receipt_date_not_null,n,True,purchase_order_lines,NOT NULL expected_receipt_date
+purchase_order_lines_material_id_not_null,n,True,purchase_order_lines,NOT NULL material_id
+purchase_order_lines_order_date_not_null,n,True,purchase_order_lines,NOT NULL order_date
+purchase_order_lines_ordered_kg_not_null,n,True,purchase_order_lines,NOT NULL ordered_kg
+purchase_order_lines_pkey,p,True,purchase_order_lines,PRIMARY KEY (po_line_id)
+purchase_order_lines_po_line_id_not_null,n,True,purchase_order_lines,NOT NULL po_line_id
+purchase_order_lines_supplier_id_not_null,n,True,purchase_order_lines,NOT NULL supplier_id
+ck_raw_material_inventory_00,c,True,raw_material_inventory,CHECK ((length(btrim(material_id)) > 0))
+ck_raw_material_inventory_01,c,True,raw_material_inventory,CHECK (((opening_kg >= (0)::numeric) AND (opening_kg < 'Infinity'::numeric)))
+ck_raw_material_inventory_02,c,True,raw_material_inventory,CHECK (((received_kg >= (0)::numeric) AND (received_kg < 'Infinity'::numeric)))
+ck_raw_material_inventory_03,c,True,raw_material_inventory,CHECK (((consumed_kg >= (0)::numeric) AND (consumed_kg < 'Infinity'::numeric)))
+ck_raw_material_inventory_04,c,True,raw_material_inventory,CHECK (((closing_kg >= (0)::numeric) AND (closing_kg < 'Infinity'::numeric)))
+ck_raw_material_inventory_05,c,True,raw_material_inventory,CHECK (((opening_value_eur >= (0)::numeric) AND (opening_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_06,c,True,raw_material_inventory,CHECK (((receipt_value_eur >= (0)::numeric) AND (receipt_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_07,c,True,raw_material_inventory,CHECK (((issued_material_value_eur >= (0)::numeric) AND (issued_material_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_08,c,True,raw_material_inventory,CHECK (((closing_value_eur >= (0)::numeric) AND (closing_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_09,c,True,raw_material_inventory,CHECK (((weighted_average_unit_cost_eur >= (0)::numeric) AND (weighted_average_unit_cost_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_10,c,True,raw_material_inventory,CHECK (((opening_purchase_material_value_eur >= (0)::numeric) AND (opening_purchase_material_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_11,c,True,raw_material_inventory,CHECK (((opening_inbound_freight_value_eur >= (0)::numeric) AND (opening_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_12,c,True,raw_material_inventory,CHECK (((receipt_purchase_material_value_eur >= (0)::numeric) AND (receipt_purchase_material_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_13,c,True,raw_material_inventory,CHECK (((receipt_inbound_freight_value_eur >= (0)::numeric) AND (receipt_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_14,c,True,raw_material_inventory,CHECK (((issued_purchase_material_value_eur >= (0)::numeric) AND (issued_purchase_material_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_15,c,True,raw_material_inventory,CHECK (((issued_inbound_freight_value_eur >= (0)::numeric) AND (issued_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_16,c,True,raw_material_inventory,CHECK (((closing_purchase_material_value_eur >= (0)::numeric) AND (closing_purchase_material_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_17,c,True,raw_material_inventory,CHECK (((closing_inbound_freight_value_eur >= (0)::numeric) AND (closing_inbound_freight_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_18,c,True,raw_material_inventory,CHECK (((landed_receipt_value_eur >= (0)::numeric) AND (landed_receipt_value_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_19,c,True,raw_material_inventory,CHECK (((weighted_average_purchase_unit_cost_eur >= (0)::numeric) AND (weighted_average_purchase_unit_cost_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_20,c,True,raw_material_inventory,CHECK (((weighted_average_inbound_freight_unit_cost_eur >= (0)::numeric) AND (weighted_average_inbound_freight_unit_cost_eur < 'Infinity'::numeric)))
+ck_raw_material_inventory_21,c,True,raw_material_inventory,CHECK ((closing_kg = ((opening_kg + received_kg) - consumed_kg)))
+ck_raw_material_inventory_22,c,True,raw_material_inventory,CHECK ((closing_value_eur = ((opening_value_eur + landed_receipt_value_eur) - issued_material_value_eur)))
+ck_raw_material_inventory_23,c,True,raw_material_inventory,CHECK ((opening_value_eur = (opening_purchase_material_value_eur + opening_inbound_freight_value_eur)))
+ck_raw_material_inventory_24,c,True,raw_material_inventory,CHECK ((receipt_value_eur = receipt_purchase_material_value_eur))
+ck_raw_material_inventory_25,c,True,raw_material_inventory,CHECK ((landed_receipt_value_eur = (receipt_purchase_material_value_eur + receipt_inbound_freight_value_eur)))
+ck_raw_material_inventory_26,c,True,raw_material_inventory,CHECK ((issued_material_value_eur = (issued_purchase_material_value_eur + issued_inbound_freight_value_eur)))
+ck_raw_material_inventory_27,c,True,raw_material_inventory,CHECK ((closing_value_eur = (closing_purchase_material_value_eur + closing_inbound_freight_value_eur)))
+ck_raw_material_inventory_28,c,True,raw_material_inventory,CHECK ((closing_purchase_material_value_eur = ((opening_purchase_material_value_eur + receipt_purchase_material_value_eur) - issued_purchase_material_value_eur)))
+ck_raw_material_inventory_29,c,True,raw_material_inventory,CHECK ((closing_inbound_freight_value_eur = ((opening_inbound_freight_value_eur + receipt_inbound_freight_value_eur) - issued_inbound_freight_value_eur)))
+fk_raw_material_inventory_0,f,True,raw_material_inventory,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_raw_material_inventory_1,f,True,raw_material_inventory,FOREIGN KEY (material_id) REFERENCES manufacturing_v2.materials(material_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+raw_material_inventory_closing_inbound_freight_value_e_not_null,n,True,raw_material_inventory,NOT NULL closing_inbound_freight_value_eur
+raw_material_inventory_closing_kg_not_null,n,True,raw_material_inventory,NOT NULL closing_kg
+raw_material_inventory_closing_purchase_material_value_not_null,n,True,raw_material_inventory,NOT NULL closing_purchase_material_value_eur
+raw_material_inventory_closing_value_eur_not_null,n,True,raw_material_inventory,NOT NULL closing_value_eur
+raw_material_inventory_consumed_kg_not_null,n,True,raw_material_inventory,NOT NULL consumed_kg
+raw_material_inventory_issued_inbound_freight_value_eu_not_null,n,True,raw_material_inventory,NOT NULL issued_inbound_freight_value_eur
+raw_material_inventory_issued_material_value_eur_not_null,n,True,raw_material_inventory,NOT NULL issued_material_value_eur
+raw_material_inventory_issued_purchase_material_value__not_null,n,True,raw_material_inventory,NOT NULL issued_purchase_material_value_eur
+raw_material_inventory_landed_receipt_value_eur_not_null,n,True,raw_material_inventory,NOT NULL landed_receipt_value_eur
+raw_material_inventory_material_id_not_null,n,True,raw_material_inventory,NOT NULL material_id
+raw_material_inventory_month_id_not_null,n,True,raw_material_inventory,NOT NULL month_id
+raw_material_inventory_opening_inbound_freight_value_e_not_null,n,True,raw_material_inventory,NOT NULL opening_inbound_freight_value_eur
+raw_material_inventory_opening_kg_not_null,n,True,raw_material_inventory,NOT NULL opening_kg
+raw_material_inventory_opening_purchase_material_value_not_null,n,True,raw_material_inventory,NOT NULL opening_purchase_material_value_eur
+raw_material_inventory_opening_value_eur_not_null,n,True,raw_material_inventory,NOT NULL opening_value_eur
+raw_material_inventory_pkey,p,True,raw_material_inventory,"PRIMARY KEY (month_id, material_id)"
+raw_material_inventory_receipt_inbound_freight_value_e_not_null,n,True,raw_material_inventory,NOT NULL receipt_inbound_freight_value_eur
+raw_material_inventory_receipt_purchase_material_value_not_null,n,True,raw_material_inventory,NOT NULL receipt_purchase_material_value_eur
+raw_material_inventory_receipt_value_eur_not_null,n,True,raw_material_inventory,NOT NULL receipt_value_eur
+raw_material_inventory_received_kg_not_null,n,True,raw_material_inventory,NOT NULL received_kg
+raw_material_inventory_weighted_average_inbound_freigh_not_null,n,True,raw_material_inventory,NOT NULL weighted_average_inbound_freight_unit_cost_eur
+raw_material_inventory_weighted_average_purchase_unit__not_null,n,True,raw_material_inventory,NOT NULL weighted_average_purchase_unit_cost_eur
+raw_material_inventory_weighted_average_unit_cost_eur_not_null,n,True,raw_material_inventory,NOT NULL weighted_average_unit_cost_eur
+ck_sales_00,c,True,sales,CHECK ((length(btrim(sales_line_id)) > 0))
+ck_sales_01,c,True,sales,CHECK ((length(btrim(product_id)) > 0))
+ck_sales_02,c,True,sales,CHECK ((length(btrim(customer_id)) > 0))
+ck_sales_03,c,True,sales,CHECK ((requested_units >= 0))
+ck_sales_04,c,True,sales,CHECK ((unfulfilled_units >= 0))
+ck_sales_05,c,True,sales,CHECK ((units_shipped >= 0))
+ck_sales_06,c,True,sales,CHECK (((list_unit_price_eur >= (0)::numeric) AND (list_unit_price_eur < 'Infinity'::numeric)))
+ck_sales_07,c,True,sales,CHECK (((discount_pct >= (0)::numeric) AND (discount_pct < 'Infinity'::numeric)))
+ck_sales_08,c,True,sales,CHECK (((gross_revenue_eur >= (0)::numeric) AND (gross_revenue_eur < 'Infinity'::numeric)))
+ck_sales_09,c,True,sales,CHECK (((discount_amount_eur >= (0)::numeric) AND (discount_amount_eur < 'Infinity'::numeric)))
+ck_sales_10,c,True,sales,CHECK (((net_revenue_eur >= (0)::numeric) AND (net_revenue_eur < 'Infinity'::numeric)))
+ck_sales_11,c,True,sales,CHECK (((weighted_average_unit_cost_eur >= (0)::numeric) AND (weighted_average_unit_cost_eur < 'Infinity'::numeric)))
+ck_sales_12,c,True,sales,CHECK (((cogs_eur >= (0)::numeric) AND (cogs_eur < 'Infinity'::numeric)))
+ck_sales_13,c,True,sales,CHECK (((material_cogs_eur >= (0)::numeric) AND (material_cogs_eur < 'Infinity'::numeric)))
+ck_sales_14,c,True,sales,CHECK (((inbound_freight_cogs_eur >= (0)::numeric) AND (inbound_freight_cogs_eur < 'Infinity'::numeric)))
+ck_sales_15,c,True,sales,CHECK (((labor_cogs_eur >= (0)::numeric) AND (labor_cogs_eur < 'Infinity'::numeric)))
+ck_sales_16,c,True,sales,CHECK (((energy_cogs_eur >= (0)::numeric) AND (energy_cogs_eur < 'Infinity'::numeric)))
+ck_sales_17,c,True,sales,CHECK (((overhead_cogs_eur >= (0)::numeric) AND (overhead_cogs_eur < 'Infinity'::numeric)))
+ck_sales_18,c,True,sales,CHECK (((outbound_freight_rate_eur_per_unit >= (0)::numeric) AND (outbound_freight_rate_eur_per_unit < 'Infinity'::numeric)))
+ck_sales_19,c,True,sales,CHECK (((outbound_freight_eur >= (0)::numeric) AND (outbound_freight_eur < 'Infinity'::numeric)))
+ck_sales_20,c,True,sales,CHECK ((units_shipped > 0))
+ck_sales_21,c,True,sales,CHECK ((requested_units = (units_shipped + unfulfilled_units)))
+ck_sales_22,c,True,sales,CHECK ((discount_pct <= (100)::numeric))
+ck_sales_23,c,True,sales,CHECK ((gross_revenue_eur = ((units_shipped)::numeric * list_unit_price_eur)))
+ck_sales_24,c,True,sales,"CHECK ((discount_amount_eur = round(((gross_revenue_eur * discount_pct) / (100)::numeric), 2)))"
+ck_sales_25,c,True,sales,CHECK ((net_revenue_eur = (gross_revenue_eur - discount_amount_eur)))
+ck_sales_26,c,True,sales,"CHECK (((date_trunc('month'::text, (shipment_date)::timestamp with time zone))::date = month_id))"
+ck_sales_27,c,True,sales,CHECK ((shipment_date = ((month_id + '1 mon -1 days'::interval))::date))
+ck_sales_28,c,True,sales,CHECK ((cogs_eur = ((((material_cogs_eur + inbound_freight_cogs_eur) + labor_cogs_eur) + energy_cogs_eur) + overhead_cogs_eur)))
+ck_sales_29,c,True,sales,"CHECK ((outbound_freight_eur = round(((units_shipped)::numeric * outbound_freight_rate_eur_per_unit), 2)))"
+fk_sales_0,f,True,sales,FOREIGN KEY (month_id) REFERENCES manufacturing_v2.months(month_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+fk_sales_1,f,True,sales,"FOREIGN KEY (month_id, product_id) REFERENCES manufacturing_v2.finished_goods_inventory(month_id, product_id) ON UPDATE RESTRICT ON DELETE RESTRICT"
+fk_sales_2,f,True,sales,FOREIGN KEY (customer_id) REFERENCES manufacturing_v2.customers(customer_id) ON UPDATE RESTRICT ON DELETE RESTRICT
+sales_cogs_eur_not_null,n,True,sales,NOT NULL cogs_eur
+sales_customer_id_not_null,n,True,sales,NOT NULL customer_id
+sales_discount_amount_eur_not_null,n,True,sales,NOT NULL discount_amount_eur
+sales_discount_pct_not_null,n,True,sales,NOT NULL discount_pct
+sales_energy_cogs_eur_not_null,n,True,sales,NOT NULL energy_cogs_eur
+sales_gross_revenue_eur_not_null,n,True,sales,NOT NULL gross_revenue_eur
+sales_inbound_freight_cogs_eur_not_null,n,True,sales,NOT NULL inbound_freight_cogs_eur
+sales_labor_cogs_eur_not_null,n,True,sales,NOT NULL labor_cogs_eur
+sales_list_unit_price_eur_not_null,n,True,sales,NOT NULL list_unit_price_eur
+sales_material_cogs_eur_not_null,n,True,sales,NOT NULL material_cogs_eur
+sales_month_id_not_null,n,True,sales,NOT NULL month_id
+sales_net_revenue_eur_not_null,n,True,sales,NOT NULL net_revenue_eur
+sales_outbound_freight_eur_not_null,n,True,sales,NOT NULL outbound_freight_eur
+sales_outbound_freight_rate_eur_per_unit_not_null,n,True,sales,NOT NULL outbound_freight_rate_eur_per_unit
+sales_overhead_cogs_eur_not_null,n,True,sales,NOT NULL overhead_cogs_eur
+sales_pkey,p,True,sales,PRIMARY KEY (sales_line_id)
+sales_product_id_not_null,n,True,sales,NOT NULL product_id
+sales_requested_units_not_null,n,True,sales,NOT NULL requested_units
+sales_sales_line_id_not_null,n,True,sales,NOT NULL sales_line_id
+sales_shipment_date_not_null,n,True,sales,NOT NULL shipment_date
+sales_unfulfilled_units_not_null,n,True,sales,NOT NULL unfulfilled_units
+sales_units_shipped_not_null,n,True,sales,NOT NULL units_shipped
+sales_weighted_average_unit_cost_eur_not_null,n,True,sales,NOT NULL weighted_average_unit_cost_eur
+ck_suppliers_00,c,True,suppliers,CHECK ((length(btrim(supplier_id)) > 0))
+ck_suppliers_01,c,True,suppliers,CHECK ((length(btrim(supplier_name)) > 0))
+ck_suppliers_02,c,True,suppliers,CHECK ((lead_time_days >= 0))
+ck_suppliers_03,c,True,suppliers,CHECK (((on_time_delivery_target >= (0)::numeric) AND (on_time_delivery_target < 'Infinity'::numeric)))
+ck_suppliers_04,c,True,suppliers,CHECK ((lead_time_days > 0))
+ck_suppliers_05,c,True,suppliers,CHECK ((on_time_delivery_target <= (1)::numeric))
+suppliers_lead_time_days_not_null,n,True,suppliers,NOT NULL lead_time_days
+suppliers_on_time_delivery_target_not_null,n,True,suppliers,NOT NULL on_time_delivery_target
+suppliers_pkey,p,True,suppliers,PRIMARY KEY (supplier_id)
+suppliers_supplier_id_not_null,n,True,suppliers,NOT NULL supplier_id
+suppliers_supplier_name_not_null,n,True,suppliers,NOT NULL supplier_name

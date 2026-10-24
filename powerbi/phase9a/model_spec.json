@@ -1,0 +1,902 @@
+{
+  "database": "manufacturing_360",
+  "schema": "manufacturing_v2",
+  "storage_mode": "Import",
+  "tables": [
+    {
+      "name": "DimDate",
+      "source": "Power Query generated calendar bounded by live SQL dates",
+      "grain": "one calendar day, full years",
+      "keys": [
+        "Date"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "columns": [
+        "Date",
+        "Year",
+        "Quarter",
+        "MonthNumber",
+        "MonthName",
+        "MonthStart",
+        "YearMonth",
+        "YearMonthSort",
+        "Day",
+        "DaysInMonth"
+      ],
+      "verified_rows": 731
+    },
+    {
+      "name": "DimProduct",
+      "source": "products",
+      "grain": "one product_id",
+      "keys": [
+        "product_id"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "sql": "SELECT s.product_id, s.product_name, s.category, s.line_id, s.base_selling_price_eur, s.standard_labor_hours_per_attempt, s.standard_energy_kwh_per_attempt FROM manufacturing_v2.products s",
+      "verified_rows": 20,
+      "columns": [
+        "line_id",
+        "category",
+        "product_id",
+        "product_name",
+        "base_selling_price_eur",
+        "standard_energy_kwh_per_attempt",
+        "standard_labor_hours_per_attempt"
+      ]
+    },
+    {
+      "name": "DimCustomer",
+      "source": "customers",
+      "grain": "one customer_id",
+      "keys": [
+        "customer_id"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "sql": "SELECT s.customer_id, s.customer_name, s.segment FROM manufacturing_v2.customers s",
+      "verified_rows": 25,
+      "columns": [
+        "segment",
+        "customer_id",
+        "customer_name"
+      ]
+    },
+    {
+      "name": "DimMaterial",
+      "source": "materials",
+      "grain": "one material_id",
+      "keys": [
+        "material_id"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "sql": "SELECT s.material_id, s.material_name, s.unit, s.base_unit_cost_eur FROM manufacturing_v2.materials s",
+      "verified_rows": 10,
+      "columns": [
+        "unit",
+        "material_id",
+        "material_name",
+        "base_unit_cost_eur"
+      ]
+    },
+    {
+      "name": "DimSupplier",
+      "source": "suppliers",
+      "grain": "one supplier_id",
+      "keys": [
+        "supplier_id"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "sql": "SELECT s.supplier_id, s.supplier_name, s.lead_time_days, s.on_time_delivery_target FROM manufacturing_v2.suppliers s",
+      "verified_rows": 15,
+      "columns": [
+        "supplier_id",
+        "supplier_name",
+        "lead_time_days",
+        "on_time_delivery_target"
+      ]
+    },
+    {
+      "name": "DimLine",
+      "source": "production_lines",
+      "grain": "one line_id",
+      "keys": [
+        "line_id"
+      ],
+      "role": "dimension",
+      "month_key": null,
+      "sql": "SELECT s.line_id, s.line_name, s.monthly_capacity_units, s.support_labor_hours_per_month, s.base_energy_kwh_per_month FROM manufacturing_v2.production_lines s",
+      "verified_rows": 3,
+      "columns": [
+        "line_id",
+        "line_name",
+        "monthly_capacity_units",
+        "base_energy_kwh_per_month",
+        "support_labor_hours_per_month"
+      ]
+    },
+    {
+      "name": "FactSales",
+      "source": "bi_sales_detail",
+      "grain": "shipment line",
+      "keys": [
+        "sales_line_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.sales_line_id, s.month_id, s.shipment_date, s.product_id, s.customer_id, s.requested_units, s.unfulfilled_units, s.units_shipped, s.list_unit_price_eur, s.discount_pct, s.gross_revenue_eur, s.discount_amount_eur, s.net_revenue_eur, s.weighted_average_unit_cost_eur, s.cogs_eur, s.material_cogs_eur, s.inbound_freight_cogs_eur, s.labor_cogs_eur, s.energy_cogs_eur, s.overhead_cogs_eur, s.outbound_freight_rate_eur_per_unit, s.outbound_freight_eur, s.product_name, s.category, s.line_id, s.customer_name, s.segment, s.net_unit_price_eur, s.gross_profit_eur, s.gross_margin_pct, s.contribution_after_outbound_eur FROM manufacturing_v2.bi_sales_detail s",
+      "verified_rows": 2596,
+      "columns": [
+        "line_id",
+        "segment",
+        "category",
+        "cogs_eur",
+        "month_id",
+        "product_id",
+        "customer_id",
+        "discount_pct",
+        "product_name",
+        "customer_name",
+        "sales_line_id",
+        "shipment_date",
+        "units_shipped",
+        "labor_cogs_eur",
+        "energy_cogs_eur",
+        "net_revenue_eur",
+        "requested_units",
+        "gross_margin_pct",
+        "gross_profit_eur",
+        "gross_revenue_eur",
+        "material_cogs_eur",
+        "overhead_cogs_eur",
+        "unfulfilled_units",
+        "net_unit_price_eur",
+        "discount_amount_eur",
+        "list_unit_price_eur",
+        "outbound_freight_eur",
+        "inbound_freight_cogs_eur",
+        "weighted_average_unit_cost_eur",
+        "contribution_after_outbound_eur",
+        "outbound_freight_rate_eur_per_unit"
+      ]
+    },
+    {
+      "name": "FactProduction",
+      "source": "bi_production_performance",
+      "grain": "product/month batch",
+      "keys": [
+        "production_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.production_id, s.month_id, s.year, s.quarter, s.product_id, s.product_name, s.category, s.line_id, s.attempted_units, s.defective_units, s.good_units, s.defect_rate_pct, s.good_yield_pct FROM manufacturing_v2.bi_production_performance s",
+      "verified_rows": 480,
+      "columns": [
+        "year",
+        "line_id",
+        "quarter",
+        "category",
+        "month_id",
+        "good_units",
+        "product_id",
+        "product_name",
+        "production_id",
+        "good_yield_pct",
+        "attempted_units",
+        "defect_rate_pct",
+        "defective_units"
+      ]
+    },
+    {
+      "name": "FactManufacturing",
+      "source": "bi_manufacturing_cost_components",
+      "grain": "production batch allocation",
+      "keys": [
+        "production_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.production_id, s.month_id, s.product_id, s.line_id, s.attempted_units, s.good_units, s.material_cost_eur, s.labor_cost_eur, s.energy_cost_eur, s.manufacturing_overhead_eur, s.total_manufacturing_cost_eur, s.capitalized_production_cost_eur, s.production_loss_expense_eur, s.good_unit_manufacturing_cost_eur, s.production_labor_cost_eur, s.support_labor_cost_eur, s.activity_energy_cost_eur, s.standby_energy_cost_eur, s.purchase_material_cost_eur, s.inbound_freight_cost_eur, s.capitalized_material_cost_eur, s.capitalized_inbound_freight_cost_eur, s.capitalized_labor_cost_eur, s.capitalized_energy_cost_eur, s.capitalized_overhead_cost_eur, s.material_production_loss_expense_eur, s.inbound_freight_production_loss_expense_eur, s.labor_production_loss_expense_eur, s.energy_production_loss_expense_eur, s.overhead_production_loss_expense_eur, s.product_name, s.category, s.landed_material_cost_eur FROM manufacturing_v2.bi_manufacturing_cost_components s",
+      "verified_rows": 480,
+      "columns": [
+        "line_id",
+        "category",
+        "month_id",
+        "good_units",
+        "product_id",
+        "product_name",
+        "production_id",
+        "labor_cost_eur",
+        "attempted_units",
+        "energy_cost_eur",
+        "material_cost_eur",
+        "support_labor_cost_eur",
+        "standby_energy_cost_eur",
+        "activity_energy_cost_eur",
+        "inbound_freight_cost_eur",
+        "landed_material_cost_eur",
+        "production_labor_cost_eur",
+        "capitalized_labor_cost_eur",
+        "manufacturing_overhead_eur",
+        "purchase_material_cost_eur",
+        "capitalized_energy_cost_eur",
+        "production_loss_expense_eur",
+        "total_manufacturing_cost_eur",
+        "capitalized_material_cost_eur",
+        "capitalized_overhead_cost_eur",
+        "capitalized_production_cost_eur",
+        "good_unit_manufacturing_cost_eur",
+        "labor_production_loss_expense_eur",
+        "energy_production_loss_expense_eur",
+        "capitalized_inbound_freight_cost_eur",
+        "material_production_loss_expense_eur",
+        "overhead_production_loss_expense_eur",
+        "inbound_freight_production_loss_expense_eur"
+      ]
+    },
+    {
+      "name": "FactConversion",
+      "source": "bi_line_manufacturing_costs",
+      "grain": "line/month cost pool",
+      "keys": [
+        "month_id",
+        "line_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.month_id, s.line_id, s.attempted_units, s.labor_hours, s.hourly_rate_eur, s.energy_kwh, s.energy_tariff_eur, s.labor_cost_eur, s.energy_cost_eur, s.manufacturing_overhead_eur, s.total_conversion_cost_eur, s.idle_cost_eur, s.production_labor_hours, s.support_labor_hours, s.activity_energy_kwh, s.base_energy_kwh, s.production_labor_cost_eur, s.support_labor_cost_eur, s.activity_energy_cost_eur, s.standby_energy_cost_eur, s.idle_labor_cost_eur, s.idle_energy_cost_eur, s.idle_overhead_cost_eur, s.line_name FROM manufacturing_v2.bi_line_manufacturing_costs s",
+      "verified_rows": 72,
+      "columns": [
+        "line_id",
+        "month_id",
+        "line_name",
+        "energy_kwh",
+        "labor_hours",
+        "idle_cost_eur",
+        "labor_cost_eur",
+        "attempted_units",
+        "base_energy_kwh",
+        "energy_cost_eur",
+        "hourly_rate_eur",
+        "energy_tariff_eur",
+        "activity_energy_kwh",
+        "idle_labor_cost_eur",
+        "support_labor_hours",
+        "idle_energy_cost_eur",
+        "idle_overhead_cost_eur",
+        "production_labor_hours",
+        "support_labor_cost_eur",
+        "standby_energy_cost_eur",
+        "activity_energy_cost_eur",
+        "production_labor_cost_eur",
+        "total_conversion_cost_eur",
+        "manufacturing_overhead_eur"
+      ]
+    },
+    {
+      "name": "FactCapacity",
+      "source": "line_month_capacity",
+      "grain": "line/month capacity",
+      "keys": [
+        "month_id",
+        "line_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.month_id, s.line_id, s.nominal_capacity_units, s.downtime_pct, s.effective_capacity_units FROM manufacturing_v2.line_month_capacity s",
+      "verified_rows": 72,
+      "columns": [
+        "line_id",
+        "month_id",
+        "downtime_pct",
+        "nominal_capacity_units",
+        "effective_capacity_units"
+      ]
+    },
+    {
+      "name": "FactReceipts",
+      "source": "bi_procurement_receipts",
+      "grain": "receipt (one complete receipt per PO line)",
+      "keys": [
+        "receipt_id"
+      ],
+      "role": "fact",
+      "month_key": "ReceiptMonth",
+      "sql": "SELECT s.receipt_id, s.po_line_id, s.receipt_date, s.received_kg, s.landed_unit_cost_eur, s.receipt_value_eur, s.purchase_unit_cost_eur, s.purchase_value_eur, s.inbound_freight_rate_eur_per_kg, s.inbound_freight_eur, s.landed_receipt_value_eur, s.material_id, s.supplier_id, s.order_date, s.expected_receipt_date, s.agreed_unit_cost_eur, s.material_name, s.supplier_name, s.on_time, s.actual_lead_time_days FROM manufacturing_v2.bi_procurement_receipts s",
+      "verified_rows": 144,
+      "columns": [
+        "on_time",
+        "order_date",
+        "po_line_id",
+        "receipt_id",
+        "material_id",
+        "received_kg",
+        "supplier_id",
+        "receipt_date",
+        "material_name",
+        "supplier_name",
+        "receipt_value_eur",
+        "purchase_value_eur",
+        "inbound_freight_eur",
+        "agreed_unit_cost_eur",
+        "landed_unit_cost_eur",
+        "actual_lead_time_days",
+        "expected_receipt_date",
+        "purchase_unit_cost_eur",
+        "landed_receipt_value_eur",
+        "inbound_freight_rate_eur_per_kg",
+        "ReceiptMonth"
+      ]
+    },
+    {
+      "name": "FactPurchaseOrders",
+      "source": "bi_procurement_order_status",
+      "grain": "purchase-order line",
+      "keys": [
+        "po_line_id"
+      ],
+      "role": "fact",
+      "month_key": "OrderMonth",
+      "sql": "SELECT s.po_line_id, s.material_id, s.supplier_id, s.order_date, s.expected_receipt_date, s.ordered_kg, s.agreed_unit_cost_eur, s.received_kg, s.outstanding_kg, s.purchase_value_eur, s.inbound_freight_eur, s.landed_receipt_value_eur FROM manufacturing_v2.bi_procurement_order_status s",
+      "verified_rows": 144,
+      "columns": [
+        "order_date",
+        "ordered_kg",
+        "po_line_id",
+        "material_id",
+        "received_kg",
+        "supplier_id",
+        "outstanding_kg",
+        "purchase_value_eur",
+        "inbound_freight_eur",
+        "agreed_unit_cost_eur",
+        "expected_receipt_date",
+        "landed_receipt_value_eur",
+        "OrderMonth"
+      ]
+    },
+    {
+      "name": "FactRawInventory",
+      "source": "bi_raw_material_inventory",
+      "grain": "material/month snapshot",
+      "keys": [
+        "month_id",
+        "material_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.month_id, s.material_id, s.opening_kg, s.received_kg, s.consumed_kg, s.closing_kg, s.opening_value_eur, s.receipt_value_eur, s.issued_material_value_eur, s.closing_value_eur, s.weighted_average_unit_cost_eur, s.opening_purchase_material_value_eur, s.opening_inbound_freight_value_eur, s.receipt_purchase_material_value_eur, s.receipt_inbound_freight_value_eur, s.issued_purchase_material_value_eur, s.issued_inbound_freight_value_eur, s.closing_purchase_material_value_eur, s.closing_inbound_freight_value_eur, s.landed_receipt_value_eur, s.weighted_average_purchase_unit_cost_eur, s.weighted_average_inbound_freight_unit_cost_eur, s.material_name, s.unit FROM manufacturing_v2.bi_raw_material_inventory s",
+      "verified_rows": 240,
+      "columns": [
+        "unit",
+        "month_id",
+        "closing_kg",
+        "opening_kg",
+        "consumed_kg",
+        "material_id",
+        "received_kg",
+        "material_name",
+        "closing_value_eur",
+        "opening_value_eur",
+        "receipt_value_eur",
+        "landed_receipt_value_eur",
+        "issued_material_value_eur",
+        "weighted_average_unit_cost_eur",
+        "issued_inbound_freight_value_eur",
+        "closing_inbound_freight_value_eur",
+        "opening_inbound_freight_value_eur",
+        "receipt_inbound_freight_value_eur",
+        "issued_purchase_material_value_eur",
+        "closing_purchase_material_value_eur",
+        "opening_purchase_material_value_eur",
+        "receipt_purchase_material_value_eur",
+        "weighted_average_purchase_unit_cost_eur",
+        "weighted_average_inbound_freight_unit_cost_eur"
+      ]
+    },
+    {
+      "name": "FactFGInventory",
+      "source": "bi_finished_goods_inventory",
+      "grain": "product/month snapshot",
+      "keys": [
+        "month_id",
+        "product_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.month_id, s.product_id, s.opening_units, s.good_production_units, s.demand_units, s.shipped_units, s.unfulfilled_units, s.closing_units, s.opening_value_eur, s.production_value_eur, s.cogs_eur, s.closing_value_eur, s.weighted_average_unit_cost_eur, s.opening_material_value_eur, s.opening_inbound_freight_value_eur, s.opening_labor_value_eur, s.opening_energy_value_eur, s.opening_overhead_value_eur, s.production_material_value_eur, s.production_inbound_freight_value_eur, s.production_labor_value_eur, s.production_energy_value_eur, s.production_overhead_value_eur, s.closing_material_value_eur, s.closing_inbound_freight_value_eur, s.closing_labor_value_eur, s.closing_energy_value_eur, s.closing_overhead_value_eur, s.material_cogs_eur, s.inbound_freight_cogs_eur, s.labor_cogs_eur, s.energy_cogs_eur, s.overhead_cogs_eur, s.product_name, s.category, s.line_id FROM manufacturing_v2.bi_finished_goods_inventory s",
+      "verified_rows": 480,
+      "columns": [
+        "line_id",
+        "category",
+        "cogs_eur",
+        "month_id",
+        "product_id",
+        "demand_units",
+        "product_name",
+        "closing_units",
+        "opening_units",
+        "shipped_units",
+        "labor_cogs_eur",
+        "energy_cogs_eur",
+        "closing_value_eur",
+        "material_cogs_eur",
+        "opening_value_eur",
+        "overhead_cogs_eur",
+        "unfulfilled_units",
+        "production_value_eur",
+        "good_production_units",
+        "closing_labor_value_eur",
+        "opening_labor_value_eur",
+        "closing_energy_value_eur",
+        "inbound_freight_cogs_eur",
+        "opening_energy_value_eur",
+        "closing_material_value_eur",
+        "closing_overhead_value_eur",
+        "opening_material_value_eur",
+        "opening_overhead_value_eur",
+        "production_labor_value_eur",
+        "production_energy_value_eur",
+        "production_material_value_eur",
+        "production_overhead_value_eur",
+        "weighted_average_unit_cost_eur",
+        "closing_inbound_freight_value_eur",
+        "opening_inbound_freight_value_eur",
+        "production_inbound_freight_value_eur"
+      ]
+    },
+    {
+      "name": "FactOpex",
+      "source": "operating_expenses",
+      "grain": "month/expense category",
+      "keys": [
+        "month_id",
+        "expense_category"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT s.month_id, s.expense_category, s.amount_eur, s.fixed_amount_eur, s.variable_rate_pct, s.variable_driver_amount_eur, s.variable_amount_eur FROM manufacturing_v2.operating_expenses s",
+      "verified_rows": 48,
+      "columns": [
+        "month_id",
+        "amount_eur",
+        "expense_category",
+        "fixed_amount_eur",
+        "variable_rate_pct",
+        "variable_amount_eur",
+        "variable_driver_amount_eur"
+      ]
+    },
+    {
+      "name": "FactConsumption",
+      "source": "bi_material_consumption",
+      "grain": "production batch/material issue",
+      "keys": [
+        "production_id",
+        "material_id"
+      ],
+      "role": "fact",
+      "month_key": "month_id",
+      "sql": "SELECT c.production_id, c.material_id, c.required_kg, c.extra_waste_kg, c.consumed_kg, c.issued_material_value_eur, c.weighted_average_unit_cost_eur, c.issued_purchase_material_value_eur, c.issued_inbound_freight_eur, c.weighted_average_purchase_unit_cost_eur, c.weighted_average_inbound_freight_unit_cost_eur, c.month_id, c.product_id, c.product_name, c.material_name, p.line_id FROM manufacturing_v2.bi_material_consumption c JOIN manufacturing_v2.products p ON p.product_id=c.product_id",
+      "verified_rows": 1536,
+      "columns": [
+        "line_id",
+        "month_id",
+        "product_id",
+        "consumed_kg",
+        "material_id",
+        "required_kg",
+        "product_name",
+        "material_name",
+        "production_id",
+        "extra_waste_kg",
+        "issued_material_value_eur",
+        "issued_inbound_freight_eur",
+        "weighted_average_unit_cost_eur",
+        "issued_purchase_material_value_eur",
+        "weighted_average_purchase_unit_cost_eur",
+        "weighted_average_inbound_freight_unit_cost_eur"
+      ]
+    },
+    {
+      "name": "RefPnL",
+      "source": "audit_expected_pnl",
+      "grain": "approved reference period (annual and combined)",
+      "keys": [
+        "period"
+      ],
+      "role": "disconnected_reference",
+      "month_key": null,
+      "sql": "SELECT s.period, s.revenue, s.cogs, s.gross_profit, s.outbound_freight, s.selling_expenses, s.administrative_expenses, s.idle_cost, s.production_loss, s.operating_profit, s.gross_margin_pct, s.operating_margin_pct FROM manufacturing_v2.audit_expected_pnl s",
+      "verified_rows": 3,
+      "columns": [
+        "cogs",
+        "period",
+        "revenue",
+        "idle_cost",
+        "gross_profit",
+        "production_loss",
+        "gross_margin_pct",
+        "operating_profit",
+        "outbound_freight",
+        "selling_expenses",
+        "operating_margin_pct",
+        "administrative_expenses"
+      ]
+    },
+    {
+      "name": "RefMonthlyPnL",
+      "source": "bi_monthly_pnl",
+      "grain": "reference month",
+      "keys": [
+        "month_id"
+      ],
+      "role": "disconnected_reference",
+      "month_key": null,
+      "sql": "SELECT s.month_id, s.year, s.quarter, s.revenue, s.cogs, s.gross_profit, s.outbound_freight, s.selling_expenses, s.administrative_expenses, s.idle_cost, s.production_loss, s.operating_profit, s.gross_margin_pct, s.operating_margin_pct FROM manufacturing_v2.bi_monthly_pnl s",
+      "verified_rows": 24,
+      "columns": [
+        "cogs",
+        "year",
+        "quarter",
+        "revenue",
+        "month_id",
+        "idle_cost",
+        "gross_profit",
+        "production_loss",
+        "gross_margin_pct",
+        "operating_profit",
+        "outbound_freight",
+        "selling_expenses",
+        "operating_margin_pct",
+        "administrative_expenses"
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactSales",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimProduct",
+      "from_column": "product_id",
+      "to_table": "FactSales",
+      "to_column": "product_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimCustomer",
+      "from_column": "customer_id",
+      "to_table": "FactSales",
+      "to_column": "customer_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactSales",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactProduction",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimProduct",
+      "from_column": "product_id",
+      "to_table": "FactProduction",
+      "to_column": "product_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactProduction",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactManufacturing",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimProduct",
+      "from_column": "product_id",
+      "to_table": "FactManufacturing",
+      "to_column": "product_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactManufacturing",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactConversion",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactConversion",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactCapacity",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactCapacity",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactReceipts",
+      "to_column": "ReceiptMonth",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimMaterial",
+      "from_column": "material_id",
+      "to_table": "FactReceipts",
+      "to_column": "material_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimSupplier",
+      "from_column": "supplier_id",
+      "to_table": "FactReceipts",
+      "to_column": "supplier_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactPurchaseOrders",
+      "to_column": "OrderMonth",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimMaterial",
+      "from_column": "material_id",
+      "to_table": "FactPurchaseOrders",
+      "to_column": "material_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimSupplier",
+      "from_column": "supplier_id",
+      "to_table": "FactPurchaseOrders",
+      "to_column": "supplier_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactRawInventory",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimMaterial",
+      "from_column": "material_id",
+      "to_table": "FactRawInventory",
+      "to_column": "material_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactFGInventory",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimProduct",
+      "from_column": "product_id",
+      "to_table": "FactFGInventory",
+      "to_column": "product_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactFGInventory",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactOpex",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactConsumption",
+      "to_column": "month_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": "month attribution; use complete calendar months"
+    },
+    {
+      "from_table": "DimProduct",
+      "from_column": "product_id",
+      "to_table": "FactConsumption",
+      "to_column": "product_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimMaterial",
+      "from_column": "material_id",
+      "to_table": "FactConsumption",
+      "to_column": "material_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimLine",
+      "from_column": "line_id",
+      "to_table": "FactConsumption",
+      "to_column": "line_id",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": true,
+      "purpose": ""
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactSales",
+      "to_column": "shipment_date",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": false,
+      "purpose": "daily shipment measures only"
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactReceipts",
+      "to_column": "receipt_date",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": false,
+      "purpose": "daily receipt measures only"
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactPurchaseOrders",
+      "to_column": "order_date",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": false,
+      "purpose": "daily order measures only"
+    },
+    {
+      "from_table": "DimDate",
+      "from_column": "Date",
+      "to_table": "FactPurchaseOrders",
+      "to_column": "expected_receipt_date",
+      "cardinality": "1:*",
+      "cross_filter": "Single: dimension to fact",
+      "active": false,
+      "purpose": "expected receipt schedule measures only"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+\set ON_ERROR_STOP on
+\encoding UTF8
+BEGIN;
+SET LOCAL search_path = pg_catalog;
+SET LOCAL TIME ZONE 'Europe/Rome';
+\ir 01_schema.sql
+\ir 02_import.psql
+\ir 03_views.sql
+\ir 04_reference_baseline.sql
+\ir 05_validate.sql
+COMMIT;

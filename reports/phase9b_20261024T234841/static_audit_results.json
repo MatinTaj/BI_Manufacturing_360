@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "kind": "Static reference/structure checks plus read-only native SQL and Python tests",
+  "dax_engine_executed": false,
+  "m_engine_executed": false,
+  "csharp_compiled": false,
+  "parameter_tables_reused": 6,
+  "new_parameter_tables": 0,
+  "parameter_grid_values": 151,
+  "existing_scenario_measures_reused": 14,
+  "new_measures": 8,
+  "scenario_measure_count": 22,
+  "direct_dax_column_references_checked": 8,
+  "native_sql_matches_prepared_projection": true,
+  "native_sql_result": {
+    "rows": 2596,
+    "valid_rows": 2596,
+    "labor_difference": 0.0,
+    "unique_sales_ids": 2596
+  },
+  "in_memory_tests_passed": 15
+}

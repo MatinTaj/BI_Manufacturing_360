@@ -1,0 +1,4242 @@
+[
+  {
+    "data_type": "text",
+    "table_name": "audit_expected_files",
+    "column_name": "dataset",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "audit_expected_files",
+    "column_name": "row_count",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "text",
+    "table_name": "audit_expected_files",
+    "column_name": "sha256",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "audit_expected_pnl",
+    "column_name": "period",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "revenue",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "cogs",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "gross_profit",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "outbound_freight",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "selling_expenses",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "administrative_expenses",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "idle_cost",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "production_loss",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "operating_profit",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_expected_pnl",
+    "column_name": "operating_margin_pct",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 20
+  },
+  {
+    "data_type": "text",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "period",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "metric",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "expected",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "actual",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "difference",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "boolean",
+    "table_name": "audit_pnl_reconciliation",
+    "column_name": "passed",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "audit_validation_results",
+    "column_name": "check_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "audit_validation_results",
+    "column_name": "failed_rows",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "customer_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "customer_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "segment",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "sales_lines",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "units_shipped",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "net_revenue_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "manufacturing_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "outbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "gross_profit_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "contribution_after_outbound_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_customer_month_performance",
+    "column_name": "net_asp_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "good_production_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "demand_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "shipped_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "unfulfilled_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_labor_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_energy_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "opening_overhead_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_labor_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_energy_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "production_overhead_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_labor_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_energy_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "closing_overhead_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_finished_goods_inventory",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "attempted_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "labor_hours",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "hourly_rate_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "energy_kwh",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "energy_tariff_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "manufacturing_overhead_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "total_conversion_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "idle_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "production_labor_hours",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "support_labor_hours",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "activity_energy_kwh",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "base_energy_kwh",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "production_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "support_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "activity_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "standby_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "idle_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "idle_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "idle_overhead_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_line_manufacturing_costs",
+    "column_name": "line_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_line_production_performance",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_line_production_performance",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_line_production_performance",
+    "column_name": "line_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_line_production_performance",
+    "column_name": "nominal_capacity_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_line_production_performance",
+    "column_name": "effective_capacity_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_production_performance",
+    "column_name": "downtime_pct",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 9
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_line_production_performance",
+    "column_name": "attempted_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_line_production_performance",
+    "column_name": "defective_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_line_production_performance",
+    "column_name": "good_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_production_performance",
+    "column_name": "capacity_utilization_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_line_production_performance",
+    "column_name": "defect_rate_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "production_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "attempted_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "good_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "material_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "manufacturing_overhead_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "total_manufacturing_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_production_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "good_unit_manufacturing_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "production_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "support_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "activity_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "standby_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "purchase_material_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "inbound_freight_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_material_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_inbound_freight_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_labor_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_energy_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "capitalized_overhead_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "material_production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "inbound_freight_production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "labor_production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "energy_production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "overhead_production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_manufacturing_cost_components",
+    "column_name": "landed_material_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_material_consumption",
+    "column_name": "production_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_material_consumption",
+    "column_name": "material_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "required_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "extra_waste_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "consumed_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "issued_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "issued_purchase_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "issued_inbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "weighted_average_purchase_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_material_consumption",
+    "column_name": "weighted_average_inbound_freight_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_material_consumption",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_material_consumption",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_material_consumption",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_material_consumption",
+    "column_name": "material_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "year",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "quarter",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "revenue",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "cogs",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "gross_profit",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "outbound_freight",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "selling_expenses",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "administrative_expenses",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "idle_cost",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "production_loss",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "operating_profit",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_monthly_pnl",
+    "column_name": "operating_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_period_pnl",
+    "column_name": "period",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "revenue",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "cogs",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "gross_profit",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "outbound_freight",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "selling_expenses",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "administrative_expenses",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "idle_cost",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "production_loss",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "operating_profit",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_period_pnl",
+    "column_name": "operating_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "po_line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "material_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "supplier_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "order_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "expected_receipt_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "ordered_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "agreed_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "received_kg",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "outstanding_kg",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "purchase_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "inbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_order_status",
+    "column_name": "landed_receipt_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "receipt_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "po_line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "receipt_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "received_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "landed_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "receipt_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "purchase_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "purchase_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "inbound_freight_rate_eur_per_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "inbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "landed_receipt_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "material_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "supplier_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "order_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "expected_receipt_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "agreed_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "material_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "supplier_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "boolean",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "on_time",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_procurement_receipts",
+    "column_name": "actual_lead_time_days",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "bigint",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "units_shipped",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 64
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "net_revenue_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "outbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "gross_profit_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "contribution_after_outbound_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "production_manufacturing_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "capitalized_production_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "production_loss_expense_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "closing_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_month_profitability",
+    "column_name": "closing_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_profitability",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_profitability",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_profitability",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_product_profitability",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "units_shipped",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "net_revenue_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "outbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "gross_profit_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "contribution_after_outbound_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_product_profitability",
+    "column_name": "net_asp_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_production_performance",
+    "column_name": "production_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_production_performance",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_production_performance",
+    "column_name": "year",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_production_performance",
+    "column_name": "quarter",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_production_performance",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_production_performance",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_production_performance",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_production_performance",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_production_performance",
+    "column_name": "attempted_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_production_performance",
+    "column_name": "defective_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_production_performance",
+    "column_name": "good_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_production_performance",
+    "column_name": "defect_rate_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_production_performance",
+    "column_name": "good_yield_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "material_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "opening_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "received_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "consumed_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "closing_kg",
+    "is_nullable": "YES",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "opening_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "receipt_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "issued_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "closing_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "opening_purchase_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "opening_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "receipt_purchase_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "receipt_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "issued_purchase_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "issued_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "closing_purchase_material_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "closing_inbound_freight_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "landed_receipt_value_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "weighted_average_purchase_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "weighted_average_inbound_freight_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "material_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_raw_material_inventory",
+    "column_name": "unit",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "sales_line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_sales_detail",
+    "column_name": "month_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "bi_sales_detail",
+    "column_name": "shipment_date",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "product_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "customer_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_sales_detail",
+    "column_name": "requested_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_sales_detail",
+    "column_name": "unfulfilled_units",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "bi_sales_detail",
+    "column_name": "units_shipped",
+    "is_nullable": "YES",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "list_unit_price_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "discount_pct",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 9
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "gross_revenue_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "discount_amount_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "net_revenue_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "outbound_freight_rate_eur_per_unit",
+    "is_nullable": "YES",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "outbound_freight_eur",
+    "is_nullable": "YES",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "product_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "category",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "line_id",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "customer_name",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bi_sales_detail",
+    "column_name": "segment",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "net_unit_price_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "gross_profit_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "gross_margin_pct",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bi_sales_detail",
+    "column_name": "contribution_after_outbound_eur",
+    "is_nullable": "YES",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bom",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "bom",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "bom",
+    "column_name": "quantity_kg_per_unit",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "customers",
+    "column_name": "customer_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "customers",
+    "column_name": "customer_name",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "customers",
+    "column_name": "segment",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "finished_goods_inventory",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "finished_goods_inventory",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "good_production_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "demand_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "shipped_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "unfulfilled_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_labor_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_energy_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "opening_overhead_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_labor_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_energy_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "production_overhead_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_labor_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_energy_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "closing_overhead_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "finished_goods_inventory",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "date",
+    "table_name": "line_month_capacity",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "line_month_capacity",
+    "column_name": "line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "line_month_capacity",
+    "column_name": "nominal_capacity_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "line_month_capacity",
+    "column_name": "downtime_pct",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 9
+  },
+  {
+    "data_type": "integer",
+    "table_name": "line_month_capacity",
+    "column_name": "effective_capacity_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "date",
+    "table_name": "manufacturing_costs",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "manufacturing_costs",
+    "column_name": "line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "manufacturing_costs",
+    "column_name": "attempted_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "labor_hours",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "hourly_rate_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "energy_kwh",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "energy_tariff_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "manufacturing_overhead_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "total_conversion_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "idle_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "production_labor_hours",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "support_labor_hours",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "activity_energy_kwh",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "base_energy_kwh",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "production_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "support_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "activity_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "standby_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "idle_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "idle_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "manufacturing_costs",
+    "column_name": "idle_overhead_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_consumption",
+    "column_name": "production_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_consumption",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "required_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "extra_waste_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "consumed_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "issued_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "issued_purchase_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "issued_inbound_freight_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "weighted_average_purchase_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_consumption",
+    "column_name": "weighted_average_inbound_freight_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_receipts",
+    "column_name": "receipt_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_receipts",
+    "column_name": "po_line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "material_receipts",
+    "column_name": "receipt_date",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "received_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "landed_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "receipt_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "purchase_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "purchase_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "inbound_freight_rate_eur_per_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "inbound_freight_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "material_receipts",
+    "column_name": "landed_receipt_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_suppliers",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "material_suppliers",
+    "column_name": "supplier_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "materials",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "materials",
+    "column_name": "material_name",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "materials",
+    "column_name": "unit",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "materials",
+    "column_name": "base_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "date",
+    "table_name": "months",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "months",
+    "column_name": "year",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "months",
+    "column_name": "quarter",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "months",
+    "column_name": "month_number",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "months",
+    "column_name": "days_in_month",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "date",
+    "table_name": "operating_expenses",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "operating_expenses",
+    "column_name": "expense_category",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "operating_expenses",
+    "column_name": "amount_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "operating_expenses",
+    "column_name": "fixed_amount_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "operating_expenses",
+    "column_name": "variable_rate_pct",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 9
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "operating_expenses",
+    "column_name": "variable_driver_amount_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "operating_expenses",
+    "column_name": "variable_amount_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "production",
+    "column_name": "production_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "production",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "production",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production",
+    "column_name": "attempted_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production",
+    "column_name": "defective_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production",
+    "column_name": "good_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "text",
+    "table_name": "production_cost_allocation",
+    "column_name": "production_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "production_cost_allocation",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "production_cost_allocation",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "production_cost_allocation",
+    "column_name": "line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production_cost_allocation",
+    "column_name": "attempted_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production_cost_allocation",
+    "column_name": "good_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "material_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "manufacturing_overhead_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "total_manufacturing_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_production_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "good_unit_manufacturing_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "production_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "support_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "activity_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "standby_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "purchase_material_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "inbound_freight_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_material_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_inbound_freight_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_labor_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_energy_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "capitalized_overhead_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "material_production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "inbound_freight_production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "labor_production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "energy_production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_cost_allocation",
+    "column_name": "overhead_production_loss_expense_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "production_lines",
+    "column_name": "line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "production_lines",
+    "column_name": "line_name",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "production_lines",
+    "column_name": "monthly_capacity_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_lines",
+    "column_name": "support_labor_hours_per_month",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "production_lines",
+    "column_name": "base_energy_kwh_per_month",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "products",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "products",
+    "column_name": "product_name",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "products",
+    "column_name": "category",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "products",
+    "column_name": "line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "products",
+    "column_name": "base_selling_price_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "products",
+    "column_name": "standard_labor_hours_per_attempt",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "products",
+    "column_name": "standard_energy_kwh_per_attempt",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "purchase_order_lines",
+    "column_name": "po_line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "purchase_order_lines",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "purchase_order_lines",
+    "column_name": "supplier_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "purchase_order_lines",
+    "column_name": "order_date",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "purchase_order_lines",
+    "column_name": "expected_receipt_date",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "purchase_order_lines",
+    "column_name": "ordered_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "purchase_order_lines",
+    "column_name": "agreed_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "date",
+    "table_name": "raw_material_inventory",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "raw_material_inventory",
+    "column_name": "material_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "opening_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "received_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "consumed_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "closing_kg",
+    "is_nullable": "NO",
+    "numeric_scale": 3,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "opening_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "receipt_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "issued_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "closing_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "opening_purchase_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "opening_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "receipt_purchase_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "receipt_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "issued_purchase_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "issued_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "closing_purchase_material_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "closing_inbound_freight_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "landed_receipt_value_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "weighted_average_purchase_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "raw_material_inventory",
+    "column_name": "weighted_average_inbound_freight_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "sales",
+    "column_name": "sales_line_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "sales",
+    "column_name": "month_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "date",
+    "table_name": "sales",
+    "column_name": "shipment_date",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "sales",
+    "column_name": "product_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "sales",
+    "column_name": "customer_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "sales",
+    "column_name": "requested_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "sales",
+    "column_name": "unfulfilled_units",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "integer",
+    "table_name": "sales",
+    "column_name": "units_shipped",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "list_unit_price_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "discount_pct",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 9
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "gross_revenue_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "discount_amount_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "net_revenue_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "weighted_average_unit_cost_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 8,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "material_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "inbound_freight_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "labor_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "energy_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "overhead_cogs_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "outbound_freight_rate_eur_per_unit",
+    "is_nullable": "NO",
+    "numeric_scale": 4,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "sales",
+    "column_name": "outbound_freight_eur",
+    "is_nullable": "NO",
+    "numeric_scale": 2,
+    "numeric_precision": 18
+  },
+  {
+    "data_type": "text",
+    "table_name": "suppliers",
+    "column_name": "supplier_id",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "text",
+    "table_name": "suppliers",
+    "column_name": "supplier_name",
+    "is_nullable": "NO",
+    "numeric_scale": null,
+    "numeric_precision": null
+  },
+  {
+    "data_type": "integer",
+    "table_name": "suppliers",
+    "column_name": "lead_time_days",
+    "is_nullable": "NO",
+    "numeric_scale": 0,
+    "numeric_precision": 32
+  },
+  {
+    "data_type": "numeric",
+    "table_name": "suppliers",
+    "column_name": "on_time_delivery_target",
+    "is_nullable": "NO",
+    "numeric_scale": 6,
+    "numeric_precision": 9
+  }
+]

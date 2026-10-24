@@ -1,0 +1,11 @@
+material_id,material_name,unit,base_unit_cost_eur
+M001,Steel,kg,2.8
+M002,Aluminium,kg,5.2
+M003,Copper,kg,8.1
+M004,Cast Iron,kg,2.3
+M005,Polymer,kg,3.4
+M006,Rubber,kg,4.0
+M007,Stainless Steel,kg,6.5
+M008,Composite,kg,9.2
+M009,Brass,kg,7.1
+M010,Industrial Resin,kg,5.8

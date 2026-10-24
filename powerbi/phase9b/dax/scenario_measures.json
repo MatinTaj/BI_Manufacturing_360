@@ -1,0 +1,653 @@
+[
+  {
+    "name": "Material Change %",
+    "formula": "SELECTEDVALUE('ParamMaterial'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 1,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamMaterial[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamMaterial[Value]"
+    ]
+  },
+  {
+    "name": "Inbound Change %",
+    "formula": "SELECTEDVALUE('ParamInbound'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 2,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamInbound[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamInbound[Value]"
+    ]
+  },
+  {
+    "name": "Outbound Change %",
+    "formula": "SELECTEDVALUE('ParamOutbound'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 3,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamOutbound[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamOutbound[Value]"
+    ]
+  },
+  {
+    "name": "Labor Change %",
+    "formula": "SELECTEDVALUE('ParamLabor'[Value], 0)",
+    "definition": "Existing independent zero-default parameter. Labor affects direct production-labor exposure only.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 4,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamLabor[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamLabor[Value]"
+    ]
+  },
+  {
+    "name": "Energy Change %",
+    "formula": "SELECTEDVALUE('ParamEnergy'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 5,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamEnergy[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamEnergy[Value]"
+    ]
+  },
+  {
+    "name": "Price Change %",
+    "formula": "SELECTEDVALUE('ParamPrice'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected existing parameter; no/multiple selection means zero.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 6,
+    "dependencies": [],
+    "direct_sources": [
+      "ParamPrice[Value]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Direct Labor COGS Exposure",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[direct_labor_cogs_exposure_eur]))",
+    "definition": "Derived direct production-labor subset of booked labor COGS, reconciled through monthly inventory.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 7,
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "direct_sources": [
+      "FactSales[direct_labor_cogs_exposure_eur]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]"
+    ]
+  },
+  {
+    "name": "Support Labor COGS Exposure",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[support_labor_cogs_exposure_eur]))",
+    "definition": "Derived support-labor subset of booked labor COGS, unchanged by the direct-labor parameter.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 8,
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "direct_sources": [
+      "FactSales[support_labor_cogs_exposure_eur]"
+    ],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[support_labor_cogs_exposure_eur]"
+    ]
+  },
+  {
+    "name": "Labor Exposure Difference",
+    "formula": "IF([Complete Month Context], [Labor COGS] - [Direct Labor COGS Exposure] - [Support Labor COGS Exposure])",
+    "definition": "Aggregate labor less analytical parts; zero in every supported slice.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 9,
+    "dependencies": [
+      "Complete Month Context",
+      "Direct Labor COGS Exposure",
+      "Labor COGS",
+      "Support Labor COGS Exposure"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[support_labor_cogs_exposure_eur]"
+    ]
+  },
+  {
+    "name": "Scenario Revenue",
+    "formula": "[Net Revenue] * (1 + [Price Change %])",
+    "definition": "Static shipped units, unchanged discount percentages; proportional net-price change.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 10,
+    "dependencies": [
+      "Net Revenue",
+      "Price Change %"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Manufacturing COGS",
+    "formula": "IF([Complete Month Context], [Material COGS] * (1 + [Material Change %]) + [Inbound Freight COGS] * (1 + [Inbound Change %]) + [Labor COGS] + [Direct Labor COGS Exposure] * [Labor Change %] + [Energy COGS] * (1 + [Energy Change %]) + [Overhead COGS])",
+    "definition": "Five recognized COGS components once; only direct labor changes, support and overhead fixed.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 11,
+    "dependencies": [
+      "Complete Month Context",
+      "Direct Labor COGS Exposure",
+      "Energy COGS",
+      "Energy Change %",
+      "Inbound Change %",
+      "Inbound Freight COGS",
+      "Labor COGS",
+      "Labor Change %",
+      "Material COGS",
+      "Material Change %",
+      "Overhead COGS"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Outbound Freight",
+    "formula": "[Outbound Freight] * (1 + [Outbound Change %])",
+    "definition": "Shipment distribution expense, excluded from manufacturing COGS.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 12,
+    "dependencies": [
+      "Outbound Change %",
+      "Outbound Freight"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[outbound_freight_eur]",
+      "ParamOutbound[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Gross Profit",
+    "formula": "IF([Complete Month Context], [Scenario Revenue] - [Scenario Manufacturing COGS])",
+    "definition": "Hypothetical manufacturing gross profit.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 13,
+    "dependencies": [
+      "Complete Month Context",
+      "Scenario Manufacturing COGS",
+      "Scenario Revenue"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Gross Margin %",
+    "formula": "DIVIDE([Scenario Gross Profit], [Scenario Revenue])",
+    "definition": "Hypothetical gross margin fraction.",
+    "format_string": "0.00%",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 14,
+    "dependencies": [
+      "Scenario Gross Profit",
+      "Scenario Revenue"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Selling Expenses",
+    "formula": "IF([Company Context Valid], [Fixed Selling Expenses] + [Variable Selling Expenses] * (1 + [Price Change %]))",
+    "definition": "Fixed selling unchanged; revenue-variable selling follows price at fixed volume.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 15,
+    "dependencies": [
+      "Company Context Valid",
+      "Fixed Selling Expenses",
+      "Price Change %",
+      "Variable Selling Expenses"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Operating Expenses",
+    "formula": "IF([Company Context Valid], [Scenario Selling Expenses] + [Administrative Expenses])",
+    "definition": "Selling plus administration, matching operating_expenses.csv; outbound and production losses remain separate.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 16,
+    "dependencies": [
+      "Administrative Expenses",
+      "Company Context Valid",
+      "Scenario Selling Expenses"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Operating Profit",
+    "formula": "IF([Company Context Valid], [Scenario Gross Profit] - [Scenario Outbound Freight] - [Scenario Operating Expenses] - [Separately Expensed Production Costs])",
+    "definition": "Company OP with each deduction recognized once.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 17,
+    "dependencies": [
+      "Company Context Valid",
+      "Scenario Gross Profit",
+      "Scenario Operating Expenses",
+      "Scenario Outbound Freight",
+      "Separately Expensed Production Costs"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario Operating Margin %",
+    "formula": "DIVIDE([Scenario Operating Profit], IF([Company Context Valid], [Scenario Revenue]))",
+    "definition": "Hypothetical company margin fraction.",
+    "format_string": "0.00%",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 18,
+    "dependencies": [
+      "Company Context Valid",
+      "Scenario Operating Profit",
+      "Scenario Revenue"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario GP Change",
+    "formula": "IF([Complete Month Context], [Scenario Gross Profit] - [Gross Profit])",
+    "definition": "Absolute gross profit change from unchanged baseline.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 19,
+    "dependencies": [
+      "Complete Month Context",
+      "Gross Profit",
+      "Scenario Gross Profit"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario GP Change %",
+    "formula": "DIVIDE([Scenario GP Change], [Gross Profit])",
+    "definition": "Relative GP change; zero base profit returns BLANK.",
+    "format_string": "0.00%",
+    "filter_behavior": "Recognized sales context: complete months and Date/Product/Customer/Line.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 20,
+    "dependencies": [
+      "Gross Profit",
+      "Scenario GP Change"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario OP Change",
+    "formula": "IF([Company Context Valid], [Scenario Operating Profit] - [Operating Profit])",
+    "definition": "Absolute OP change, guarded for company context.",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "update existing scenario measure",
+    "order": 21,
+    "dependencies": [
+      "Company Context Valid",
+      "Operating Profit",
+      "Scenario Operating Profit"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ]
+  },
+  {
+    "name": "Scenario OP Change %",
+    "formula": "DIVIDE([Scenario OP Change], [Operating Profit])",
+    "definition": "Relative OP change; zero base OP returns BLANK.",
+    "format_string": "0.00%",
+    "filter_behavior": "Company Date-only; BLANK under Product/Customer/Line/Material/Supplier filters.",
+    "home_table": "FactSales",
+    "folder": "12 Historical Sensitivity",
+    "action": "add only if absent",
+    "order": 22,
+    "dependencies": [
+      "Operating Profit",
+      "Scenario OP Change"
+    ],
+    "direct_sources": [],
+    "validation_status": "Static/reference verification only; DAX execution pending Desktop.",
+    "validation_method": "Compare full-precision reference calculator outputs and supplied Desktop scenario matrix; round only final display.",
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[direct_labor_cogs_exposure_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ]
+  }
+]

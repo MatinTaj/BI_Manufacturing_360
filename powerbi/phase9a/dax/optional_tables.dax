@@ -1,0 +1,13 @@
+// Create each optional disconnected calculated table separately; do not execute as a DAX query.
+
+ParamMaterial = GENERATESERIES(-0.50, 1.00, 0.01)
+
+ParamInbound = GENERATESERIES(-0.50, 1.00, 0.01)
+
+ParamOutbound = GENERATESERIES(-0.50, 1.00, 0.01)
+
+ParamLabor = GENERATESERIES(-0.50, 1.00, 0.01)
+
+ParamEnergy = GENERATESERIES(-0.50, 1.00, 0.01)
+
+ParamPrice = GENERATESERIES(-0.50, 1.00, 0.01)

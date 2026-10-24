@@ -1,0 +1,56 @@
+[
+  {
+    "name": "ParamMaterial",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for materials"
+  },
+  {
+    "name": "ParamInbound",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for inbound freight"
+  },
+  {
+    "name": "ParamOutbound",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for outbound freight"
+  },
+  {
+    "name": "ParamLabor",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for labor"
+  },
+  {
+    "name": "ParamEnergy",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for energy"
+  },
+  {
+    "name": "ParamPrice",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(-0.50, 1.00, 0.01)",
+    "default": 0,
+    "description": "Optional historical sensitivity for net selling prices"
+  }
+]

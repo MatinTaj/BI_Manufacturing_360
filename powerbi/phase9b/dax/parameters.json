@@ -1,0 +1,92 @@
+[
+  {
+    "name": "ParamMaterial",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Raw material purchase cost",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  },
+  {
+    "name": "ParamInbound",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Inbound freight cost",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  },
+  {
+    "name": "ParamOutbound",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Outbound freight cost",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  },
+  {
+    "name": "ParamLabor",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Direct production labor cost",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  },
+  {
+    "name": "ParamEnergy",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Recognized energy cost",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  },
+  {
+    "name": "ParamPrice",
+    "columns": [
+      "Value"
+    ],
+    "formula": "GENERATESERIES(CURRENCY(-0.50), CURRENCY(1.00), CURRENCY(0.01))",
+    "default": 0,
+    "description": "Net selling price",
+    "min_value": "-0.50",
+    "max_value": "1.00",
+    "increment": "0.01",
+    "number_of_values": 151,
+    "relationship": "Disconnected",
+    "upgrade": "Same table and Value column; fixed-decimal numeric grid avoids floating-key mismatch. Replace the old formula, do not add a second table."
+  }
+]

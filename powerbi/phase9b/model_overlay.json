@@ -1,0 +1,12 @@
+{
+  "base_model": "../phase9a/model_spec.json",
+  "replace_query_only": "FactSales",
+  "add_columns": [
+    "direct_labor_cogs_exposure_eur",
+    "support_labor_cogs_exposure_eur"
+  ],
+  "relationships_added": 0,
+  "existing_relationships_unchanged": 34,
+  "new_physical_database_objects": 0,
+  "note": "Analytical allocation of existing labor COGS, not a changed accounting amount or sixth cost component."
+}

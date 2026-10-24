@@ -1,0 +1,35 @@
+from_table,from_column,to_table,to_column,cardinality,cross_filter,active,purpose
+DimDate,Date,FactSales,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimProduct,product_id,FactSales,product_id,1:*,Single: dimension to fact,True,
+DimCustomer,customer_id,FactSales,customer_id,1:*,Single: dimension to fact,True,
+DimLine,line_id,FactSales,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactProduction,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimProduct,product_id,FactProduction,product_id,1:*,Single: dimension to fact,True,
+DimLine,line_id,FactProduction,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactManufacturing,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimProduct,product_id,FactManufacturing,product_id,1:*,Single: dimension to fact,True,
+DimLine,line_id,FactManufacturing,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactConversion,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimLine,line_id,FactConversion,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactCapacity,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimLine,line_id,FactCapacity,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactReceipts,ReceiptMonth,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimMaterial,material_id,FactReceipts,material_id,1:*,Single: dimension to fact,True,
+DimSupplier,supplier_id,FactReceipts,supplier_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactPurchaseOrders,OrderMonth,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimMaterial,material_id,FactPurchaseOrders,material_id,1:*,Single: dimension to fact,True,
+DimSupplier,supplier_id,FactPurchaseOrders,supplier_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactRawInventory,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimMaterial,material_id,FactRawInventory,material_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactFGInventory,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimProduct,product_id,FactFGInventory,product_id,1:*,Single: dimension to fact,True,
+DimLine,line_id,FactFGInventory,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactOpex,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimDate,Date,FactConsumption,month_id,1:*,Single: dimension to fact,True,month attribution; use complete calendar months
+DimProduct,product_id,FactConsumption,product_id,1:*,Single: dimension to fact,True,
+DimMaterial,material_id,FactConsumption,material_id,1:*,Single: dimension to fact,True,
+DimLine,line_id,FactConsumption,line_id,1:*,Single: dimension to fact,True,
+DimDate,Date,FactSales,shipment_date,1:*,Single: dimension to fact,False,daily shipment measures only
+DimDate,Date,FactReceipts,receipt_date,1:*,Single: dimension to fact,False,daily receipt measures only
+DimDate,Date,FactPurchaseOrders,order_date,1:*,Single: dimension to fact,False,daily order measures only
+DimDate,Date,FactPurchaseOrders,expected_receipt_date,1:*,Single: dimension to fact,False,expected receipt schedule measures only

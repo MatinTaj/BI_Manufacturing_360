@@ -1,0 +1,9 @@
+EVALUATE
+UNION(
+    CALCULATETABLE(ROW("Test", "Partial day blocks monthly revenue", "Passed", ISBLANK([Net Revenue])), TREATAS({DATE(2025,6,15)}, 'DimDate'[Date])),
+    CALCULATETABLE(ROW("Test", "Product blocks company OP", "Passed", ISBLANK([Operating Profit])), TREATAS({"P001"}, 'DimProduct'[product_id])),
+    CALCULATETABLE(ROW("Test", "Inactive supplier OTD is blank", "Passed", ISBLANK([Receipt OTD %])), TREATAS({"S003"}, 'DimSupplier'[supplier_id])),
+    CALCULATETABLE(ROW("Test", "First-year YoY blank", "Passed", ISBLANK([Revenue YoY %])), TREATAS({2024}, 'DimDate'[Year])),
+    CALCULATETABLE(ROW("Test", "Partial-year turns blank", "Passed", ISBLANK([FG Turnover])), TREATAS({"2025-06"}, 'DimDate'[YearMonth])),
+    CALCULATETABLE(ROW("Test", "Daily shipment role nonblank", "Passed", NOT ISBLANK([Daily Shipment Revenue])), TREATAS({DATE(2025,12,31)}, 'DimDate'[Date]))
+)

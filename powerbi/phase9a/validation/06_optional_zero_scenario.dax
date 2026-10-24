@@ -1,0 +1,5 @@
+// Only after importing the six optional parameter tables and optional measures.
+EVALUATE
+ROW("Zero scenario OP difference", [Scenario OP Change],
+    "Scenario revenue difference", [Scenario Revenue] - [Net Revenue],
+    "Scenario COGS difference", [Scenario Manufacturing COGS] - [Manufacturing COGS])

@@ -1,0 +1,20 @@
+EVALUATE
+VAR Actual = SUMMARIZECOLUMNS('DimDate'[Year],
+    "Actual Revenue", [Net Revenue], "Actual COGS", [Manufacturing COGS],
+    "Actual GP", [Gross Profit], "Actual Outbound", [Outbound Freight],
+    "Actual Selling", [Selling Expenses], "Actual Admin", [Administrative Expenses],
+    "Actual Idle", [Idle Production Costs], "Actual Loss", [Abnormal Production Losses],
+    "Actual OP", [Operating Profit], "Actual GM", [Gross Margin %], "Actual OM", [Operating Margin %])
+RETURN ADDCOLUMNS(Actual,
+    "Revenue Difference", [Actual Revenue] - LOOKUPVALUE('RefPnL'[revenue], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "COGS Difference", [Actual COGS] - LOOKUPVALUE('RefPnL'[cogs], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "GP Difference", [Actual GP] - LOOKUPVALUE('RefPnL'[gross_profit], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "Outbound Difference", [Actual Outbound] - LOOKUPVALUE('RefPnL'[outbound_freight], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "Selling Difference", [Actual Selling] - LOOKUPVALUE('RefPnL'[selling_expenses], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "Admin Difference", [Actual Admin] - LOOKUPVALUE('RefPnL'[administrative_expenses], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "Idle Difference", [Actual Idle] - LOOKUPVALUE('RefPnL'[idle_cost], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "Loss Difference", [Actual Loss] - LOOKUPVALUE('RefPnL'[production_loss], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "OP Difference", [Actual OP] - LOOKUPVALUE('RefPnL'[operating_profit], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "GM Difference pp", 100*[Actual GM] - LOOKUPVALUE('RefPnL'[gross_margin_pct], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")),
+    "OM Difference pp", 100*[Actual OM] - LOOKUPVALUE('RefPnL'[operating_margin_pct], 'RefPnL'[period], FORMAT('DimDate'[Year], "0")))
+ORDER BY 'DimDate'[Year]

@@ -1,0 +1,42 @@
+tablename,indexname,indexdef
+audit_expected_files,audit_expected_files_pkey,CREATE UNIQUE INDEX audit_expected_files_pkey ON manufacturing_v2.audit_expected_files USING btree (dataset)
+audit_expected_pnl,audit_expected_pnl_pkey,CREATE UNIQUE INDEX audit_expected_pnl_pkey ON manufacturing_v2.audit_expected_pnl USING btree (period)
+bom,bom_pkey,"CREATE UNIQUE INDEX bom_pkey ON manufacturing_v2.bom USING btree (product_id, material_id)"
+bom,ix_v2_02,CREATE INDEX ix_v2_02 ON manufacturing_v2.bom USING btree (material_id)
+customers,customers_pkey,CREATE UNIQUE INDEX customers_pkey ON manufacturing_v2.customers USING btree (customer_id)
+finished_goods_inventory,finished_goods_inventory_pkey,"CREATE UNIQUE INDEX finished_goods_inventory_pkey ON manufacturing_v2.finished_goods_inventory USING btree (month_id, product_id)"
+finished_goods_inventory,ix_v2_12,"CREATE INDEX ix_v2_12 ON manufacturing_v2.finished_goods_inventory USING btree (product_id, month_id)"
+line_month_capacity,line_month_capacity_pkey,"CREATE UNIQUE INDEX line_month_capacity_pkey ON manufacturing_v2.line_month_capacity USING btree (month_id, line_id)"
+manufacturing_costs,ix_v2_09,"CREATE INDEX ix_v2_09 ON manufacturing_v2.manufacturing_costs USING btree (line_id, month_id)"
+manufacturing_costs,manufacturing_costs_pkey,"CREATE UNIQUE INDEX manufacturing_costs_pkey ON manufacturing_v2.manufacturing_costs USING btree (month_id, line_id)"
+material_consumption,ix_v2_04,"CREATE INDEX ix_v2_04 ON manufacturing_v2.material_consumption USING btree (material_id, production_id)"
+material_consumption,material_consumption_pkey,"CREATE UNIQUE INDEX material_consumption_pkey ON manufacturing_v2.material_consumption USING btree (production_id, material_id)"
+material_receipts,ix_v2_07,CREATE INDEX ix_v2_07 ON manufacturing_v2.material_receipts USING btree (receipt_date)
+material_receipts,material_receipts_pkey,CREATE UNIQUE INDEX material_receipts_pkey ON manufacturing_v2.material_receipts USING btree (receipt_id)
+material_receipts,uq_material_receipts_0,CREATE UNIQUE INDEX uq_material_receipts_0 ON manufacturing_v2.material_receipts USING btree (po_line_id)
+material_suppliers,ix_v2_01,CREATE INDEX ix_v2_01 ON manufacturing_v2.material_suppliers USING btree (supplier_id)
+material_suppliers,material_suppliers_pkey,"CREATE UNIQUE INDEX material_suppliers_pkey ON manufacturing_v2.material_suppliers USING btree (material_id, supplier_id)"
+materials,materials_pkey,CREATE UNIQUE INDEX materials_pkey ON manufacturing_v2.materials USING btree (material_id)
+months,months_pkey,CREATE UNIQUE INDEX months_pkey ON manufacturing_v2.months USING btree (month_id)
+operating_expenses,operating_expenses_pkey,"CREATE UNIQUE INDEX operating_expenses_pkey ON manufacturing_v2.operating_expenses USING btree (month_id, expense_category)"
+production,ix_v2_03,"CREATE INDEX ix_v2_03 ON manufacturing_v2.production USING btree (product_id, month_id)"
+production,production_pkey,CREATE UNIQUE INDEX production_pkey ON manufacturing_v2.production USING btree (production_id)
+production,uq_production_0,"CREATE UNIQUE INDEX uq_production_0 ON manufacturing_v2.production USING btree (month_id, product_id)"
+production,uq_production_1,"CREATE UNIQUE INDEX uq_production_1 ON manufacturing_v2.production USING btree (production_id, month_id, product_id)"
+production_cost_allocation,ix_v2_10,"CREATE INDEX ix_v2_10 ON manufacturing_v2.production_cost_allocation USING btree (product_id, month_id)"
+production_cost_allocation,ix_v2_11,"CREATE INDEX ix_v2_11 ON manufacturing_v2.production_cost_allocation USING btree (line_id, month_id)"
+production_cost_allocation,production_cost_allocation_pkey,CREATE UNIQUE INDEX production_cost_allocation_pkey ON manufacturing_v2.production_cost_allocation USING btree (production_id)
+production_lines,production_lines_pkey,CREATE UNIQUE INDEX production_lines_pkey ON manufacturing_v2.production_lines USING btree (line_id)
+products,ix_v2_00,CREATE INDEX ix_v2_00 ON manufacturing_v2.products USING btree (line_id)
+products,products_pkey,CREATE UNIQUE INDEX products_pkey ON manufacturing_v2.products USING btree (product_id)
+products,uq_products_0,"CREATE UNIQUE INDEX uq_products_0 ON manufacturing_v2.products USING btree (product_id, line_id)"
+purchase_order_lines,ix_v2_05,"CREATE INDEX ix_v2_05 ON manufacturing_v2.purchase_order_lines USING btree (supplier_id, order_date)"
+purchase_order_lines,ix_v2_06,"CREATE INDEX ix_v2_06 ON manufacturing_v2.purchase_order_lines USING btree (material_id, supplier_id)"
+purchase_order_lines,purchase_order_lines_pkey,CREATE UNIQUE INDEX purchase_order_lines_pkey ON manufacturing_v2.purchase_order_lines USING btree (po_line_id)
+raw_material_inventory,ix_v2_08,"CREATE INDEX ix_v2_08 ON manufacturing_v2.raw_material_inventory USING btree (material_id, month_id)"
+raw_material_inventory,raw_material_inventory_pkey,"CREATE UNIQUE INDEX raw_material_inventory_pkey ON manufacturing_v2.raw_material_inventory USING btree (month_id, material_id)"
+sales,ix_v2_13,"CREATE INDEX ix_v2_13 ON manufacturing_v2.sales USING btree (product_id, month_id)"
+sales,ix_v2_14,"CREATE INDEX ix_v2_14 ON manufacturing_v2.sales USING btree (customer_id, month_id)"
+sales,ix_v2_15,CREATE INDEX ix_v2_15 ON manufacturing_v2.sales USING btree (shipment_date)
+sales,sales_pkey,CREATE UNIQUE INDEX sales_pkey ON manufacturing_v2.sales USING btree (sales_line_id)
+suppliers,suppliers_pkey,CREATE UNIQUE INDEX suppliers_pkey ON manufacturing_v2.suppliers USING btree (supplier_id)

@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "method": "Disposable copy of public-file profile with private pointers/raw/backups absent and missing-pointer bootstrap executed",
+  "checks": [
+    {
+      "check": "python_regressions",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 8.987
+    },
+    {
+      "check": "sql_analytics",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 6.879
+    },
+    {
+      "check": "phase9a_static_sources",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 14.803
+    },
+    {
+      "check": "scenario_reference",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 9.815
+    },
+    {
+      "check": "scenario_static_and_unit_tests",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 1.146
+    },
+    {
+      "check": "csv_and_sql_static",
+      "exit_code": 0,
+      "status": "PASS",
+      "seconds": 4.533
+    }
+  ],
+  "python_regression_tests": 61,
+  "model_sql_checks": 36,
+  "financial_comparisons": 33,
+  "business_queries": 16,
+  "analytics_quality_gates": 83,
+  "annual_cross_analysis_checks": 22,
+  "scenario_period_results": 66,
+  "scenario_zero_comparisons": 33,
+  "scenario_delta_comparisons": 132,
+  "scenario_unit_tests": 15,
+  "prepared_relationships_verified": 34,
+  "csv_tables_statically_checked": 19,
+  "row_constraint_evaluations": 160078,
+  "approved_data_regenerated": false,
+  "database_objects_modified": false,
+  "power_bi_executed": false,
+  "original_phase8_9_reports_modified": false,
+  "project_git_initialized": false,
+  "commit_or_push_performed": false,
+  "public_profile_input_files": 290,
+  "private_source_dependencies_absent": true
+}

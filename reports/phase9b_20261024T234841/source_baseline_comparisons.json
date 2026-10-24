@@ -1,0 +1,266 @@
+[
+  {
+    "actual": "21532651.77",
+    "metric": "revenue",
+    "passed": true,
+    "period": "combined",
+    "expected": "21532651.77",
+    "difference": "0.00"
+  },
+  {
+    "actual": "16507175.56",
+    "metric": "cogs",
+    "passed": true,
+    "period": "combined",
+    "expected": "16507175.56",
+    "difference": "0.00"
+  },
+  {
+    "actual": "5025476.21",
+    "metric": "gross_profit",
+    "passed": true,
+    "period": "combined",
+    "expected": "5025476.21",
+    "difference": "0.00"
+  },
+  {
+    "actual": "581573.41",
+    "metric": "outbound_freight",
+    "passed": true,
+    "period": "combined",
+    "expected": "581573.41",
+    "difference": "0.00"
+  },
+  {
+    "actual": "1065417.03",
+    "metric": "selling_expenses",
+    "passed": true,
+    "period": "combined",
+    "expected": "1065417.03",
+    "difference": "0.00"
+  },
+  {
+    "actual": "927732.00",
+    "metric": "administrative_expenses",
+    "passed": true,
+    "period": "combined",
+    "expected": "927732.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "idle_cost",
+    "passed": true,
+    "period": "combined",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "production_loss",
+    "passed": true,
+    "period": "combined",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "2450753.77",
+    "metric": "operating_profit",
+    "passed": true,
+    "period": "combined",
+    "expected": "2450753.77",
+    "difference": "0.00"
+  },
+  {
+    "actual": "23.3388635254003367",
+    "metric": "gross_margin_pct",
+    "passed": true,
+    "period": "combined",
+    "expected": "23.33886353",
+    "difference": "-4.5996633E-9"
+  },
+  {
+    "actual": "11.3815697025039476",
+    "metric": "operating_margin_pct",
+    "passed": true,
+    "period": "combined",
+    "expected": "11.38156970",
+    "difference": "2.5039476E-9"
+  },
+  {
+    "actual": "10559374.25",
+    "metric": "revenue",
+    "passed": true,
+    "period": "2024",
+    "expected": "10559374.25",
+    "difference": "0.00"
+  },
+  {
+    "actual": "8095663.36",
+    "metric": "cogs",
+    "passed": true,
+    "period": "2024",
+    "expected": "8095663.36",
+    "difference": "0.00"
+  },
+  {
+    "actual": "2463710.89",
+    "metric": "gross_profit",
+    "passed": true,
+    "period": "2024",
+    "expected": "2463710.89",
+    "difference": "0.00"
+  },
+  {
+    "actual": "286376.98",
+    "metric": "outbound_freight",
+    "passed": true,
+    "period": "2024",
+    "expected": "286376.98",
+    "difference": "0.00"
+  },
+  {
+    "actual": "525761.49",
+    "metric": "selling_expenses",
+    "passed": true,
+    "period": "2024",
+    "expected": "525761.49",
+    "difference": "0.00"
+  },
+  {
+    "actual": "459762.00",
+    "metric": "administrative_expenses",
+    "passed": true,
+    "period": "2024",
+    "expected": "459762.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "idle_cost",
+    "passed": true,
+    "period": "2024",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "production_loss",
+    "passed": true,
+    "period": "2024",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "1191810.42",
+    "metric": "operating_profit",
+    "passed": true,
+    "period": "2024",
+    "expected": "1191810.42",
+    "difference": "0.00"
+  },
+  {
+    "actual": "23.3319781236089818",
+    "metric": "gross_margin_pct",
+    "passed": true,
+    "period": "2024",
+    "expected": "23.33197812",
+    "difference": "3.6089818E-9"
+  },
+  {
+    "actual": "11.2867523376207638",
+    "metric": "operating_margin_pct",
+    "passed": true,
+    "period": "2024",
+    "expected": "11.28675234",
+    "difference": "-2.3792362E-9"
+  },
+  {
+    "actual": "10973277.52",
+    "metric": "revenue",
+    "passed": true,
+    "period": "2025",
+    "expected": "10973277.52",
+    "difference": "0.00"
+  },
+  {
+    "actual": "8411512.20",
+    "metric": "cogs",
+    "passed": true,
+    "period": "2025",
+    "expected": "8411512.20",
+    "difference": "0.00"
+  },
+  {
+    "actual": "2561765.32",
+    "metric": "gross_profit",
+    "passed": true,
+    "period": "2025",
+    "expected": "2561765.32",
+    "difference": "0.00"
+  },
+  {
+    "actual": "295196.43",
+    "metric": "outbound_freight",
+    "passed": true,
+    "period": "2025",
+    "expected": "295196.43",
+    "difference": "0.00"
+  },
+  {
+    "actual": "539655.54",
+    "metric": "selling_expenses",
+    "passed": true,
+    "period": "2025",
+    "expected": "539655.54",
+    "difference": "0.00"
+  },
+  {
+    "actual": "467970.00",
+    "metric": "administrative_expenses",
+    "passed": true,
+    "period": "2025",
+    "expected": "467970.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "idle_cost",
+    "passed": true,
+    "period": "2025",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "0.00",
+    "metric": "production_loss",
+    "passed": true,
+    "period": "2025",
+    "expected": "0.00",
+    "difference": "0.00"
+  },
+  {
+    "actual": "1258943.35",
+    "metric": "operating_profit",
+    "passed": true,
+    "period": "2025",
+    "expected": "1258943.35",
+    "difference": "0.00"
+  },
+  {
+    "actual": "23.3454892153315375",
+    "metric": "gross_margin_pct",
+    "passed": true,
+    "period": "2025",
+    "expected": "23.34548922",
+    "difference": "-4.6684625E-9"
+  },
+  {
+    "actual": "11.4728106320599098",
+    "metric": "operating_margin_pct",
+    "passed": true,
+    "period": "2025",
+    "expected": "11.47281063",
+    "difference": "2.0599098E-9"
+  }
+]

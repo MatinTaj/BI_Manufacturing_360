@@ -1,0 +1,92 @@
+[
+  {
+    "table": "DimProduct",
+    "rows": 20,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "DimCustomer",
+    "rows": 25,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "DimMaterial",
+    "rows": 10,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "DimSupplier",
+    "rows": 15,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "DimLine",
+    "rows": 3,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactSales",
+    "rows": 2596,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactProduction",
+    "rows": 480,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactManufacturing",
+    "rows": 480,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactConversion",
+    "rows": 72,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactCapacity",
+    "rows": 72,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactReceipts",
+    "rows": 144,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactPurchaseOrders",
+    "rows": 144,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactRawInventory",
+    "rows": 240,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactFGInventory",
+    "rows": 480,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactOpex",
+    "rows": 48,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "FactConsumption",
+    "rows": 1536,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "RefPnL",
+    "rows": 3,
+    "duplicate_keys": 0
+  },
+  {
+    "table": "RefMonthlyPnL",
+    "rows": 24,
+    "duplicate_keys": 0
+  }
+]

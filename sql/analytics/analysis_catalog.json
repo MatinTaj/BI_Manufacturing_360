@@ -1,0 +1,90 @@
+[
+  {
+    "file": "01_executive_financial.sql",
+    "title": "Executive financial performance",
+    "question": "How did revenue and operating profit change, and which months drove the result?",
+    "sources": "bi_monthly_pnl; bi_period_pnl",
+    "grain": "Q1 year; Q2 month",
+    "kpis": "Gross margin=GP/revenue; operating margin=OP/revenue; YoY=(current/prior\u22121); percentage changes use percentage points.",
+    "logic": "LAG over annual results and same calendar month; cumulative SUM resets each year.",
+    "limitations": "Initial-year YoY is NULL. OP follows approved policy; net income and cash flow are outside scope.",
+    "queries": 2
+  },
+  {
+    "file": "02_product_profitability.sql",
+    "title": "Product profitability",
+    "question": "Which products create profit and how do realized prices compare with COGS per unit?",
+    "sources": "bi_product_profitability; bi_product_month_profitability",
+    "grain": "Q1 product/full period; Q2 product/year",
+    "kpis": "GP=revenue\u2212five-component COGS; contribution=GP\u2212outbound; realized price=revenue/shipped units.",
+    "logic": "DENSE_RANK and cumulative contribution ordered by gross profit; annual ratio-of-sums with same-product LAG.",
+    "limitations": "Product contribution excludes unallocated company opex and idle losses. Price/cost changes are descriptive, not causal price-volume-mix attribution.",
+    "queries": 2
+  },
+  {
+    "file": "03_manufacturing_costs.sql",
+    "title": "Manufacturing costs and activity drivers",
+    "question": "Which cost components dominate, and what drives line conversion economics?",
+    "sources": "production_cost_allocation; bi_line_manufacturing_costs",
+    "grain": "Q1 year/component; Q2 line/year",
+    "kpis": "Manufacturing total=five components; labor rate=cost/hours; energy tariff=cost/kWh; activity intensity=activity/attempted units.",
+    "logic": "LATERAL VALUES unpivots only five authoritative components; line pools analyzed independently from allocations.",
+    "limitations": "Never add cost pools to product allocations, or landed material subtotal to purchase/freight. Manufacturing additions differ from sales COGS because inventory defers costs.",
+    "queries": 2
+  },
+  {
+    "file": "04_production_efficiency.sql",
+    "title": "Production efficiency and defects",
+    "question": "Which lines have capacity pressure and where are defects concentrated?",
+    "sources": "bi_line_production_performance; bi_production_performance",
+    "grain": "Q1 line/year; Q2 product/full period",
+    "kpis": "Utilization=attempted/effective capacity; defect rate=defective/attempted; yield=good/attempted.",
+    "logic": "Ratios of annual sums, annual LAG changes and defect-count ranking; no sales joins.",
+    "limitations": "Capacity utilization is not OEE. No machine-speed or quality inspection detail; defect volume depends on production mix. No scrap-sale recovery assumption.",
+    "queries": 2
+  },
+  {
+    "file": "05_supplier_procurement.sql",
+    "title": "Supplier performance and procurement",
+    "question": "How concentrated is purchasing, and do observed receipts support supplier comparisons?",
+    "sources": "suppliers LEFT JOIN bi_procurement_receipts; material receipt details",
+    "grain": "Q1 supplier/full period; Q2 material/receipt year",
+    "kpis": "OTD=on-time receipt count/all observed receipts; lead days=receipt\u2212order; purchase price=purchase EUR/kg.",
+    "logic": "Retains suppliers without receipts; COUNT(receipt_id) avoids counting null extended rows; weighted spend/quantity rates.",
+    "limitations": "Suppliers with zero receipts have NULL performance, not zero OTD. Synthetic scheduled/full receipts limit real supplier reliability conclusions. Receipt-based OTD is not order-line fill rate.",
+    "queries": 2
+  },
+  {
+    "file": "06_inventory_turnover.sql",
+    "title": "Inventory valuation and turnover",
+    "question": "How much cost is tied up in inventory and how quickly does it turn?",
+    "sources": "raw_material_inventory; finished_goods_inventory; months; bi_monthly_pnl",
+    "grain": "Q1 year; Q2 month",
+    "kpis": "FG turns=annual COGS/mean monthly midpoint FG; raw turns=annual landed issues/mean raw midpoint; combined days=calendar days*mean combined inventory/COGS.",
+    "logic": "Aggregate each inventory fact to month before joining; average (opening+closing)/2 across months; calendar carries actual 365/366 days.",
+    "limitations": "Midpoints approximate time-average balances; zero opening FG in 2024 creates startup bias. No WIP, daily balances or receivables/payables: this is not a cash conversion cycle. Closing balances are not summed across months.",
+    "queries": 2
+  },
+  {
+    "file": "07_customer_concentration.sql",
+    "title": "Customer concentration",
+    "question": "How dependent is revenue on the largest customers, and does their contribution justify concentration?",
+    "sources": "bi_customer_month_performance",
+    "grain": "Q1 customer/year; Q2 year",
+    "kpis": "Revenue share=customer/year revenue divided by company/year; HHI=sum of squared percentage shares; contribution=GP\u2212outbound.",
+    "logic": "Annual customer aggregation, deterministic ROW_NUMBER ties by customer_id, cumulative revenue windows and conditional top-N sums.",
+    "limitations": "HHI describes this fictional customer book, not an antitrust market measure. No contract renewal, credit risk or group ownership data; customer contribution excludes shared opex.",
+    "queries": 2
+  },
+  {
+    "file": "08_logistics_distribution.sql",
+    "title": "Logistics and distribution",
+    "question": "How do outbound distribution costs differ by segment and how is inbound freight recognized?",
+    "sources": "bi_sales_detail; bi_procurement_receipts; sales",
+    "grain": "Q1 year/customer segment; Q2 year freight recognition bridge",
+    "kpis": "Outbound EUR/unit=freight/shipped; distribution burden=outbound/revenue; inbound receipt amounts are capitalized, not immediately expensed.",
+    "logic": "Segment ratios of sums; independent annual receipt and sales aggregates joined to calendar-year spine.",
+    "limitations": "Inbound purchases and recognized inbound COGS differ through inventory. Outbound is below GP, never inventory. Rates are synthetic blended per-unit costs; geography and minimum shipment charges are absent.",
+    "queries": 2
+  }
+]

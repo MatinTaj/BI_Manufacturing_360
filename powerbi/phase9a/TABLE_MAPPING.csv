@@ -1,0 +1,20 @@
+name,source,grain,keys,role,month_key,verified_rows
+DimDate,Power Query generated calendar bounded by live SQL dates,"one calendar day, full years",Date,dimension,,731
+DimProduct,products,one product_id,product_id,dimension,,20
+DimCustomer,customers,one customer_id,customer_id,dimension,,25
+DimMaterial,materials,one material_id,material_id,dimension,,10
+DimSupplier,suppliers,one supplier_id,supplier_id,dimension,,15
+DimLine,production_lines,one line_id,line_id,dimension,,3
+FactSales,bi_sales_detail,shipment line,sales_line_id,fact,month_id,2596
+FactProduction,bi_production_performance,product/month batch,production_id,fact,month_id,480
+FactManufacturing,bi_manufacturing_cost_components,production batch allocation,production_id,fact,month_id,480
+FactConversion,bi_line_manufacturing_costs,line/month cost pool,"month_id,line_id",fact,month_id,72
+FactCapacity,line_month_capacity,line/month capacity,"month_id,line_id",fact,month_id,72
+FactReceipts,bi_procurement_receipts,receipt (one complete receipt per PO line),receipt_id,fact,ReceiptMonth,144
+FactPurchaseOrders,bi_procurement_order_status,purchase-order line,po_line_id,fact,OrderMonth,144
+FactRawInventory,bi_raw_material_inventory,material/month snapshot,"month_id,material_id",fact,month_id,240
+FactFGInventory,bi_finished_goods_inventory,product/month snapshot,"month_id,product_id",fact,month_id,480
+FactOpex,operating_expenses,month/expense category,"month_id,expense_category",fact,month_id,48
+FactConsumption,bi_material_consumption,production batch/material issue,"production_id,material_id",fact,month_id,1536
+RefPnL,audit_expected_pnl,approved reference period (annual and combined),period,disconnected_reference,,3
+RefMonthlyPnL,bi_monthly_pnl,reference month,month_id,disconnected_reference,,24

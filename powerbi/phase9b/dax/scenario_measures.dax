@@ -1,0 +1,46 @@
+// Query-scoped replacement for Phase 9A optional library. No DAX engine execution claimed.
+DEFINE
+    MEASURE 'FactSales'[Material Change %] =
+        SELECTEDVALUE('ParamMaterial'[Value], 0)
+    MEASURE 'FactSales'[Inbound Change %] =
+        SELECTEDVALUE('ParamInbound'[Value], 0)
+    MEASURE 'FactSales'[Outbound Change %] =
+        SELECTEDVALUE('ParamOutbound'[Value], 0)
+    MEASURE 'FactSales'[Labor Change %] =
+        SELECTEDVALUE('ParamLabor'[Value], 0)
+    MEASURE 'FactSales'[Energy Change %] =
+        SELECTEDVALUE('ParamEnergy'[Value], 0)
+    MEASURE 'FactSales'[Price Change %] =
+        SELECTEDVALUE('ParamPrice'[Value], 0)
+    MEASURE 'FactSales'[Direct Labor COGS Exposure] =
+        IF([Complete Month Context], SUM('FactSales'[direct_labor_cogs_exposure_eur]))
+    MEASURE 'FactSales'[Support Labor COGS Exposure] =
+        IF([Complete Month Context], SUM('FactSales'[support_labor_cogs_exposure_eur]))
+    MEASURE 'FactSales'[Labor Exposure Difference] =
+        IF([Complete Month Context], [Labor COGS] - [Direct Labor COGS Exposure] - [Support Labor COGS Exposure])
+    MEASURE 'FactSales'[Scenario Revenue] =
+        [Net Revenue] * (1 + [Price Change %])
+    MEASURE 'FactSales'[Scenario Manufacturing COGS] =
+        IF([Complete Month Context], [Material COGS] * (1 + [Material Change %]) + [Inbound Freight COGS] * (1 + [Inbound Change %]) + [Labor COGS] + [Direct Labor COGS Exposure] * [Labor Change %] + [Energy COGS] * (1 + [Energy Change %]) + [Overhead COGS])
+    MEASURE 'FactSales'[Scenario Outbound Freight] =
+        [Outbound Freight] * (1 + [Outbound Change %])
+    MEASURE 'FactSales'[Scenario Gross Profit] =
+        IF([Complete Month Context], [Scenario Revenue] - [Scenario Manufacturing COGS])
+    MEASURE 'FactSales'[Scenario Gross Margin %] =
+        DIVIDE([Scenario Gross Profit], [Scenario Revenue])
+    MEASURE 'FactSales'[Scenario Selling Expenses] =
+        IF([Company Context Valid], [Fixed Selling Expenses] + [Variable Selling Expenses] * (1 + [Price Change %]))
+    MEASURE 'FactSales'[Scenario Operating Expenses] =
+        IF([Company Context Valid], [Scenario Selling Expenses] + [Administrative Expenses])
+    MEASURE 'FactSales'[Scenario Operating Profit] =
+        IF([Company Context Valid], [Scenario Gross Profit] - [Scenario Outbound Freight] - [Scenario Operating Expenses] - [Separately Expensed Production Costs])
+    MEASURE 'FactSales'[Scenario Operating Margin %] =
+        DIVIDE([Scenario Operating Profit], IF([Company Context Valid], [Scenario Revenue]))
+    MEASURE 'FactSales'[Scenario GP Change] =
+        IF([Complete Month Context], [Scenario Gross Profit] - [Gross Profit])
+    MEASURE 'FactSales'[Scenario GP Change %] =
+        DIVIDE([Scenario GP Change], [Gross Profit])
+    MEASURE 'FactSales'[Scenario OP Change] =
+        IF([Company Context Valid], [Scenario Operating Profit] - [Operating Profit])
+    MEASURE 'FactSales'[Scenario OP Change %] =
+        DIVIDE([Scenario OP Change], [Operating Profit])

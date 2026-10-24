@@ -1,0 +1,77 @@
+{
+  "all_zero": {},
+  "material_plus_10": {
+    "material": "0.10"
+  },
+  "direct_labor_plus_10": {
+    "labor": "0.10"
+  },
+  "energy_plus_10": {
+    "energy": "0.10"
+  },
+  "inbound_plus_10": {
+    "inbound": "0.10"
+  },
+  "outbound_plus_10": {
+    "outbound": "0.10"
+  },
+  "selling_price_plus_5": {
+    "price": "0.05"
+  },
+  "material_plus_10_price_plus_5": {
+    "material": "0.10",
+    "price": "0.05"
+  },
+  "price_minimum": {
+    "price": "-0.50"
+  },
+  "price_maximum": {
+    "price": "1.00"
+  },
+  "material_minimum": {
+    "material": "-0.50"
+  },
+  "material_maximum": {
+    "material": "1.00"
+  },
+  "inbound_minimum": {
+    "inbound": "-0.50"
+  },
+  "inbound_maximum": {
+    "inbound": "1.00"
+  },
+  "outbound_minimum": {
+    "outbound": "-0.50"
+  },
+  "outbound_maximum": {
+    "outbound": "1.00"
+  },
+  "labor_minimum": {
+    "labor": "-0.50"
+  },
+  "labor_maximum": {
+    "labor": "1.00"
+  },
+  "energy_minimum": {
+    "energy": "-0.50"
+  },
+  "energy_maximum": {
+    "energy": "1.00"
+  },
+  "all_maximum": {
+    "price": "1",
+    "material": "1",
+    "inbound": "1",
+    "outbound": "1",
+    "labor": "1",
+    "energy": "1"
+  },
+  "all_minimum": {
+    "price": "-0.5",
+    "material": "-0.5",
+    "inbound": "-0.5",
+    "outbound": "-0.5",
+    "labor": "-0.5",
+    "energy": "-0.5"
+  }
+}

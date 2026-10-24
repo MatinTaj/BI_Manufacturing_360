@@ -1,0 +1,8 @@
+EVALUATE
+ROW("Revenue", [Net Revenue], "COGS", [Manufacturing COGS], "Gross Profit", [Gross Profit],
+    "Outbound", [Outbound Freight], "Selling", [Selling Expenses], "Admin", [Administrative Expenses],
+    "Operating Profit", [Operating Profit], "Gross Margin", [Gross Margin %], "Operating Margin", [Operating Margin %],
+    "Revenue Difference", [Net Revenue] - LOOKUPVALUE('RefPnL'[revenue], 'RefPnL'[period], "combined"),
+    "COGS Difference", [Manufacturing COGS] - LOOKUPVALUE('RefPnL'[cogs], 'RefPnL'[period], "combined"),
+    "OP Difference", [Operating Profit] - LOOKUPVALUE('RefPnL'[operating_profit], 'RefPnL'[period], "combined"),
+    "Freight Bridge", [Inbound Freight Bridge Difference])

@@ -1,0 +1,71 @@
+// Desktop/DAX Studio query only. NOT executed during reference validation.
+// Explicit parameter/date filters make all 66 results reproducible; percentages output on 0-100 scale.
+EVALUATE
+VAR Cases = DATATABLE(
+    "scenario", STRING, "price_delta", DOUBLE, "material_delta", DOUBLE, "inbound_delta", DOUBLE, "outbound_delta", DOUBLE, "labor_delta", DOUBLE, "energy_delta", DOUBLE,
+    {
+        { "all_zero", 0, 0, 0, 0, 0, 0 },
+        { "material_plus_10", 0, 0.10, 0, 0, 0, 0 },
+        { "direct_labor_plus_10", 0, 0, 0, 0, 0.10, 0 },
+        { "energy_plus_10", 0, 0, 0, 0, 0, 0.10 },
+        { "inbound_plus_10", 0, 0, 0.10, 0, 0, 0 },
+        { "outbound_plus_10", 0, 0, 0, 0.10, 0, 0 },
+        { "selling_price_plus_5", 0.05, 0, 0, 0, 0, 0 },
+        { "material_plus_10_price_plus_5", 0.05, 0.10, 0, 0, 0, 0 },
+        { "price_minimum", -0.50, 0, 0, 0, 0, 0 },
+        { "price_maximum", 1.00, 0, 0, 0, 0, 0 },
+        { "material_minimum", 0, -0.50, 0, 0, 0, 0 },
+        { "material_maximum", 0, 1.00, 0, 0, 0, 0 },
+        { "inbound_minimum", 0, 0, -0.50, 0, 0, 0 },
+        { "inbound_maximum", 0, 0, 1.00, 0, 0, 0 },
+        { "outbound_minimum", 0, 0, 0, -0.50, 0, 0 },
+        { "outbound_maximum", 0, 0, 0, 1.00, 0, 0 },
+        { "labor_minimum", 0, 0, 0, 0, -0.50, 0 },
+        { "labor_maximum", 0, 0, 0, 0, 1.00, 0 },
+        { "energy_minimum", 0, 0, 0, 0, 0, -0.50 },
+        { "energy_maximum", 0, 0, 0, 0, 0, 1.00 },
+        { "all_maximum", 1, 1, 1, 1, 1, 1 },
+        { "all_minimum", -0.5, -0.5, -0.5, -0.5, -0.5, -0.5 }
+    })
+VAR Periods = DATATABLE("period", STRING, {{"2024"},{"2025"},{"combined"}})
+RETURN GENERATE(CROSSJOIN(Periods,Cases),
+    VAR PeriodName = [period]
+    VAR PeriodYear = SWITCH(PeriodName,"2024",2024,"2025",2025,0)
+    VAR PriceDelta = CURRENCY([price_delta])
+    VAR MaterialDelta = CURRENCY([material_delta])
+    VAR InboundDelta = CURRENCY([inbound_delta])
+    VAR OutboundDelta = CURRENCY([outbound_delta])
+    VAR LaborDelta = CURRENCY([labor_delta])
+    VAR EnergyDelta = CURRENCY([energy_delta])
+    RETURN CALCULATETABLE(
+        ROW(
+            "revenue", [Scenario Revenue],
+            "cogs", [Scenario Manufacturing COGS],
+            "gross_profit", [Scenario Gross Profit],
+            "gross_margin_pct", 100*[Scenario Gross Margin %],
+            "outbound_freight", [Scenario Outbound Freight],
+            "selling_expenses", [Scenario Selling Expenses],
+            "administrative_expenses", [Administrative Expenses],
+            "operating_expenses", [Scenario Operating Expenses],
+            "idle_cost", [Idle Production Costs],
+            "production_loss", [Abnormal Production Losses],
+            "operating_profit", [Scenario Operating Profit],
+            "operating_margin_pct", 100*[Scenario Operating Margin %],
+            "direct_labor_cogs", [Direct Labor COGS Exposure]*(1+[Labor Change %]),
+            "support_labor_cogs", [Support Labor COGS Exposure],
+            "gp_change", [Scenario GP Change],
+            "gp_change_pct", 100*[Scenario GP Change %],
+            "op_change", [Scenario OP Change],
+            "op_change_pct", 100*[Scenario OP Change %]),
+        REMOVEFILTERS('DimProduct'), REMOVEFILTERS('DimCustomer'), REMOVEFILTERS('DimLine'),
+        REMOVEFILTERS('DimMaterial'), REMOVEFILTERS('DimSupplier'),
+        FILTER(ALL('DimDate'), PeriodYear=0 || 'DimDate'[Year]=PeriodYear),
+        TREATAS({PriceDelta}, 'ParamPrice'[Value]),
+        TREATAS({MaterialDelta}, 'ParamMaterial'[Value]),
+        TREATAS({InboundDelta}, 'ParamInbound'[Value]),
+        TREATAS({OutboundDelta}, 'ParamOutbound'[Value]),
+        TREATAS({LaborDelta}, 'ParamLabor'[Value]),
+        TREATAS({EnergyDelta}, 'ParamEnergy'[Value])
+    )
+)
+ORDER BY [period],[scenario]

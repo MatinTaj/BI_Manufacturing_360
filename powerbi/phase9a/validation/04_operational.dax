@@ -1,0 +1,16 @@
+EVALUATE
+SUMMARIZECOLUMNS('DimDate'[Year], 'DimLine'[line_id],
+    "Attempted", [Attempted Units], "Good", [Good Units], "Defects", [Defective Units],
+    "Utilization", [Capacity Utilization %], "Defect Rate", [Defect Rate %])
+ORDER BY 'DimLine'[line_id], 'DimDate'[Year]
+
+EVALUATE
+SUMMARIZECOLUMNS('DimSupplier'[supplier_id], "Receipts", [Receipt Count],
+    "OTD", [Receipt OTD %], "Target Gap pp", [Supplier Target Gap pp], "Purchase Spend", [Purchase Spend])
+ORDER BY 'DimSupplier'[supplier_id]
+
+EVALUATE
+SUMMARIZECOLUMNS('DimDate'[Year], "Raw Avg", [Average Raw Inventory], "FG Avg", [Average FG Inventory],
+    "FG Turns", [FG Turnover], "Raw Turns", [Raw Turnover], "Combined Turns", [Combined Inventory Turnover],
+    "Inventory Days", [Inventory Days Proxy], "Top 5 Share", [Top 5 Customer Share %], "HHI", [Customer HHI])
+ORDER BY 'DimDate'[Year]

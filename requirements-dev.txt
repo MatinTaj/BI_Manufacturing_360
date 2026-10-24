@@ -1,0 +1,3 @@
+-r requirements.txt
+# Optional PostgreSQL 18 AST/static checks.
+pglast==8.7

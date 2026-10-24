@@ -1,0 +1,3508 @@
+[
+  {
+    "name": "Complete Month Context",
+    "formula": "VAR VisibleDays = COUNTROWS(VALUES('DimDate'[Date]))\nVAR ExpectedDays = SUMX(VALUES('DimDate'[MonthStart]), DAY(EOMONTH('DimDate'[MonthStart], 0)))\nRETURN VisibleDays > 0 && VisibleDays = ExpectedDays",
+    "definition": "True only when the selected calendar context contains every day in each visible month.",
+    "folder": "00 Controls",
+    "format_string": "General",
+    "filter_behavior": "Calendar only.",
+    "validation": "True for year/month slicers; false for a single day in a multi-day month.",
+    "order": 1,
+    "direct_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Company Context Valid",
+    "formula": "[Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier'))",
+    "definition": "Company-only financial scope; prevents presenting shared costs as allocated segment profit.",
+    "folder": "00 Controls",
+    "format_string": "General",
+    "filter_behavior": "Only Date filters are valid; every entity dimension filter returns false. Hide fact attributes to prevent unsupported direct-fact filtering.",
+    "validation": "False after selecting any product, customer, line, material or supplier.",
+    "order": 2,
+    "direct_sources": [],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Net Revenue",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[net_revenue_eur]))",
+    "definition": "Net sales revenue after discounts.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 3,
+    "direct_sources": [
+      "FactSales[net_revenue_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Gross Sales",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[gross_revenue_eur]))",
+    "definition": "Sales before discounts.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 4,
+    "direct_sources": [
+      "FactSales[gross_revenue_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[gross_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Sales Discounts",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[discount_amount_eur]))",
+    "definition": "Discount deductions; positive values.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 5,
+    "direct_sources": [
+      "FactSales[discount_amount_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[discount_amount_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Shipped Units",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[units_shipped]))",
+    "definition": "Actual shipped volume.",
+    "folder": "01 Sales",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 6,
+    "direct_sources": [
+      "FactSales[units_shipped]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[units_shipped]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Requested Units",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[requested_units]))",
+    "definition": "Requested demand.",
+    "folder": "01 Sales",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 7,
+    "direct_sources": [
+      "FactSales[requested_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[requested_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Unfulfilled Units",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[unfulfilled_units]))",
+    "definition": "Requested units not shipped.",
+    "folder": "01 Sales",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 8,
+    "direct_sources": [
+      "FactSales[unfulfilled_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[unfulfilled_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Net Realized Price",
+    "formula": "DIVIDE([Net Revenue], [Shipped Units])",
+    "definition": "Weighted realized selling price after discounts.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 9,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue",
+      "Shipped Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[units_shipped]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Revenue Prior Year",
+    "formula": "CALCULATE([Net Revenue], DATEADD('DimDate'[Date], -1, YEAR))",
+    "definition": "Revenue in the corresponding prior calendar period.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Shifts Date by one year; retains entity filters. Initial-year result is BLANK.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 10,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Revenue YoY %",
+    "formula": "DIVIDE([Net Revenue] - [Revenue Prior Year], [Revenue Prior Year])",
+    "definition": "Relative revenue growth; fraction formatted as percent.",
+    "folder": "01 Sales",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 11,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue",
+      "Revenue Prior Year"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Revenue YTD",
+    "formula": "TOTALYTD([Net Revenue], 'DimDate'[Date])",
+    "definition": "Calendar-year running revenue.",
+    "folder": "01 Sales",
+    "format_string": "#,0.00",
+    "filter_behavior": "Runs January through current month; keep one year per chart series.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 12,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Material COGS",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[material_cogs_eur]))",
+    "definition": "Recognized sales COGS component; purchase-material COGS excludes inbound freight.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 13,
+    "direct_sources": [
+      "FactSales[material_cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[material_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Freight COGS",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[inbound_freight_cogs_eur]))",
+    "definition": "Recognized sales COGS component; purchase-material COGS excludes inbound freight.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 14,
+    "direct_sources": [
+      "FactSales[inbound_freight_cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[inbound_freight_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Labor COGS",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[labor_cogs_eur]))",
+    "definition": "Recognized sales COGS component; purchase-material COGS excludes inbound freight.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 15,
+    "direct_sources": [
+      "FactSales[labor_cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[labor_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Energy COGS",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[energy_cogs_eur]))",
+    "definition": "Recognized sales COGS component; purchase-material COGS excludes inbound freight.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 16,
+    "direct_sources": [
+      "FactSales[energy_cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Overhead COGS",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[overhead_cogs_eur]))",
+    "definition": "Recognized sales COGS component; purchase-material COGS excludes inbound freight.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 17,
+    "direct_sources": [
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Manufacturing COGS",
+    "formula": "IF([Complete Month Context] && COUNTROWS('FactSales') > 0, [Material COGS] + [Inbound Freight COGS] + [Labor COGS] + [Energy COGS] + [Overhead COGS])",
+    "definition": "Sum of five authoritative COGS components.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 18,
+    "direct_sources": [],
+    "dependencies": [
+      "Complete Month Context",
+      "Energy COGS",
+      "Inbound Freight COGS",
+      "Labor COGS",
+      "Material COGS",
+      "Overhead COGS"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "COGS per Shipped Unit",
+    "formula": "DIVIDE([Manufacturing COGS], [Shipped Units])",
+    "definition": "Weighted recognized inventory cost per shipped unit.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 19,
+    "direct_sources": [],
+    "dependencies": [
+      "Manufacturing COGS",
+      "Shipped Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "FactSales[units_shipped]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Gross Profit",
+    "formula": "[Net Revenue] - [Manufacturing COGS]",
+    "definition": "Revenue less manufacturing COGS.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 20,
+    "direct_sources": [],
+    "dependencies": [
+      "Manufacturing COGS",
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Gross Margin %",
+    "formula": "DIVIDE([Gross Profit], [Net Revenue])",
+    "definition": "Manufacturing gross profit divided by net revenue.",
+    "folder": "02 Profitability",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 21,
+    "direct_sources": [],
+    "dependencies": [
+      "Gross Profit",
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Outbound Freight",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[outbound_freight_eur]))",
+    "definition": "Shipment distribution expense below gross profit.",
+    "folder": "09 Logistics",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 22,
+    "direct_sources": [
+      "FactSales[outbound_freight_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[outbound_freight_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Contribution after Outbound",
+    "formula": "[Gross Profit] - [Outbound Freight]",
+    "definition": "Product/customer contribution before shared company costs.",
+    "folder": "02 Profitability",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 23,
+    "direct_sources": [],
+    "dependencies": [
+      "Gross Profit",
+      "Outbound Freight"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Contribution Margin %",
+    "formula": "DIVIDE([Contribution after Outbound], [Net Revenue])",
+    "definition": "Contribution after outbound freight divided by revenue.",
+    "folder": "02 Profitability",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 24,
+    "direct_sources": [],
+    "dependencies": [
+      "Contribution after Outbound",
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Product Gross Profit Rank",
+    "formula": "IF(HASONEVALUE('DimProduct'[product_id]), RANKX(ALLSELECTED('DimProduct'), [Gross Profit], , DESC, DENSE))",
+    "definition": "Dense gross profit rank within externally selected product cohort.",
+    "folder": "02 Profitability",
+    "format_string": "#,0",
+    "filter_behavior": "Date/other dimensions retained; external product selections define comparison cohort.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/02_product_profitability.sql (full-precision outputs in Phase 8C report).",
+    "order": 25,
+    "direct_sources": [
+      "DimProduct[product_id]"
+    ],
+    "dependencies": [
+      "Gross Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimProduct[product_id]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Selling Expenses",
+    "formula": "IF([Company Context Valid], CALCULATE(SUM('FactOpex'[amount_eur]), 'FactOpex'[expense_category] = \"selling\"))",
+    "definition": "Approved company operating expense category.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company-only, Date context. BLANK for segment/entity filters.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 26,
+    "direct_sources": [
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]"
+    ],
+    "dependencies": [
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Administrative Expenses",
+    "formula": "IF([Company Context Valid], CALCULATE(SUM('FactOpex'[amount_eur]), 'FactOpex'[expense_category] = \"administration\"))",
+    "definition": "Approved company operating expense category.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Company-only, Date context. BLANK for segment/entity filters.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 27,
+    "direct_sources": [
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]"
+    ],
+    "dependencies": [
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Fixed Selling Expenses",
+    "formula": "IF([Company Context Valid], CALCULATE(SUM('FactOpex'[fixed_amount_eur]), 'FactOpex'[expense_category] = \"selling\"))",
+    "definition": "Fixed selling expense resource baseline.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 28,
+    "direct_sources": [
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]"
+    ],
+    "dependencies": [
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Variable Selling Expenses",
+    "formula": "IF([Company Context Valid], CALCULATE(SUM('FactOpex'[variable_amount_eur]), 'FactOpex'[expense_category] = \"selling\"))",
+    "definition": "Revenue-variable selling expense.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 29,
+    "direct_sources": [
+      "FactOpex[expense_category]",
+      "FactOpex[variable_amount_eur]"
+    ],
+    "dependencies": [
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[expense_category]",
+      "FactOpex[variable_amount_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Idle Production Costs",
+    "formula": "IF([Company Context Valid], SUM('FactConversion'[idle_cost_eur]))",
+    "definition": "Separately expensed idle line pools.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 30,
+    "direct_sources": [
+      "FactConversion[idle_cost_eur]"
+    ],
+    "dependencies": [
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Abnormal Production Losses",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[production_loss_expense_eur]))",
+    "definition": "Fully defective batch costs, separately expensed.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 31,
+    "direct_sources": [
+      "FactManufacturing[production_loss_expense_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[production_loss_expense_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Separately Expensed Production Costs",
+    "formula": "IF([Company Context Valid], [Idle Production Costs] + [Abnormal Production Losses])",
+    "definition": "Idle line costs plus fully defective production losses, once.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 32,
+    "direct_sources": [],
+    "dependencies": [
+      "Abnormal Production Losses",
+      "Company Context Valid",
+      "Idle Production Costs"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Profit",
+    "formula": "IF([Company Context Valid], [Gross Profit] - [Outbound Freight] - [Selling Expenses] - [Administrative Expenses] - [Separately Expensed Production Costs])",
+    "definition": "Approved company operating profit.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Date only. BLANK under any entity dimension filter; use contribution for product/customer analysis.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 33,
+    "direct_sources": [],
+    "dependencies": [
+      "Administrative Expenses",
+      "Company Context Valid",
+      "Gross Profit",
+      "Outbound Freight",
+      "Selling Expenses",
+      "Separately Expensed Production Costs"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Margin %",
+    "formula": "DIVIDE([Operating Profit], IF([Company Context Valid], [Net Revenue]))",
+    "definition": "Company operating profit as a share of revenue.",
+    "folder": "03 Company P&L",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 34,
+    "direct_sources": [],
+    "dependencies": [
+      "Company Context Valid",
+      "Net Revenue",
+      "Operating Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Profit Prior Year",
+    "formula": "CALCULATE([Operating Profit], DATEADD('DimDate'[Date], -1, YEAR))",
+    "definition": "Comparable prior-year company operating profit.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 35,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Operating Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Profit YoY %",
+    "formula": "DIVIDE([Operating Profit] - [Operating Profit Prior Year], [Operating Profit Prior Year])",
+    "definition": "Relative operating profit growth.",
+    "folder": "03 Company P&L",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 36,
+    "direct_sources": [],
+    "dependencies": [
+      "Operating Profit",
+      "Operating Profit Prior Year"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Margin Change pp",
+    "formula": "VAR Prior = CALCULATE([Operating Margin %], DATEADD('DimDate'[Date], -1, YEAR))\nRETURN IF(NOT ISBLANK(Prior) && NOT ISBLANK([Operating Margin %]), 100 * ([Operating Margin %] - Prior))",
+    "definition": "Change in operating margin in percentage points.",
+    "folder": "03 Company P&L",
+    "format_string": "0.00 \"pp\"",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Initial-year result should be BLANK; prior-year BLANK guard must prevent a fabricated change. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 37,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Operating Margin %"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Operating Profit YTD",
+    "formula": "TOTALYTD([Operating Profit], 'DimDate'[Date])",
+    "definition": "Calendar-year company operating profit running total.",
+    "folder": "03 Company P&L",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/01_executive_financial.sql (full-precision outputs in Phase 8C report).",
+    "order": 38,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Operating Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Attempted Units",
+    "formula": "IF([Complete Month Context], SUM('FactProduction'[attempted_units]))",
+    "definition": "Production volume; defects included in attempted units.",
+    "folder": "04 Production",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 39,
+    "direct_sources": [
+      "FactProduction[attempted_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactProduction[attempted_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Good Units",
+    "formula": "IF([Complete Month Context], SUM('FactProduction'[good_units]))",
+    "definition": "Production volume; defects included in attempted units.",
+    "folder": "04 Production",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 40,
+    "direct_sources": [
+      "FactProduction[good_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactProduction[good_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Defective Units",
+    "formula": "IF([Complete Month Context], SUM('FactProduction'[defective_units]))",
+    "definition": "Production volume; defects included in attempted units.",
+    "folder": "04 Production",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 41,
+    "direct_sources": [
+      "FactProduction[defective_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactProduction[defective_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Effective Capacity Units",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactCapacity'[effective_capacity_units]))",
+    "definition": "Line/month available capacity, not repeated by product.",
+    "folder": "04 Production",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 42,
+    "direct_sources": [
+      "FactCapacity[effective_capacity_units]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactCapacity[effective_capacity_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Capacity Utilization %",
+    "formula": "DIVIDE([Attempted Units], [Effective Capacity Units])",
+    "definition": "Attempted units / effective line capacity; not OEE.",
+    "folder": "04 Production",
+    "format_string": "0.00%",
+    "filter_behavior": "Date and Line only for meaningful utilization; denominator is BLANK for product/customer/material/supplier filters.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 43,
+    "direct_sources": [],
+    "dependencies": [
+      "Attempted Units",
+      "Effective Capacity Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactCapacity[effective_capacity_units]",
+      "FactProduction[attempted_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Defect Rate %",
+    "formula": "DIVIDE([Defective Units], [Attempted Units])",
+    "definition": "Ratio of total defects to attempted volume.",
+    "folder": "04 Production",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 44,
+    "direct_sources": [],
+    "dependencies": [
+      "Attempted Units",
+      "Defective Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactProduction[attempted_units]",
+      "FactProduction[defective_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Good Yield %",
+    "formula": "DIVIDE([Good Units], [Attempted Units])",
+    "definition": "Good output / attempted output.",
+    "folder": "04 Production",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/04_production_efficiency.sql (full-precision outputs in Phase 8C report).",
+    "order": 45,
+    "direct_sources": [],
+    "dependencies": [
+      "Attempted Units",
+      "Good Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactProduction[attempted_units]",
+      "FactProduction[good_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Purchase Material Manufacturing Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[purchase_material_cost_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 46,
+    "direct_sources": [
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Manufacturing Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[inbound_freight_cost_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 47,
+    "direct_sources": [
+      "FactManufacturing[inbound_freight_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[inbound_freight_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Manufacturing Labor Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[labor_cost_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 48,
+    "direct_sources": [
+      "FactManufacturing[labor_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[labor_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Manufacturing Energy Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[energy_cost_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 49,
+    "direct_sources": [
+      "FactManufacturing[energy_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Manufacturing Overhead Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[manufacturing_overhead_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 50,
+    "direct_sources": [
+      "FactManufacturing[manufacturing_overhead_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[manufacturing_overhead_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Capitalized Production Cost",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[capitalized_production_cost_eur]))",
+    "definition": "Production cost allocation component or capitalized aggregate; never add pools again.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 51,
+    "direct_sources": [
+      "FactManufacturing[capitalized_production_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[capitalized_production_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Total Manufacturing Cost",
+    "formula": "[Purchase Material Manufacturing Cost] + [Inbound Manufacturing Cost] + [Manufacturing Labor Cost] + [Manufacturing Energy Cost] + [Manufacturing Overhead Cost]",
+    "definition": "Five-component production cost incurred.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 52,
+    "direct_sources": [],
+    "dependencies": [
+      "Inbound Manufacturing Cost",
+      "Manufacturing Energy Cost",
+      "Manufacturing Labor Cost",
+      "Manufacturing Overhead Cost",
+      "Purchase Material Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Material Manufacturing Share %",
+    "formula": "DIVIDE([Purchase Material Manufacturing Cost], [Total Manufacturing Cost])",
+    "definition": "Component share of production cost, not sales COGS.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 53,
+    "direct_sources": [],
+    "dependencies": [
+      "Purchase Material Manufacturing Cost",
+      "Total Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Manufacturing Share %",
+    "formula": "DIVIDE([Inbound Manufacturing Cost], [Total Manufacturing Cost])",
+    "definition": "Component share of production cost, not sales COGS.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 54,
+    "direct_sources": [],
+    "dependencies": [
+      "Inbound Manufacturing Cost",
+      "Total Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Labor Manufacturing Share %",
+    "formula": "DIVIDE([Manufacturing Labor Cost], [Total Manufacturing Cost])",
+    "definition": "Component share of production cost, not sales COGS.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 55,
+    "direct_sources": [],
+    "dependencies": [
+      "Manufacturing Labor Cost",
+      "Total Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Energy Manufacturing Share %",
+    "formula": "DIVIDE([Manufacturing Energy Cost], [Total Manufacturing Cost])",
+    "definition": "Component share of production cost, not sales COGS.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 56,
+    "direct_sources": [],
+    "dependencies": [
+      "Manufacturing Energy Cost",
+      "Total Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Overhead Manufacturing Share %",
+    "formula": "DIVIDE([Manufacturing Overhead Cost], [Total Manufacturing Cost])",
+    "definition": "Component share of production cost, not sales COGS.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 57,
+    "direct_sources": [],
+    "dependencies": [
+      "Manufacturing Overhead Cost",
+      "Total Manufacturing Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[energy_cost_eur]",
+      "FactManufacturing[inbound_freight_cost_eur]",
+      "FactManufacturing[labor_cost_eur]",
+      "FactManufacturing[manufacturing_overhead_eur]",
+      "FactManufacturing[purchase_material_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Pool Labor Cost",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[labor_cost_eur]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 58,
+    "direct_sources": [
+      "FactConversion[labor_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[labor_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Pool Energy Cost",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[energy_cost_eur]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 59,
+    "direct_sources": [
+      "FactConversion[energy_cost_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[energy_cost_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Labor Hours",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[labor_hours]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 60,
+    "direct_sources": [
+      "FactConversion[labor_hours]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[labor_hours]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Activity Labor Hours",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[production_labor_hours]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 61,
+    "direct_sources": [
+      "FactConversion[production_labor_hours]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[production_labor_hours]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Support Labor Hours",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[support_labor_hours]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 62,
+    "direct_sources": [
+      "FactConversion[support_labor_hours]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[support_labor_hours]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Energy kWh",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[energy_kwh]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 63,
+    "direct_sources": [
+      "FactConversion[energy_kwh]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[energy_kwh]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Activity Energy kWh",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[activity_energy_kwh]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 64,
+    "direct_sources": [
+      "FactConversion[activity_energy_kwh]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[activity_energy_kwh]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Standby Energy kWh",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[base_energy_kwh]))",
+    "definition": "Line-level cost pool activity; independent from product allocation facts.",
+    "folder": "05 Manufacturing",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 65,
+    "direct_sources": [
+      "FactConversion[base_energy_kwh]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[base_energy_kwh]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Realized Labor Rate",
+    "formula": "DIVIDE([Pool Labor Cost], [Labor Hours])",
+    "definition": "Pool labor cost per total activity/support hour.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 66,
+    "direct_sources": [],
+    "dependencies": [
+      "Labor Hours",
+      "Pool Labor Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[labor_cost_eur]",
+      "FactConversion[labor_hours]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Realized Energy Tariff",
+    "formula": "DIVIDE([Pool Energy Cost], [Energy kWh])",
+    "definition": "Pool energy cost per total activity/standby kWh.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 67,
+    "direct_sources": [],
+    "dependencies": [
+      "Energy kWh",
+      "Pool Energy Cost"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[energy_cost_eur]",
+      "FactConversion[energy_kwh]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Activity Labor per Attempt",
+    "formula": "DIVIDE([Activity Labor Hours], [Attempted Units])",
+    "definition": "Line mix-weighted standard production hours per attempt.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 68,
+    "direct_sources": [],
+    "dependencies": [
+      "Activity Labor Hours",
+      "Attempted Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[production_labor_hours]",
+      "FactProduction[attempted_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Activity Energy per Attempt",
+    "formula": "DIVIDE([Activity Energy kWh], [Attempted Units])",
+    "definition": "Line mix-weighted standard activity kWh per attempt.",
+    "folder": "05 Manufacturing",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/03_manufacturing_costs.sql (full-precision outputs in Phase 8C report).",
+    "order": 69,
+    "direct_sources": [],
+    "dependencies": [
+      "Activity Energy kWh",
+      "Attempted Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[activity_energy_kwh]",
+      "FactProduction[attempted_units]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Purchase Spend",
+    "formula": "IF([Complete Month Context], SUM('FactReceipts'[purchase_value_eur]))",
+    "definition": "Receipt purchase-only value.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 70,
+    "direct_sources": [
+      "FactReceipts[purchase_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[purchase_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Receipt Freight",
+    "formula": "IF([Complete Month Context], SUM('FactReceipts'[inbound_freight_eur]))",
+    "definition": "Capitalized inbound freight on receipts.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 71,
+    "direct_sources": [
+      "FactReceipts[inbound_freight_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[inbound_freight_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Landed Receipt Value",
+    "formula": "IF([Complete Month Context], SUM('FactReceipts'[landed_receipt_value_eur]))",
+    "definition": "Purchase plus inbound freight, not another additive expense.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 72,
+    "direct_sources": [
+      "FactReceipts[landed_receipt_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[landed_receipt_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Received kg",
+    "formula": "IF([Complete Month Context], SUM('FactReceipts'[received_kg]))",
+    "definition": "Receipt weight.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 73,
+    "direct_sources": [
+      "FactReceipts[received_kg]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[received_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Receipt Count",
+    "formula": "IF([Complete Month Context], COUNTROWS('FactReceipts'))",
+    "definition": "Count of observed receipt rows.",
+    "folder": "06 Procurement",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 74,
+    "direct_sources": [],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "On Time Receipts",
+    "formula": "IF([Complete Month Context], CALCULATE(COUNTROWS('FactReceipts'), 'FactReceipts'[on_time] = TRUE()))",
+    "definition": "Receipts on or before expected receipt date.",
+    "folder": "06 Procurement",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 75,
+    "direct_sources": [
+      "FactReceipts[on_time]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[on_time]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Receipt OTD %",
+    "formula": "DIVIDE([On Time Receipts], [Receipt Count])",
+    "definition": "Receipt-count on-time ratio, BLANK without receipts.",
+    "folder": "06 Procurement",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 76,
+    "direct_sources": [],
+    "dependencies": [
+      "On Time Receipts",
+      "Receipt Count"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[on_time]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Supplier Target OTD %",
+    "formula": "DIVIDE(SUMX(VALUES('DimSupplier'[supplier_id]), [Receipt Count] * CALCULATE(MAX('DimSupplier'[on_time_delivery_target]))), [Receipt Count])",
+    "definition": "Receipt-weighted supplier target fraction; supports aggregated suppliers.",
+    "folder": "06 Procurement",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 77,
+    "direct_sources": [
+      "DimSupplier[on_time_delivery_target]",
+      "DimSupplier[supplier_id]"
+    ],
+    "dependencies": [
+      "Receipt Count"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimSupplier[on_time_delivery_target]",
+      "DimSupplier[supplier_id]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Supplier Target Gap pp",
+    "formula": "IF(NOT ISBLANK([Receipt OTD %]), 100 * ([Receipt OTD %] - [Supplier Target OTD %]))",
+    "definition": "Observed receipt OTD minus weighted target in percentage points.",
+    "folder": "06 Procurement",
+    "format_string": "0.00 \"pp\"",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 78,
+    "direct_sources": [],
+    "dependencies": [
+      "Receipt OTD %",
+      "Supplier Target OTD %"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimSupplier[on_time_delivery_target]",
+      "DimSupplier[supplier_id]",
+      "FactReceipts[on_time]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Mean Lead Days",
+    "formula": "IF([Complete Month Context], AVERAGE('FactReceipts'[actual_lead_time_days]))",
+    "definition": "Receipt-count weighted mean calendar lead days.",
+    "folder": "06 Procurement",
+    "format_string": "0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 79,
+    "direct_sources": [
+      "FactReceipts[actual_lead_time_days]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[actual_lead_time_days]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Mean Late Days",
+    "formula": "IF([Complete Month Context], AVERAGEX('FactReceipts', MAX(0, DATEDIFF('FactReceipts'[expected_receipt_date], 'FactReceipts'[receipt_date], DAY))))",
+    "definition": "Mean nonnegative receipt lateness, calendar days.",
+    "folder": "06 Procurement",
+    "format_string": "0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 80,
+    "direct_sources": [
+      "FactReceipts[expected_receipt_date]",
+      "FactReceipts[receipt_date]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[expected_receipt_date]",
+      "FactReceipts[receipt_date]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Weighted Purchase Price",
+    "formula": "DIVIDE([Purchase Spend], [Received kg])",
+    "definition": "Purchase-only EUR per received kg.",
+    "folder": "06 Procurement",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 81,
+    "direct_sources": [],
+    "dependencies": [
+      "Purchase Spend",
+      "Received kg"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[purchase_value_eur]",
+      "FactReceipts[received_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Weighted Landed Price",
+    "formula": "DIVIDE([Landed Receipt Value], [Received kg])",
+    "definition": "Landed EUR per received kg.",
+    "folder": "06 Procurement",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 82,
+    "direct_sources": [],
+    "dependencies": [
+      "Landed Receipt Value",
+      "Received kg"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[landed_receipt_value_eur]",
+      "FactReceipts[received_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Supplier Spend Share %",
+    "formula": "DIVIDE([Purchase Spend], CALCULATE([Purchase Spend], REMOVEFILTERS('DimSupplier')))",
+    "definition": "Supplier purchase share of the full supplier population; retains material/date context.",
+    "folder": "06 Procurement",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 83,
+    "direct_sources": [],
+    "dependencies": [
+      "Purchase Spend"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactReceipts[purchase_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Ordered kg",
+    "formula": "IF([Complete Month Context], SUM('FactPurchaseOrders'[ordered_kg]))",
+    "definition": "Ordered quantity attributed to order month.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 84,
+    "direct_sources": [
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Outstanding Ordered kg",
+    "formula": "IF([Complete Month Context], SUM('FactPurchaseOrders'[outstanding_kg]))",
+    "definition": "Current imported order-line residual, not historical order backlog.",
+    "folder": "06 Procurement",
+    "format_string": "#,0.000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/05_supplier_procurement.sql (full-precision outputs in Phase 8C report).",
+    "order": 85,
+    "direct_sources": [
+      "FactPurchaseOrders[outstanding_kg]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactPurchaseOrders[outstanding_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Raw Closing Inventory",
+    "formula": "VAR PeriodMonth = MAX('DimDate'[MonthStart])\nRETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactRawInventory'[closing_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactRawInventory'[month_id])))",
+    "definition": "Inventory at the selected last closing / first opening month, not sum of snapshots.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Raw supports Date/Material; FG supports Date/Product/Line. Unsupported entity filters return BLANK.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 86,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Raw Opening Inventory",
+    "formula": "VAR PeriodMonth = MIN('DimDate'[MonthStart])\nRETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactRawInventory'[opening_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactRawInventory'[month_id])))",
+    "definition": "Inventory at the selected last closing / first opening month, not sum of snapshots.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Raw supports Date/Material; FG supports Date/Product/Line. Unsupported entity filters return BLANK.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 87,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Average Raw Inventory",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), AVERAGEX(VALUES('DimDate'[MonthStart]), VAR ThisMonth = 'DimDate'[MonthStart] RETURN CALCULATE(DIVIDE(SUM('FactRawInventory'[opening_value_eur]) + SUM('FactRawInventory'[closing_value_eur]), 2), REMOVEFILTERS('DimDate'), TREATAS({ThisMonth}, 'FactRawInventory'[month_id]))))",
+    "definition": "Mean of monthly opening/closing midpoint inventory, at selected entity grain.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Equal month weights; partial-month contexts return BLANK. Approximation to daily inventory.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 88,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "FG Closing Inventory",
+    "formula": "VAR PeriodMonth = MAX('DimDate'[MonthStart])\nRETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactFGInventory'[closing_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactFGInventory'[month_id])))",
+    "definition": "Inventory at the selected last closing / first opening month, not sum of snapshots.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Raw supports Date/Material; FG supports Date/Product/Line. Unsupported entity filters return BLANK.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 89,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "FG Opening Inventory",
+    "formula": "VAR PeriodMonth = MIN('DimDate'[MonthStart])\nRETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactFGInventory'[opening_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactFGInventory'[month_id])))",
+    "definition": "Inventory at the selected last closing / first opening month, not sum of snapshots.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Raw supports Date/Material; FG supports Date/Product/Line. Unsupported entity filters return BLANK.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 90,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Average FG Inventory",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), AVERAGEX(VALUES('DimDate'[MonthStart]), VAR ThisMonth = 'DimDate'[MonthStart] RETURN CALCULATE(DIVIDE(SUM('FactFGInventory'[opening_value_eur]) + SUM('FactFGInventory'[closing_value_eur]), 2), REMOVEFILTERS('DimDate'), TREATAS({ThisMonth}, 'FactFGInventory'[month_id]))))",
+    "definition": "Mean of monthly opening/closing midpoint inventory, at selected entity grain.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Equal month weights; partial-month contexts return BLANK. Approximation to daily inventory.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 91,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Landed Raw Issues",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), SUM('FactRawInventory'[issued_material_value_eur]))",
+    "definition": "Raw-material issues at landed cost.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 92,
+    "direct_sources": [
+      "FactRawInventory[issued_material_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactRawInventory[issued_material_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inventory COGS",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactFGInventory'[cogs_eur]))",
+    "definition": "Finished-goods monthly COGS for inventory ratios.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 93,
+    "direct_sources": [
+      "FactFGInventory[cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "FG Turnover",
+    "formula": "IF(HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Inventory COGS], [Average FG Inventory]))",
+    "definition": "Annual FG COGS divided by mean monthly midpoint FG.",
+    "folder": "07 Inventory",
+    "format_string": "0.00 \"x\"",
+    "filter_behavior": "Requires 12 complete months in exactly one calendar year. FG supports Product/Line; raw supports Material; combined supports Date only. Returns BLANK for a partial year.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 94,
+    "direct_sources": [
+      "DimDate[Year]"
+    ],
+    "dependencies": [
+      "Average FG Inventory",
+      "Inventory COGS"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimDate[Year]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[cogs_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Raw Turnover",
+    "formula": "IF(HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Landed Raw Issues], [Average Raw Inventory]))",
+    "definition": "Annual landed raw issues divided by mean raw inventory.",
+    "folder": "07 Inventory",
+    "format_string": "0.00 \"x\"",
+    "filter_behavior": "Requires 12 complete months in exactly one calendar year. FG supports Product/Line; raw supports Material; combined supports Date only. Returns BLANK for a partial year.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 95,
+    "direct_sources": [
+      "DimDate[Year]"
+    ],
+    "dependencies": [
+      "Average Raw Inventory",
+      "Landed Raw Issues"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimDate[Year]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[issued_material_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Combined Closing Inventory",
+    "formula": "IF([Company Context Valid], [Raw Closing Inventory] + [FG Closing Inventory])",
+    "definition": "Raw plus FG month-end stock; no WIP.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 96,
+    "direct_sources": [],
+    "dependencies": [
+      "Company Context Valid",
+      "FG Closing Inventory",
+      "Raw Closing Inventory"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Combined Average Inventory",
+    "formula": "IF([Company Context Valid], [Average Raw Inventory] + [Average FG Inventory])",
+    "definition": "Company average raw plus FG inventory.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 97,
+    "direct_sources": [],
+    "dependencies": [
+      "Average FG Inventory",
+      "Average Raw Inventory",
+      "Company Context Valid"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Combined Inventory Turnover",
+    "formula": "IF([Company Context Valid] && HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Manufacturing COGS], [Combined Average Inventory]))",
+    "definition": "Annual COGS / mean combined inventory.",
+    "folder": "07 Inventory",
+    "format_string": "0.00 \"x\"",
+    "filter_behavior": "Requires 12 complete months in exactly one calendar year. FG supports Product/Line; raw supports Material; combined supports Date only. Returns BLANK for a partial year.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 98,
+    "direct_sources": [
+      "DimDate[Year]"
+    ],
+    "dependencies": [
+      "Combined Average Inventory",
+      "Company Context Valid",
+      "Manufacturing COGS"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimDate[Year]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Selected Calendar Days",
+    "formula": "IF([Complete Month Context], COUNTROWS(VALUES('DimDate'[Date])))",
+    "definition": "Actual days in the selected month periods (366 in 2024).",
+    "folder": "07 Inventory",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 99,
+    "direct_sources": [
+      "DimDate[Date]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inventory Days Proxy",
+    "formula": "IF([Company Context Valid] && HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Selected Calendar Days] * [Combined Average Inventory], [Manufacturing COGS]))",
+    "definition": "Calendar-day inventory proxy; not cash conversion cycle.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Requires 12 complete months in exactly one calendar year. FG supports Product/Line; raw supports Material; combined supports Date only. Returns BLANK for a partial year.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 100,
+    "direct_sources": [
+      "DimDate[Year]"
+    ],
+    "dependencies": [
+      "Combined Average Inventory",
+      "Company Context Valid",
+      "Manufacturing COGS",
+      "Selected Calendar Days"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimDate[Year]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactFGInventory[opening_value_eur]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]",
+      "FactRawInventory[opening_value_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Closing Inventory Change",
+    "formula": "VAR Prior = CALCULATE([Combined Closing Inventory], DATEADD('DimDate'[Date], -1, MONTH))\nRETURN IF(HASONEVALUE('DimDate'[YearMonth]) && NOT ISBLANK(Prior), [Combined Closing Inventory] - Prior)",
+    "definition": "Change between selected monthly close and prior month close.",
+    "folder": "07 Inventory",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/06_inventory_turnover.sql (full-precision outputs in Phase 8C report).",
+    "order": 101,
+    "direct_sources": [
+      "DimDate[Date]",
+      "DimDate[YearMonth]"
+    ],
+    "dependencies": [
+      "Combined Closing Inventory"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "DimDate[YearMonth]",
+      "FactFGInventory[closing_value_eur]",
+      "FactFGInventory[month_id]",
+      "FactRawInventory[closing_value_eur]",
+      "FactRawInventory[month_id]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Customer Revenue Share %",
+    "formula": "DIVIDE([Net Revenue], CALCULATE([Net Revenue], ALLSELECTED('DimCustomer')))",
+    "definition": "Revenue share within externally selected customer cohort.",
+    "folder": "08 Customers",
+    "format_string": "0.00%",
+    "filter_behavior": "Retains Date/Product/Line and customer slicers; removes visual customer rows/columns.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 102,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Top 1 Customer Share %",
+    "formula": "VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), \"__Revenue\", CALCULATE([Net Revenue]))\nVAR TopCustomers = TOPN(1, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)\nRETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))",
+    "definition": "Top-N share of selected customer revenue; deterministic customer ID ties.",
+    "folder": "08 Customers",
+    "format_string": "0.00%",
+    "filter_behavior": "Externally selected customer cohort; remove customer slicers to match company-wide SQL.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 103,
+    "direct_sources": [
+      "DimCustomer[customer_id]"
+    ],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimCustomer[customer_id]",
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Top 5 Customer Share %",
+    "formula": "VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), \"__Revenue\", CALCULATE([Net Revenue]))\nVAR TopCustomers = TOPN(5, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)\nRETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))",
+    "definition": "Top-N share of selected customer revenue; deterministic customer ID ties.",
+    "folder": "08 Customers",
+    "format_string": "0.00%",
+    "filter_behavior": "Externally selected customer cohort; remove customer slicers to match company-wide SQL.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 104,
+    "direct_sources": [
+      "DimCustomer[customer_id]"
+    ],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimCustomer[customer_id]",
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Top 10 Customer Share %",
+    "formula": "VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), \"__Revenue\", CALCULATE([Net Revenue]))\nVAR TopCustomers = TOPN(10, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)\nRETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))",
+    "definition": "Top-N share of selected customer revenue; deterministic customer ID ties.",
+    "folder": "08 Customers",
+    "format_string": "0.00%",
+    "filter_behavior": "Externally selected customer cohort; remove customer slicers to match company-wide SQL.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 105,
+    "direct_sources": [
+      "DimCustomer[customer_id]"
+    ],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimCustomer[customer_id]",
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Customer HHI",
+    "formula": "VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), \"__Revenue\", CALCULATE([Net Revenue]))\nVAR TotalRevenue = SUMX(Customers, [__Revenue])\nRETURN IF(TotalRevenue > 0, SUMX(Customers, POWER(100 * DIVIDE([__Revenue], TotalRevenue), 2)))",
+    "definition": "Sum of squared customer percentage shares, 0\u201310000 scale.",
+    "folder": "08 Customers",
+    "format_string": "0.00",
+    "filter_behavior": "Selected customer cohort; descriptive concentration, not market/antitrust risk.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 106,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Active Customers",
+    "formula": "IF([Complete Month Context], COUNTROWS(FILTER(VALUES('DimCustomer'[customer_id]), [Net Revenue] > 0)))",
+    "definition": "Customers with positive recognized net revenue.",
+    "folder": "08 Customers",
+    "format_string": "#,0",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/07_customer_concentration.sql (full-precision outputs in Phase 8C report).",
+    "order": 107,
+    "direct_sources": [
+      "DimCustomer[customer_id]"
+    ],
+    "dependencies": [
+      "Complete Month Context",
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimCustomer[customer_id]",
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Outbound per Shipped Unit",
+    "formula": "DIVIDE([Outbound Freight], [Shipped Units])",
+    "definition": "Weighted outbound distribution EUR/unit.",
+    "folder": "09 Logistics",
+    "format_string": "0.0000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 108,
+    "direct_sources": [],
+    "dependencies": [
+      "Outbound Freight",
+      "Shipped Units"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[units_shipped]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Outbound Revenue Burden %",
+    "formula": "DIVIDE([Outbound Freight], [Net Revenue])",
+    "definition": "Outbound freight expense as share of net revenue.",
+    "folder": "09 Logistics",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 109,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue",
+      "Outbound Freight"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Raw Freight Inventory Change",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), SUMX('FactRawInventory', 'FactRawInventory'[closing_inbound_freight_value_eur] - 'FactRawInventory'[opening_inbound_freight_value_eur]))",
+    "definition": "Net inbound-freight inventory movement across selected complete months.",
+    "folder": "09 Logistics",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 110,
+    "direct_sources": [
+      "FactRawInventory[closing_inbound_freight_value_eur]",
+      "FactRawInventory[opening_inbound_freight_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactRawInventory[closing_inbound_freight_value_eur]",
+      "FactRawInventory[opening_inbound_freight_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "FG Freight Inventory Change",
+    "formula": "IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUMX('FactFGInventory', 'FactFGInventory'[closing_inbound_freight_value_eur] - 'FactFGInventory'[opening_inbound_freight_value_eur]))",
+    "definition": "Net inbound-freight inventory movement across selected complete months.",
+    "folder": "09 Logistics",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 111,
+    "direct_sources": [
+      "FactFGInventory[closing_inbound_freight_value_eur]",
+      "FactFGInventory[opening_inbound_freight_value_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_inbound_freight_value_eur]",
+      "FactFGInventory[opening_inbound_freight_value_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Abnormal Loss",
+    "formula": "IF([Complete Month Context], SUM('FactManufacturing'[inbound_freight_production_loss_expense_eur]))",
+    "definition": "Inbound component expensed on fully defective batches.",
+    "folder": "09 Logistics",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 112,
+    "direct_sources": [
+      "FactManufacturing[inbound_freight_production_loss_expense_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactManufacturing[inbound_freight_production_loss_expense_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Freight Bridge Difference",
+    "formula": "IF([Company Context Valid], [Inbound Receipt Freight] - [Inbound Freight COGS] - [Raw Freight Inventory Change] - [FG Freight Inventory Change] - [Inbound Abnormal Loss])",
+    "definition": "Inbound receipt cost reconciles to COGS, stock changes and separately expensed losses.",
+    "folder": "09 Logistics",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Exactly EUR 0.00 for 2024, 2025 and combined. SQL oracle: sql/analytics/08_logistics_distribution.sql (full-precision outputs in Phase 8C report).",
+    "order": 113,
+    "direct_sources": [],
+    "dependencies": [
+      "Company Context Valid",
+      "FG Freight Inventory Change",
+      "Inbound Abnormal Loss",
+      "Inbound Freight COGS",
+      "Inbound Receipt Freight",
+      "Raw Freight Inventory Change"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactFGInventory[closing_inbound_freight_value_eur]",
+      "FactFGInventory[opening_inbound_freight_value_eur]",
+      "FactManufacturing[inbound_freight_production_loss_expense_eur]",
+      "FactRawInventory[closing_inbound_freight_value_eur]",
+      "FactRawInventory[opening_inbound_freight_value_eur]",
+      "FactReceipts[inbound_freight_eur]",
+      "FactSales[inbound_freight_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Daily Shipment Revenue",
+    "formula": "CALCULATE(SUM('FactSales'[net_revenue_eur]), USERELATIONSHIP('DimDate'[Date], 'FactSales'[shipment_date]))",
+    "definition": "Revenue attributed to actual shipment day, not monthly accounting date.",
+    "folder": "10 Daily Roles",
+    "format_string": "#,0.00",
+    "filter_behavior": "Daily Date filters; only shipment revenue, not company operating profit.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 114,
+    "direct_sources": [
+      "DimDate[Date]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[shipment_date]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "DimDate[Date]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[shipment_date]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Daily Received kg",
+    "formula": "CALCULATE(SUM('FactReceipts'[received_kg]), USERELATIONSHIP('DimDate'[Date], 'FactReceipts'[receipt_date]))",
+    "definition": "Receipt kg by actual day.",
+    "folder": "10 Daily Roles",
+    "format_string": "#,0.000",
+    "filter_behavior": "Daily receipt role overrides ReceiptMonth relationship for this measure.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 115,
+    "direct_sources": [
+      "DimDate[Date]",
+      "FactReceipts[receipt_date]",
+      "FactReceipts[received_kg]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "DimDate[Date]",
+      "FactReceipts[receipt_date]",
+      "FactReceipts[received_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Daily Ordered kg",
+    "formula": "CALCULATE(SUM('FactPurchaseOrders'[ordered_kg]), USERELATIONSHIP('DimDate'[Date], 'FactPurchaseOrders'[order_date]))",
+    "definition": "Ordered kg by order day.",
+    "folder": "10 Daily Roles",
+    "format_string": "#,0.000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 116,
+    "direct_sources": [
+      "DimDate[Date]",
+      "FactPurchaseOrders[order_date]",
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "DimDate[Date]",
+      "FactPurchaseOrders[order_date]",
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Expected Receipt kg",
+    "formula": "CALCULATE(SUM('FactPurchaseOrders'[ordered_kg]), USERELATIONSHIP('DimDate'[Date], 'FactPurchaseOrders'[expected_receipt_date]))",
+    "definition": "Original ordered kg by expected receipt date; not actual delivery or open backlog.",
+    "folder": "10 Daily Roles",
+    "format_string": "#,0.000",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 117,
+    "direct_sources": [
+      "DimDate[Date]",
+      "FactPurchaseOrders[expected_receipt_date]",
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "DimDate[Date]",
+      "FactPurchaseOrders[expected_receipt_date]",
+      "FactPurchaseOrders[ordered_kg]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "COGS Component Difference",
+    "formula": "IF([Complete Month Context], SUM('FactSales'[cogs_eur]) - [Manufacturing COGS])",
+    "definition": "Imported aggregate COGS less five authoritative components.",
+    "folder": "11 Validation",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "EUR 0.00 in all month/product/customer slices.",
+    "order": 118,
+    "direct_sources": [
+      "FactSales[cogs_eur]"
+    ],
+    "dependencies": [
+      "Complete Month Context",
+      "Manufacturing COGS"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[cogs_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Monthly PnL Revenue Difference",
+    "formula": "IF([Company Context Valid], [Net Revenue] - CALCULATE(SUM('RefMonthlyPnL'[revenue]), TREATAS(VALUES('DimDate'[MonthStart]), 'RefMonthlyPnL'[month_id])))",
+    "definition": "Derived revenue less disconnected SQL monthly reference.",
+    "folder": "11 Validation",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "EUR 0.00 at month, year and combined company level.",
+    "order": 119,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "RefMonthlyPnL[month_id]",
+      "RefMonthlyPnL[revenue]"
+    ],
+    "dependencies": [
+      "Company Context Valid",
+      "Net Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]",
+      "RefMonthlyPnL[month_id]",
+      "RefMonthlyPnL[revenue]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Monthly PnL OP Difference",
+    "formula": "IF([Company Context Valid], [Operating Profit] - CALCULATE(SUM('RefMonthlyPnL'[operating_profit]), TREATAS(VALUES('DimDate'[MonthStart]), 'RefMonthlyPnL'[month_id])))",
+    "definition": "Derived OP less disconnected SQL monthly reference.",
+    "folder": "11 Validation",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "EUR 0.00 at month, year and combined company level.",
+    "order": 120,
+    "direct_sources": [
+      "DimDate[MonthStart]",
+      "RefMonthlyPnL[month_id]",
+      "RefMonthlyPnL[operating_profit]"
+    ],
+    "dependencies": [
+      "Company Context Valid",
+      "Operating Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "RefMonthlyPnL[month_id]",
+      "RefMonthlyPnL[operating_profit]"
+    ],
+    "home_table": "FactSales",
+    "optional": false,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Material Change %",
+    "formula": "SELECTEDVALUE('ParamMaterial'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 121,
+    "direct_sources": [
+      "ParamMaterial[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamMaterial[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Inbound Change %",
+    "formula": "SELECTEDVALUE('ParamInbound'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 122,
+    "direct_sources": [
+      "ParamInbound[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamInbound[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Outbound Change %",
+    "formula": "SELECTEDVALUE('ParamOutbound'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 123,
+    "direct_sources": [
+      "ParamOutbound[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamOutbound[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Labor Change %",
+    "formula": "SELECTEDVALUE('ParamLabor'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 124,
+    "direct_sources": [
+      "ParamLabor[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamLabor[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Energy Change %",
+    "formula": "SELECTEDVALUE('ParamEnergy'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 125,
+    "direct_sources": [
+      "ParamEnergy[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamEnergy[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Price Change %",
+    "formula": "SELECTEDVALUE('ParamPrice'[Value], 0)",
+    "definition": "Selected independent hypothetical change; BLANK/multiple defaults to zero.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.0%",
+    "filter_behavior": "Disconnected parameter; does not filter source facts.",
+    "validation": "Zero/no selection produces zero change. This is prepared code, not an executed scenario.",
+    "order": 126,
+    "direct_sources": [
+      "ParamPrice[Value]"
+    ],
+    "dependencies": [],
+    "required_sources": [
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Revenue",
+    "formula": "[Net Revenue] * (1 + [Price Change %])",
+    "definition": "Static volume, discounts unchanged proportionally; hypothetical net price sensitivity.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 127,
+    "direct_sources": [],
+    "dependencies": [
+      "Net Revenue",
+      "Price Change %"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[net_revenue_eur]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Manufacturing COGS",
+    "formula": "[Material COGS] * (1 + [Material Change %]) + [Inbound Freight COGS] * (1 + [Inbound Change %]) + [Labor COGS] * (1 + [Labor Change %]) + [Energy COGS] * (1 + [Energy Change %]) + [Overhead COGS]",
+    "definition": "Independent historical recognized-cost exposure, fixed overhead retained.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 128,
+    "direct_sources": [],
+    "dependencies": [
+      "Energy COGS",
+      "Energy Change %",
+      "Inbound Change %",
+      "Inbound Freight COGS",
+      "Labor COGS",
+      "Labor Change %",
+      "Material COGS",
+      "Material Change %",
+      "Overhead COGS"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Outbound Freight",
+    "formula": "[Outbound Freight] * (1 + [Outbound Change %])",
+    "definition": "Historical distribution-cost sensitivity at unchanged shipped volume.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 129,
+    "direct_sources": [],
+    "dependencies": [
+      "Outbound Change %",
+      "Outbound Freight"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[outbound_freight_eur]",
+      "ParamOutbound[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Gross Profit",
+    "formula": "[Scenario Revenue] - [Scenario Manufacturing COGS]",
+    "definition": "Hypothetical gross profit under static activity.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 130,
+    "direct_sources": [],
+    "dependencies": [
+      "Scenario Manufacturing COGS",
+      "Scenario Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Selling Expenses",
+    "formula": "IF([Company Context Valid], [Fixed Selling Expenses] + [Variable Selling Expenses] * (1 + [Price Change %]))",
+    "definition": "Fixed selling unchanged; revenue-variable selling scales with net price at fixed volume.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 131,
+    "direct_sources": [],
+    "dependencies": [
+      "Company Context Valid",
+      "Fixed Selling Expenses",
+      "Price Change %",
+      "Variable Selling Expenses"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Operating Profit",
+    "formula": "IF([Company Context Valid], [Scenario Gross Profit] - [Scenario Outbound Freight] - [Scenario Selling Expenses] - [Administrative Expenses] - [Separately Expensed Production Costs])",
+    "definition": "Company-only historical sensitivity; idle and abnormal expense held at baseline.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 132,
+    "direct_sources": [],
+    "dependencies": [
+      "Administrative Expenses",
+      "Company Context Valid",
+      "Scenario Gross Profit",
+      "Scenario Outbound Freight",
+      "Scenario Selling Expenses",
+      "Separately Expensed Production Costs"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario Operating Margin %",
+    "formula": "DIVIDE([Scenario Operating Profit], IF([Company Context Valid], [Scenario Revenue]))",
+    "definition": "Hypothetical company operating margin.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "0.00%",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 133,
+    "direct_sources": [],
+    "dependencies": [
+      "Company Context Valid",
+      "Scenario Operating Profit",
+      "Scenario Revenue"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  },
+  {
+    "name": "Scenario OP Change",
+    "formula": "[Scenario Operating Profit] - [Operating Profit]",
+    "definition": "Hypothetical operating profit difference from unchanged baseline.",
+    "folder": "12 Optional Sensitivity",
+    "format_string": "#,0.00",
+    "filter_behavior": "Respects active dimension relationships and complete calendar-month context.",
+    "validation": "Compare the same calendar/entity filter with the corresponding Phase 8C SQL output.",
+    "order": 134,
+    "direct_sources": [],
+    "dependencies": [
+      "Operating Profit",
+      "Scenario Operating Profit"
+    ],
+    "required_sources": [
+      "DimDate[Date]",
+      "DimDate[MonthStart]",
+      "FactConversion[idle_cost_eur]",
+      "FactManufacturing[production_loss_expense_eur]",
+      "FactOpex[amount_eur]",
+      "FactOpex[expense_category]",
+      "FactOpex[fixed_amount_eur]",
+      "FactOpex[variable_amount_eur]",
+      "FactSales[energy_cogs_eur]",
+      "FactSales[inbound_freight_cogs_eur]",
+      "FactSales[labor_cogs_eur]",
+      "FactSales[material_cogs_eur]",
+      "FactSales[net_revenue_eur]",
+      "FactSales[outbound_freight_eur]",
+      "FactSales[overhead_cogs_eur]",
+      "ParamEnergy[Value]",
+      "ParamInbound[Value]",
+      "ParamLabor[Value]",
+      "ParamMaterial[Value]",
+      "ParamOutbound[Value]",
+      "ParamPrice[Value]"
+    ],
+    "home_table": "FactSales",
+    "optional": true,
+    "validation_status": "Pending Power BI Desktop execution; static checks do not establish DAX correctness."
+  }
+]

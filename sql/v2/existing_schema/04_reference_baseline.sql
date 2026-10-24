@@ -1,0 +1,23 @@
+-- Frozen Phase 7 candidate expectations. Financial constants belong here, NEVER in analytical views.
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('months', 24, '4d89d8745aecfecfae5e4cc44bc2fe4bd6f934d091ccfc0e58ac98becd9eb806');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('production_lines', 3, 'a13d3319d6df690c3d52e6d119907171cf590f35f1809492771050a5b149d47f');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('materials', 10, '40e84b2d8cf8653e27940def905fd1810d82dfc172d67f493cbed53fde072450');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('suppliers', 15, 'a5d73ab42070312e8c3d7dce1c4dccdc9836f72f3e8cf6d5f1711c573ecedba1');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('customers', 25, '08ac4c09a4b56bb825da0bcf06b9c0615ef1e395c4dbdf11e82bc57bbcb0ec1f');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('products', 20, '9abeb77857ec9e5dea395bca6f3530a59e2cdefe84d816d21ba19db4029c0dac');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('material_suppliers', 30, '5c660c38194903b5b63c3bd3c4491ef671c49e655d7a4c023070d0e0bd245978');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('bom', 64, '30f126e0bd0a02cc25b6f3ccbfcdb86e8a548a97dedc0807e9e08d505df34228');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('line_month_capacity', 72, '6e2bb28a18ae4e47d046cdca0d51f47419a4f5f94c929c6443e11a3e86a1b7d4');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('production', 480, '81b66c0bc8e267fe1186f75a302d7bc7c5702f522a7d1cbc26e13b3cf8824abc');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('purchase_order_lines', 144, '57474754beb2ee72bad297e28aa08268287d42aeb113a36760868eda4fa1d2e3');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('material_receipts', 144, '1271eeb91d0c53d6d659a24de9c03f7a8ea2e9d79aea2877b2d4bdd38341415f');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('material_consumption', 1536, 'f53d14634cffe6fba0accd06755c5373235d30fe4cf42d0be2534e2bfe031c27');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('raw_material_inventory', 240, '00a7f91e27bb7f40227d383191b952c964c1ee0f8158978a9b1a0ac6f7964cf6');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('manufacturing_costs', 72, 'a6e6d27f6a11a2febce0e36ee39700bc9c6a3433e73d110346ca25fb26058bde');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('production_cost_allocation', 480, '3c5d9d92fa093d7a81361cb09434638cb17916636e7a5ce031ea99c57b1fd0ee');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('finished_goods_inventory', 480, 'a289b5d12a09f0b510f0205f724008efa054dd2191a5e46626ad03877658a41e');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('sales', 2596, 'aa28c7e00c26ac7998af326d4af70339b2f621564540c533ad32351eb741ce96');
+INSERT INTO manufacturing_v2.audit_expected_files VALUES ('operating_expenses', 48, 'b9e6d4a41230fb080eb24d3946b0d34af98f622acc4ac971db3c45d449c790c0');
+INSERT INTO manufacturing_v2.audit_expected_pnl (period, revenue, cogs, gross_profit, outbound_freight, selling_expenses, administrative_expenses, idle_cost, production_loss, operating_profit, gross_margin_pct, operating_margin_pct) VALUES ('2024', 10559374.25000000, 8095663.36000000, 2463710.89000000, 286376.98000000, 525761.49000000, 459762.00000000, 0.00000000, 0.00000000, 1191810.42000000, 23.33197812, 11.28675234);
+INSERT INTO manufacturing_v2.audit_expected_pnl (period, revenue, cogs, gross_profit, outbound_freight, selling_expenses, administrative_expenses, idle_cost, production_loss, operating_profit, gross_margin_pct, operating_margin_pct) VALUES ('2025', 10973277.52000000, 8411512.20000000, 2561765.32000000, 295196.43000000, 539655.54000000, 467970.00000000, 0.00000000, 0.00000000, 1258943.35000000, 23.34548922, 11.47281063);
+INSERT INTO manufacturing_v2.audit_expected_pnl (period, revenue, cogs, gross_profit, outbound_freight, selling_expenses, administrative_expenses, idle_cost, production_loss, operating_profit, gross_margin_pct, operating_margin_pct) VALUES ('combined', 21532651.77000000, 16507175.56000000, 5025476.21000000, 581573.41000000, 1065417.03000000, 927732.00000000, 0.00000000, 0.00000000, 2450753.77000000, 23.33886353, 11.38156970);

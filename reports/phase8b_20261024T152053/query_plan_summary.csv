@@ -1,0 +1,7 @@
+query,execution_ms,planning_ms,actual_rows,temp_written_blocks,sort_disk_nodes,max_node_rows
+monthly_pnl,1.302,6.384,24.0,0,0,2596.0
+product_profitability,4.611,7.495,20.0,0,0,2596.0
+customer_month,0.962,7.221,25.0,0,0,109.0
+procurement,0.613,7.063,144.0,0,0,144.0
+raw_inventory,0.084,3.011,10.0,0,0,10.0
+production,0.277,8.619,3.0,0,0,20.0

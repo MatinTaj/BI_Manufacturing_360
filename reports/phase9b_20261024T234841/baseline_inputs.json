@@ -1,0 +1,47 @@
+{
+  "2024": {
+    "revenue": "10559374.25",
+    "material": "3287351.12",
+    "inbound": "108625.40",
+    "energy": "284579.01",
+    "overhead": "885864.83",
+    "outbound": "286376.98",
+    "direct_labor": "3367545.75",
+    "support_labor": "161697.25",
+    "fixed_selling": "314574.00",
+    "variable_selling": "211187.49",
+    "administration": "459762.00",
+    "idle": "0.00",
+    "loss": "0.00"
+  },
+  "2025": {
+    "revenue": "10973277.52",
+    "material": "3411669.92",
+    "inbound": "112944.03",
+    "energy": "294811.36",
+    "overhead": "901725.48",
+    "outbound": "295196.43",
+    "direct_labor": "3522030.90",
+    "support_labor": "168330.51",
+    "fixed_selling": "320190.00",
+    "variable_selling": "219465.54",
+    "administration": "467970.00",
+    "idle": "0.00",
+    "loss": "0.00"
+  },
+  "combined": {
+    "revenue": "21532651.77",
+    "material": "6699021.04",
+    "inbound": "221569.43",
+    "energy": "579390.37",
+    "overhead": "1787590.31",
+    "outbound": "581573.41",
+    "direct_labor": "6889576.65",
+    "support_labor": "330027.76",
+    "fixed_selling": "634764.00",
+    "variable_selling": "430653.03",
+    "administration": "927732.00",
+    "idle": "0.00",
+    "loss": "0.00"
+  }
+}

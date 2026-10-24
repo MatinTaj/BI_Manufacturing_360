@@ -1,0 +1,258 @@
+// Query-scoped DEFINE library for DAX Studio. For persisted Desktop measures, use individual formulas or optional Tabular Editor script.
+DEFINE
+    MEASURE 'FactSales'[Complete Month Context] =
+        VAR VisibleDays = COUNTROWS(VALUES('DimDate'[Date]))
+        VAR ExpectedDays = SUMX(VALUES('DimDate'[MonthStart]), DAY(EOMONTH('DimDate'[MonthStart], 0)))
+        RETURN VisibleDays > 0 && VisibleDays = ExpectedDays
+    MEASURE 'FactSales'[Company Context Valid] =
+        [Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier'))
+    MEASURE 'FactSales'[Net Revenue] =
+        IF([Complete Month Context], SUM('FactSales'[net_revenue_eur]))
+    MEASURE 'FactSales'[Gross Sales] =
+        IF([Complete Month Context], SUM('FactSales'[gross_revenue_eur]))
+    MEASURE 'FactSales'[Sales Discounts] =
+        IF([Complete Month Context], SUM('FactSales'[discount_amount_eur]))
+    MEASURE 'FactSales'[Shipped Units] =
+        IF([Complete Month Context], SUM('FactSales'[units_shipped]))
+    MEASURE 'FactSales'[Requested Units] =
+        IF([Complete Month Context], SUM('FactSales'[requested_units]))
+    MEASURE 'FactSales'[Unfulfilled Units] =
+        IF([Complete Month Context], SUM('FactSales'[unfulfilled_units]))
+    MEASURE 'FactSales'[Net Realized Price] =
+        DIVIDE([Net Revenue], [Shipped Units])
+    MEASURE 'FactSales'[Revenue Prior Year] =
+        CALCULATE([Net Revenue], DATEADD('DimDate'[Date], -1, YEAR))
+    MEASURE 'FactSales'[Revenue YoY %] =
+        DIVIDE([Net Revenue] - [Revenue Prior Year], [Revenue Prior Year])
+    MEASURE 'FactSales'[Revenue YTD] =
+        TOTALYTD([Net Revenue], 'DimDate'[Date])
+    MEASURE 'FactSales'[Material COGS] =
+        IF([Complete Month Context], SUM('FactSales'[material_cogs_eur]))
+    MEASURE 'FactSales'[Inbound Freight COGS] =
+        IF([Complete Month Context], SUM('FactSales'[inbound_freight_cogs_eur]))
+    MEASURE 'FactSales'[Labor COGS] =
+        IF([Complete Month Context], SUM('FactSales'[labor_cogs_eur]))
+    MEASURE 'FactSales'[Energy COGS] =
+        IF([Complete Month Context], SUM('FactSales'[energy_cogs_eur]))
+    MEASURE 'FactSales'[Overhead COGS] =
+        IF([Complete Month Context], SUM('FactSales'[overhead_cogs_eur]))
+    MEASURE 'FactSales'[Manufacturing COGS] =
+        IF([Complete Month Context] && COUNTROWS('FactSales') > 0, [Material COGS] + [Inbound Freight COGS] + [Labor COGS] + [Energy COGS] + [Overhead COGS])
+    MEASURE 'FactSales'[COGS per Shipped Unit] =
+        DIVIDE([Manufacturing COGS], [Shipped Units])
+    MEASURE 'FactSales'[Gross Profit] =
+        [Net Revenue] - [Manufacturing COGS]
+    MEASURE 'FactSales'[Gross Margin %] =
+        DIVIDE([Gross Profit], [Net Revenue])
+    MEASURE 'FactSales'[Outbound Freight] =
+        IF([Complete Month Context], SUM('FactSales'[outbound_freight_eur]))
+    MEASURE 'FactSales'[Contribution after Outbound] =
+        [Gross Profit] - [Outbound Freight]
+    MEASURE 'FactSales'[Contribution Margin %] =
+        DIVIDE([Contribution after Outbound], [Net Revenue])
+    MEASURE 'FactSales'[Product Gross Profit Rank] =
+        IF(HASONEVALUE('DimProduct'[product_id]), RANKX(ALLSELECTED('DimProduct'), [Gross Profit], , DESC, DENSE))
+    MEASURE 'FactSales'[Selling Expenses] =
+        IF([Company Context Valid], CALCULATE(SUM('FactOpex'[amount_eur]), 'FactOpex'[expense_category] = "selling"))
+    MEASURE 'FactSales'[Administrative Expenses] =
+        IF([Company Context Valid], CALCULATE(SUM('FactOpex'[amount_eur]), 'FactOpex'[expense_category] = "administration"))
+    MEASURE 'FactSales'[Fixed Selling Expenses] =
+        IF([Company Context Valid], CALCULATE(SUM('FactOpex'[fixed_amount_eur]), 'FactOpex'[expense_category] = "selling"))
+    MEASURE 'FactSales'[Variable Selling Expenses] =
+        IF([Company Context Valid], CALCULATE(SUM('FactOpex'[variable_amount_eur]), 'FactOpex'[expense_category] = "selling"))
+    MEASURE 'FactSales'[Idle Production Costs] =
+        IF([Company Context Valid], SUM('FactConversion'[idle_cost_eur]))
+    MEASURE 'FactSales'[Abnormal Production Losses] =
+        IF([Complete Month Context], SUM('FactManufacturing'[production_loss_expense_eur]))
+    MEASURE 'FactSales'[Separately Expensed Production Costs] =
+        IF([Company Context Valid], [Idle Production Costs] + [Abnormal Production Losses])
+    MEASURE 'FactSales'[Operating Profit] =
+        IF([Company Context Valid], [Gross Profit] - [Outbound Freight] - [Selling Expenses] - [Administrative Expenses] - [Separately Expensed Production Costs])
+    MEASURE 'FactSales'[Operating Margin %] =
+        DIVIDE([Operating Profit], IF([Company Context Valid], [Net Revenue]))
+    MEASURE 'FactSales'[Operating Profit Prior Year] =
+        CALCULATE([Operating Profit], DATEADD('DimDate'[Date], -1, YEAR))
+    MEASURE 'FactSales'[Operating Profit YoY %] =
+        DIVIDE([Operating Profit] - [Operating Profit Prior Year], [Operating Profit Prior Year])
+    MEASURE 'FactSales'[Operating Margin Change pp] =
+        VAR Prior = CALCULATE([Operating Margin %], DATEADD('DimDate'[Date], -1, YEAR))
+        RETURN IF(NOT ISBLANK(Prior) && NOT ISBLANK([Operating Margin %]), 100 * ([Operating Margin %] - Prior))
+    MEASURE 'FactSales'[Operating Profit YTD] =
+        TOTALYTD([Operating Profit], 'DimDate'[Date])
+    MEASURE 'FactSales'[Attempted Units] =
+        IF([Complete Month Context], SUM('FactProduction'[attempted_units]))
+    MEASURE 'FactSales'[Good Units] =
+        IF([Complete Month Context], SUM('FactProduction'[good_units]))
+    MEASURE 'FactSales'[Defective Units] =
+        IF([Complete Month Context], SUM('FactProduction'[defective_units]))
+    MEASURE 'FactSales'[Effective Capacity Units] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactCapacity'[effective_capacity_units]))
+    MEASURE 'FactSales'[Capacity Utilization %] =
+        DIVIDE([Attempted Units], [Effective Capacity Units])
+    MEASURE 'FactSales'[Defect Rate %] =
+        DIVIDE([Defective Units], [Attempted Units])
+    MEASURE 'FactSales'[Good Yield %] =
+        DIVIDE([Good Units], [Attempted Units])
+    MEASURE 'FactSales'[Purchase Material Manufacturing Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[purchase_material_cost_eur]))
+    MEASURE 'FactSales'[Inbound Manufacturing Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[inbound_freight_cost_eur]))
+    MEASURE 'FactSales'[Manufacturing Labor Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[labor_cost_eur]))
+    MEASURE 'FactSales'[Manufacturing Energy Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[energy_cost_eur]))
+    MEASURE 'FactSales'[Manufacturing Overhead Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[manufacturing_overhead_eur]))
+    MEASURE 'FactSales'[Capitalized Production Cost] =
+        IF([Complete Month Context], SUM('FactManufacturing'[capitalized_production_cost_eur]))
+    MEASURE 'FactSales'[Total Manufacturing Cost] =
+        [Purchase Material Manufacturing Cost] + [Inbound Manufacturing Cost] + [Manufacturing Labor Cost] + [Manufacturing Energy Cost] + [Manufacturing Overhead Cost]
+    MEASURE 'FactSales'[Material Manufacturing Share %] =
+        DIVIDE([Purchase Material Manufacturing Cost], [Total Manufacturing Cost])
+    MEASURE 'FactSales'[Inbound Manufacturing Share %] =
+        DIVIDE([Inbound Manufacturing Cost], [Total Manufacturing Cost])
+    MEASURE 'FactSales'[Labor Manufacturing Share %] =
+        DIVIDE([Manufacturing Labor Cost], [Total Manufacturing Cost])
+    MEASURE 'FactSales'[Energy Manufacturing Share %] =
+        DIVIDE([Manufacturing Energy Cost], [Total Manufacturing Cost])
+    MEASURE 'FactSales'[Overhead Manufacturing Share %] =
+        DIVIDE([Manufacturing Overhead Cost], [Total Manufacturing Cost])
+    MEASURE 'FactSales'[Pool Labor Cost] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[labor_cost_eur]))
+    MEASURE 'FactSales'[Pool Energy Cost] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[energy_cost_eur]))
+    MEASURE 'FactSales'[Labor Hours] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[labor_hours]))
+    MEASURE 'FactSales'[Activity Labor Hours] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[production_labor_hours]))
+    MEASURE 'FactSales'[Support Labor Hours] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[support_labor_hours]))
+    MEASURE 'FactSales'[Energy kWh] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[energy_kwh]))
+    MEASURE 'FactSales'[Activity Energy kWh] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[activity_energy_kwh]))
+    MEASURE 'FactSales'[Standby Energy kWh] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactConversion'[base_energy_kwh]))
+    MEASURE 'FactSales'[Realized Labor Rate] =
+        DIVIDE([Pool Labor Cost], [Labor Hours])
+    MEASURE 'FactSales'[Realized Energy Tariff] =
+        DIVIDE([Pool Energy Cost], [Energy kWh])
+    MEASURE 'FactSales'[Activity Labor per Attempt] =
+        DIVIDE([Activity Labor Hours], [Attempted Units])
+    MEASURE 'FactSales'[Activity Energy per Attempt] =
+        DIVIDE([Activity Energy kWh], [Attempted Units])
+    MEASURE 'FactSales'[Purchase Spend] =
+        IF([Complete Month Context], SUM('FactReceipts'[purchase_value_eur]))
+    MEASURE 'FactSales'[Inbound Receipt Freight] =
+        IF([Complete Month Context], SUM('FactReceipts'[inbound_freight_eur]))
+    MEASURE 'FactSales'[Landed Receipt Value] =
+        IF([Complete Month Context], SUM('FactReceipts'[landed_receipt_value_eur]))
+    MEASURE 'FactSales'[Received kg] =
+        IF([Complete Month Context], SUM('FactReceipts'[received_kg]))
+    MEASURE 'FactSales'[Receipt Count] =
+        IF([Complete Month Context], COUNTROWS('FactReceipts'))
+    MEASURE 'FactSales'[On Time Receipts] =
+        IF([Complete Month Context], CALCULATE(COUNTROWS('FactReceipts'), 'FactReceipts'[on_time] = TRUE()))
+    MEASURE 'FactSales'[Receipt OTD %] =
+        DIVIDE([On Time Receipts], [Receipt Count])
+    MEASURE 'FactSales'[Supplier Target OTD %] =
+        DIVIDE(SUMX(VALUES('DimSupplier'[supplier_id]), [Receipt Count] * CALCULATE(MAX('DimSupplier'[on_time_delivery_target]))), [Receipt Count])
+    MEASURE 'FactSales'[Supplier Target Gap pp] =
+        IF(NOT ISBLANK([Receipt OTD %]), 100 * ([Receipt OTD %] - [Supplier Target OTD %]))
+    MEASURE 'FactSales'[Mean Lead Days] =
+        IF([Complete Month Context], AVERAGE('FactReceipts'[actual_lead_time_days]))
+    MEASURE 'FactSales'[Mean Late Days] =
+        IF([Complete Month Context], AVERAGEX('FactReceipts', MAX(0, DATEDIFF('FactReceipts'[expected_receipt_date], 'FactReceipts'[receipt_date], DAY))))
+    MEASURE 'FactSales'[Weighted Purchase Price] =
+        DIVIDE([Purchase Spend], [Received kg])
+    MEASURE 'FactSales'[Weighted Landed Price] =
+        DIVIDE([Landed Receipt Value], [Received kg])
+    MEASURE 'FactSales'[Supplier Spend Share %] =
+        DIVIDE([Purchase Spend], CALCULATE([Purchase Spend], REMOVEFILTERS('DimSupplier')))
+    MEASURE 'FactSales'[Ordered kg] =
+        IF([Complete Month Context], SUM('FactPurchaseOrders'[ordered_kg]))
+    MEASURE 'FactSales'[Outstanding Ordered kg] =
+        IF([Complete Month Context], SUM('FactPurchaseOrders'[outstanding_kg]))
+    MEASURE 'FactSales'[Raw Closing Inventory] =
+        VAR PeriodMonth = MAX('DimDate'[MonthStart])
+        RETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactRawInventory'[closing_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactRawInventory'[month_id])))
+    MEASURE 'FactSales'[Raw Opening Inventory] =
+        VAR PeriodMonth = MIN('DimDate'[MonthStart])
+        RETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactRawInventory'[opening_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactRawInventory'[month_id])))
+    MEASURE 'FactSales'[Average Raw Inventory] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), AVERAGEX(VALUES('DimDate'[MonthStart]), VAR ThisMonth = 'DimDate'[MonthStart] RETURN CALCULATE(DIVIDE(SUM('FactRawInventory'[opening_value_eur]) + SUM('FactRawInventory'[closing_value_eur]), 2), REMOVEFILTERS('DimDate'), TREATAS({ThisMonth}, 'FactRawInventory'[month_id]))))
+    MEASURE 'FactSales'[FG Closing Inventory] =
+        VAR PeriodMonth = MAX('DimDate'[MonthStart])
+        RETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactFGInventory'[closing_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactFGInventory'[month_id])))
+    MEASURE 'FactSales'[FG Opening Inventory] =
+        VAR PeriodMonth = MIN('DimDate'[MonthStart])
+        RETURN IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), CALCULATE(SUM('FactFGInventory'[opening_value_eur]), REMOVEFILTERS('DimDate'), TREATAS({PeriodMonth}, 'FactFGInventory'[month_id])))
+    MEASURE 'FactSales'[Average FG Inventory] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), AVERAGEX(VALUES('DimDate'[MonthStart]), VAR ThisMonth = 'DimDate'[MonthStart] RETURN CALCULATE(DIVIDE(SUM('FactFGInventory'[opening_value_eur]) + SUM('FactFGInventory'[closing_value_eur]), 2), REMOVEFILTERS('DimDate'), TREATAS({ThisMonth}, 'FactFGInventory'[month_id]))))
+    MEASURE 'FactSales'[Landed Raw Issues] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), SUM('FactRawInventory'[issued_material_value_eur]))
+    MEASURE 'FactSales'[Inventory COGS] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUM('FactFGInventory'[cogs_eur]))
+    MEASURE 'FactSales'[FG Turnover] =
+        IF(HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Inventory COGS], [Average FG Inventory]))
+    MEASURE 'FactSales'[Raw Turnover] =
+        IF(HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Landed Raw Issues], [Average Raw Inventory]))
+    MEASURE 'FactSales'[Combined Closing Inventory] =
+        IF([Company Context Valid], [Raw Closing Inventory] + [FG Closing Inventory])
+    MEASURE 'FactSales'[Combined Average Inventory] =
+        IF([Company Context Valid], [Average Raw Inventory] + [Average FG Inventory])
+    MEASURE 'FactSales'[Combined Inventory Turnover] =
+        IF([Company Context Valid] && HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Manufacturing COGS], [Combined Average Inventory]))
+    MEASURE 'FactSales'[Selected Calendar Days] =
+        IF([Complete Month Context], COUNTROWS(VALUES('DimDate'[Date])))
+    MEASURE 'FactSales'[Inventory Days Proxy] =
+        IF([Company Context Valid] && HASONEVALUE('DimDate'[Year]) && COUNTROWS(VALUES('DimDate'[MonthStart])) = 12, DIVIDE([Selected Calendar Days] * [Combined Average Inventory], [Manufacturing COGS]))
+    MEASURE 'FactSales'[Closing Inventory Change] =
+        VAR Prior = CALCULATE([Combined Closing Inventory], DATEADD('DimDate'[Date], -1, MONTH))
+        RETURN IF(HASONEVALUE('DimDate'[YearMonth]) && NOT ISBLANK(Prior), [Combined Closing Inventory] - Prior)
+    MEASURE 'FactSales'[Customer Revenue Share %] =
+        DIVIDE([Net Revenue], CALCULATE([Net Revenue], ALLSELECTED('DimCustomer')))
+    MEASURE 'FactSales'[Top 1 Customer Share %] =
+        VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), "__Revenue", CALCULATE([Net Revenue]))
+        VAR TopCustomers = TOPN(1, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)
+        RETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))
+    MEASURE 'FactSales'[Top 5 Customer Share %] =
+        VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), "__Revenue", CALCULATE([Net Revenue]))
+        VAR TopCustomers = TOPN(5, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)
+        RETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))
+    MEASURE 'FactSales'[Top 10 Customer Share %] =
+        VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), "__Revenue", CALCULATE([Net Revenue]))
+        VAR TopCustomers = TOPN(10, Customers, [__Revenue], DESC, 'DimCustomer'[customer_id], ASC)
+        RETURN DIVIDE(SUMX(TopCustomers, [__Revenue]), SUMX(Customers, [__Revenue]))
+    MEASURE 'FactSales'[Customer HHI] =
+        VAR Customers = ADDCOLUMNS(ALLSELECTED('DimCustomer'), "__Revenue", CALCULATE([Net Revenue]))
+        VAR TotalRevenue = SUMX(Customers, [__Revenue])
+        RETURN IF(TotalRevenue > 0, SUMX(Customers, POWER(100 * DIVIDE([__Revenue], TotalRevenue), 2)))
+    MEASURE 'FactSales'[Active Customers] =
+        IF([Complete Month Context], COUNTROWS(FILTER(VALUES('DimCustomer'[customer_id]), [Net Revenue] > 0)))
+    MEASURE 'FactSales'[Outbound per Shipped Unit] =
+        DIVIDE([Outbound Freight], [Shipped Units])
+    MEASURE 'FactSales'[Outbound Revenue Burden %] =
+        DIVIDE([Outbound Freight], [Net Revenue])
+    MEASURE 'FactSales'[Raw Freight Inventory Change] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimProduct') || ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimLine') || ISCROSSFILTERED('DimSupplier')), SUMX('FactRawInventory', 'FactRawInventory'[closing_inbound_freight_value_eur] - 'FactRawInventory'[opening_inbound_freight_value_eur]))
+    MEASURE 'FactSales'[FG Freight Inventory Change] =
+        IF([Complete Month Context] && NOT(ISCROSSFILTERED('DimCustomer') || ISCROSSFILTERED('DimMaterial') || ISCROSSFILTERED('DimSupplier')), SUMX('FactFGInventory', 'FactFGInventory'[closing_inbound_freight_value_eur] - 'FactFGInventory'[opening_inbound_freight_value_eur]))
+    MEASURE 'FactSales'[Inbound Abnormal Loss] =
+        IF([Complete Month Context], SUM('FactManufacturing'[inbound_freight_production_loss_expense_eur]))
+    MEASURE 'FactSales'[Inbound Freight Bridge Difference] =
+        IF([Company Context Valid], [Inbound Receipt Freight] - [Inbound Freight COGS] - [Raw Freight Inventory Change] - [FG Freight Inventory Change] - [Inbound Abnormal Loss])
+    MEASURE 'FactSales'[Daily Shipment Revenue] =
+        CALCULATE(SUM('FactSales'[net_revenue_eur]), USERELATIONSHIP('DimDate'[Date], 'FactSales'[shipment_date]))
+    MEASURE 'FactSales'[Daily Received kg] =
+        CALCULATE(SUM('FactReceipts'[received_kg]), USERELATIONSHIP('DimDate'[Date], 'FactReceipts'[receipt_date]))
+    MEASURE 'FactSales'[Daily Ordered kg] =
+        CALCULATE(SUM('FactPurchaseOrders'[ordered_kg]), USERELATIONSHIP('DimDate'[Date], 'FactPurchaseOrders'[order_date]))
+    MEASURE 'FactSales'[Expected Receipt kg] =
+        CALCULATE(SUM('FactPurchaseOrders'[ordered_kg]), USERELATIONSHIP('DimDate'[Date], 'FactPurchaseOrders'[expected_receipt_date]))
+    MEASURE 'FactSales'[COGS Component Difference] =
+        IF([Complete Month Context], SUM('FactSales'[cogs_eur]) - [Manufacturing COGS])
+    MEASURE 'FactSales'[Monthly PnL Revenue Difference] =
+        IF([Company Context Valid], [Net Revenue] - CALCULATE(SUM('RefMonthlyPnL'[revenue]), TREATAS(VALUES('DimDate'[MonthStart]), 'RefMonthlyPnL'[month_id])))
+    MEASURE 'FactSales'[Monthly PnL OP Difference] =
+        IF([Company Context Valid], [Operating Profit] - CALCULATE(SUM('RefMonthlyPnL'[operating_profit]), TREATAS(VALUES('DimDate'[MonthStart]), 'RefMonthlyPnL'[month_id])))

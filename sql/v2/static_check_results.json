@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "postgres_connected": false,
+  "database_created": false,
+  "csv_modified": false,
+  "parser_version": "v8.7",
+  "postgres_parser_version": [
+    18,
+    6
+  ],
+  "parsed_sql_statements": 85,
+  "parsed_plpgsql_blocks": 3,
+  "validated_select_scopes": 212,
+  "views": 17,
+  "csv_tables": 19,
+  "copy_commands": 19,
+  "row_check_evaluations": 160078,
+  "baseline_metric_comparisons": 33,
+  "limitation": "Offline syntax/name/data checks only; server type resolution, COPY, transactions, permissions, planner and execution remain untested."
+}

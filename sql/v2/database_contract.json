@@ -1,0 +1,1873 @@
+{
+  "database": "manufacturing_360_v2",
+  "schemas": [
+    "erp",
+    "bi",
+    "audit"
+  ],
+  "load_order": [
+    "months",
+    "production_lines",
+    "materials",
+    "suppliers",
+    "customers",
+    "products",
+    "material_suppliers",
+    "bom",
+    "line_month_capacity",
+    "production",
+    "purchase_order_lines",
+    "material_receipts",
+    "material_consumption",
+    "raw_material_inventory",
+    "manufacturing_costs",
+    "production_cost_allocation",
+    "finished_goods_inventory",
+    "sales",
+    "operating_expenses"
+  ],
+  "tables": {
+    "months": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "year",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "quarter",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "month_number",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "days_in_month",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id"
+      ],
+      "unique": [],
+      "foreign_keys": [],
+      "checks": [
+        "year >= 0",
+        "quarter >= 0",
+        "month_number >= 0",
+        "days_in_month >= 0",
+        "month_id = date_trunc('month', month_id)::date",
+        "year = extract(year FROM month_id)",
+        "quarter = extract(quarter FROM month_id)",
+        "month_number = extract(month FROM month_id)",
+        "days_in_month = extract(day FROM (month_id + interval '1 month - 1 day'))"
+      ]
+    },
+    "production_lines": {
+      "columns": [
+        {
+          "name": "line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "line_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "monthly_capacity_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "support_labor_hours_per_month",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "base_energy_kwh_per_month",
+          "type": "numeric(18,4)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "line_id"
+      ],
+      "unique": [],
+      "foreign_keys": [],
+      "checks": [
+        "length(btrim(line_id)) > 0",
+        "length(btrim(line_name)) > 0",
+        "monthly_capacity_units >= 0",
+        "support_labor_hours_per_month >= 0 AND support_labor_hours_per_month < 'Infinity'::numeric",
+        "base_energy_kwh_per_month >= 0 AND base_energy_kwh_per_month < 'Infinity'::numeric",
+        "monthly_capacity_units > 0",
+        "support_labor_hours_per_month > 0",
+        "base_energy_kwh_per_month > 0"
+      ]
+    },
+    "materials": {
+      "columns": [
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "material_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "base_unit_cost_eur",
+          "type": "numeric(18,4)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "material_id"
+      ],
+      "unique": [],
+      "foreign_keys": [],
+      "checks": [
+        "length(btrim(material_id)) > 0",
+        "length(btrim(material_name)) > 0",
+        "length(btrim(unit)) > 0",
+        "base_unit_cost_eur >= 0 AND base_unit_cost_eur < 'Infinity'::numeric",
+        "unit = 'kg'",
+        "base_unit_cost_eur > 0"
+      ]
+    },
+    "suppliers": {
+      "columns": [
+        {
+          "name": "supplier_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "supplier_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "lead_time_days",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "on_time_delivery_target",
+          "type": "numeric(9,6)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "supplier_id"
+      ],
+      "unique": [],
+      "foreign_keys": [],
+      "checks": [
+        "length(btrim(supplier_id)) > 0",
+        "length(btrim(supplier_name)) > 0",
+        "lead_time_days >= 0",
+        "on_time_delivery_target >= 0 AND on_time_delivery_target < 'Infinity'::numeric",
+        "lead_time_days > 0",
+        "on_time_delivery_target <= 1"
+      ]
+    },
+    "customers": {
+      "columns": [
+        {
+          "name": "customer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "customer_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "segment",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "customer_id"
+      ],
+      "unique": [],
+      "foreign_keys": [],
+      "checks": [
+        "length(btrim(customer_id)) > 0",
+        "length(btrim(customer_name)) > 0",
+        "length(btrim(segment)) > 0",
+        "segment IN ('OEM', 'Tier 1', 'Aftermarket')"
+      ]
+    },
+    "products": {
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "product_name",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "base_selling_price_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "standard_labor_hours_per_attempt",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "standard_energy_kwh_per_attempt",
+          "type": "numeric(18,4)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "product_id"
+      ],
+      "unique": [
+        [
+          "product_id",
+          "line_id"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "line_id"
+          ],
+          "parent": "production_lines",
+          "references": [
+            "line_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(product_id)) > 0",
+        "length(btrim(product_name)) > 0",
+        "length(btrim(category)) > 0",
+        "length(btrim(line_id)) > 0",
+        "base_selling_price_eur >= 0 AND base_selling_price_eur < 'Infinity'::numeric",
+        "standard_labor_hours_per_attempt >= 0 AND standard_labor_hours_per_attempt < 'Infinity'::numeric",
+        "standard_energy_kwh_per_attempt >= 0 AND standard_energy_kwh_per_attempt < 'Infinity'::numeric",
+        "base_selling_price_eur > 0",
+        "standard_labor_hours_per_attempt > 0",
+        "standard_energy_kwh_per_attempt > 0"
+      ]
+    },
+    "material_suppliers": {
+      "columns": [
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "supplier_id",
+          "type": "text",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "material_id",
+        "supplier_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "material_id"
+          ],
+          "parent": "materials",
+          "references": [
+            "material_id"
+          ]
+        },
+        {
+          "columns": [
+            "supplier_id"
+          ],
+          "parent": "suppliers",
+          "references": [
+            "supplier_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(material_id)) > 0",
+        "length(btrim(supplier_id)) > 0"
+      ]
+    },
+    "bom": {
+      "columns": [
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "quantity_kg_per_unit",
+          "type": "numeric(18,3)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "product_id",
+        "material_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "product_id"
+          ],
+          "parent": "products",
+          "references": [
+            "product_id"
+          ]
+        },
+        {
+          "columns": [
+            "material_id"
+          ],
+          "parent": "materials",
+          "references": [
+            "material_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(product_id)) > 0",
+        "length(btrim(material_id)) > 0",
+        "quantity_kg_per_unit >= 0 AND quantity_kg_per_unit < 'Infinity'::numeric",
+        "quantity_kg_per_unit > 0"
+      ]
+    },
+    "line_month_capacity": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "nominal_capacity_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "downtime_pct",
+          "type": "numeric(9,4)",
+          "nullable": false
+        },
+        {
+          "name": "effective_capacity_units",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id",
+        "line_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "line_id"
+          ],
+          "parent": "production_lines",
+          "references": [
+            "line_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(line_id)) > 0",
+        "nominal_capacity_units >= 0",
+        "downtime_pct >= 0 AND downtime_pct < 'Infinity'::numeric",
+        "effective_capacity_units >= 0",
+        "downtime_pct <= 100",
+        "effective_capacity_units = floor(nominal_capacity_units * (1-downtime_pct/100))"
+      ]
+    },
+    "production": {
+      "columns": [
+        {
+          "name": "production_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempted_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "defective_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "good_units",
+          "type": "integer",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "production_id"
+      ],
+      "unique": [
+        [
+          "month_id",
+          "product_id"
+        ],
+        [
+          "production_id",
+          "month_id",
+          "product_id"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "product_id"
+          ],
+          "parent": "products",
+          "references": [
+            "product_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(production_id)) > 0",
+        "length(btrim(product_id)) > 0",
+        "attempted_units >= 0",
+        "defective_units >= 0",
+        "good_units >= 0",
+        "good_units = attempted_units-defective_units"
+      ]
+    },
+    "purchase_order_lines": {
+      "columns": [
+        {
+          "name": "po_line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "supplier_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "expected_receipt_date",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "ordered_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "agreed_unit_cost_eur",
+          "type": "numeric(18,4)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "po_line_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "material_id",
+            "supplier_id"
+          ],
+          "parent": "material_suppliers",
+          "references": [
+            "material_id",
+            "supplier_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(po_line_id)) > 0",
+        "length(btrim(material_id)) > 0",
+        "length(btrim(supplier_id)) > 0",
+        "ordered_kg >= 0 AND ordered_kg < 'Infinity'::numeric",
+        "agreed_unit_cost_eur >= 0 AND agreed_unit_cost_eur < 'Infinity'::numeric",
+        "expected_receipt_date >= order_date",
+        "agreed_unit_cost_eur > 0"
+      ]
+    },
+    "material_receipts": {
+      "columns": [
+        {
+          "name": "receipt_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "po_line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "receipt_date",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "received_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "landed_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "receipt_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "purchase_unit_cost_eur",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "purchase_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_rate_eur_per_kg",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "landed_receipt_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "receipt_id"
+      ],
+      "unique": [
+        [
+          "po_line_id"
+        ]
+      ],
+      "foreign_keys": [
+        {
+          "columns": [
+            "po_line_id"
+          ],
+          "parent": "purchase_order_lines",
+          "references": [
+            "po_line_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(receipt_id)) > 0",
+        "length(btrim(po_line_id)) > 0",
+        "received_kg >= 0 AND received_kg < 'Infinity'::numeric",
+        "landed_unit_cost_eur >= 0 AND landed_unit_cost_eur < 'Infinity'::numeric",
+        "receipt_value_eur >= 0 AND receipt_value_eur < 'Infinity'::numeric",
+        "purchase_unit_cost_eur >= 0 AND purchase_unit_cost_eur < 'Infinity'::numeric",
+        "purchase_value_eur >= 0 AND purchase_value_eur < 'Infinity'::numeric",
+        "inbound_freight_rate_eur_per_kg >= 0 AND inbound_freight_rate_eur_per_kg < 'Infinity'::numeric",
+        "inbound_freight_eur >= 0 AND inbound_freight_eur < 'Infinity'::numeric",
+        "landed_receipt_value_eur >= 0 AND landed_receipt_value_eur < 'Infinity'::numeric",
+        "purchase_value_eur = receipt_value_eur",
+        "landed_receipt_value_eur = purchase_value_eur+inbound_freight_eur",
+        "purchase_value_eur = round(received_kg*purchase_unit_cost_eur,2)",
+        "inbound_freight_eur = round(received_kg*inbound_freight_rate_eur_per_kg,2)",
+        "abs(landed_unit_cost_eur-coalesce(landed_receipt_value_eur/nullif(received_kg,0),0)) <= 0.0000000051",
+        "received_kg > 0 OR landed_receipt_value_eur = 0"
+      ]
+    },
+    "material_consumption": {
+      "columns": [
+        {
+          "name": "production_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "required_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "extra_waste_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "consumed_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "issued_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "issued_purchase_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "issued_inbound_freight_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_purchase_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_inbound_freight_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "production_id",
+        "material_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "production_id"
+          ],
+          "parent": "production",
+          "references": [
+            "production_id"
+          ]
+        },
+        {
+          "columns": [
+            "material_id"
+          ],
+          "parent": "materials",
+          "references": [
+            "material_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(production_id)) > 0",
+        "length(btrim(material_id)) > 0",
+        "required_kg >= 0 AND required_kg < 'Infinity'::numeric",
+        "extra_waste_kg >= 0 AND extra_waste_kg < 'Infinity'::numeric",
+        "consumed_kg >= 0 AND consumed_kg < 'Infinity'::numeric",
+        "issued_material_value_eur >= 0 AND issued_material_value_eur < 'Infinity'::numeric",
+        "weighted_average_unit_cost_eur >= 0 AND weighted_average_unit_cost_eur < 'Infinity'::numeric",
+        "issued_purchase_material_value_eur >= 0 AND issued_purchase_material_value_eur < 'Infinity'::numeric",
+        "issued_inbound_freight_eur >= 0 AND issued_inbound_freight_eur < 'Infinity'::numeric",
+        "weighted_average_purchase_unit_cost_eur >= 0 AND weighted_average_purchase_unit_cost_eur < 'Infinity'::numeric",
+        "weighted_average_inbound_freight_unit_cost_eur >= 0 AND weighted_average_inbound_freight_unit_cost_eur < 'Infinity'::numeric",
+        "consumed_kg = required_kg+extra_waste_kg",
+        "issued_material_value_eur = issued_purchase_material_value_eur+issued_inbound_freight_eur"
+      ]
+    },
+    "raw_material_inventory": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "material_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "opening_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "received_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "consumed_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "closing_kg",
+          "type": "numeric(18,3)",
+          "nullable": false
+        },
+        {
+          "name": "opening_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "receipt_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "issued_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "opening_purchase_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "opening_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "receipt_purchase_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "receipt_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "issued_purchase_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "issued_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_purchase_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "landed_receipt_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_purchase_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_inbound_freight_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id",
+        "material_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "material_id"
+          ],
+          "parent": "materials",
+          "references": [
+            "material_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(material_id)) > 0",
+        "opening_kg >= 0 AND opening_kg < 'Infinity'::numeric",
+        "received_kg >= 0 AND received_kg < 'Infinity'::numeric",
+        "consumed_kg >= 0 AND consumed_kg < 'Infinity'::numeric",
+        "closing_kg >= 0 AND closing_kg < 'Infinity'::numeric",
+        "opening_value_eur >= 0 AND opening_value_eur < 'Infinity'::numeric",
+        "receipt_value_eur >= 0 AND receipt_value_eur < 'Infinity'::numeric",
+        "issued_material_value_eur >= 0 AND issued_material_value_eur < 'Infinity'::numeric",
+        "closing_value_eur >= 0 AND closing_value_eur < 'Infinity'::numeric",
+        "weighted_average_unit_cost_eur >= 0 AND weighted_average_unit_cost_eur < 'Infinity'::numeric",
+        "opening_purchase_material_value_eur >= 0 AND opening_purchase_material_value_eur < 'Infinity'::numeric",
+        "opening_inbound_freight_value_eur >= 0 AND opening_inbound_freight_value_eur < 'Infinity'::numeric",
+        "receipt_purchase_material_value_eur >= 0 AND receipt_purchase_material_value_eur < 'Infinity'::numeric",
+        "receipt_inbound_freight_value_eur >= 0 AND receipt_inbound_freight_value_eur < 'Infinity'::numeric",
+        "issued_purchase_material_value_eur >= 0 AND issued_purchase_material_value_eur < 'Infinity'::numeric",
+        "issued_inbound_freight_value_eur >= 0 AND issued_inbound_freight_value_eur < 'Infinity'::numeric",
+        "closing_purchase_material_value_eur >= 0 AND closing_purchase_material_value_eur < 'Infinity'::numeric",
+        "closing_inbound_freight_value_eur >= 0 AND closing_inbound_freight_value_eur < 'Infinity'::numeric",
+        "landed_receipt_value_eur >= 0 AND landed_receipt_value_eur < 'Infinity'::numeric",
+        "weighted_average_purchase_unit_cost_eur >= 0 AND weighted_average_purchase_unit_cost_eur < 'Infinity'::numeric",
+        "weighted_average_inbound_freight_unit_cost_eur >= 0 AND weighted_average_inbound_freight_unit_cost_eur < 'Infinity'::numeric",
+        "closing_kg = opening_kg+received_kg-consumed_kg",
+        "closing_value_eur = opening_value_eur+landed_receipt_value_eur-issued_material_value_eur",
+        "opening_value_eur = opening_purchase_material_value_eur+opening_inbound_freight_value_eur",
+        "receipt_value_eur = receipt_purchase_material_value_eur",
+        "landed_receipt_value_eur = receipt_purchase_material_value_eur+receipt_inbound_freight_value_eur",
+        "issued_material_value_eur = issued_purchase_material_value_eur+issued_inbound_freight_value_eur",
+        "closing_value_eur = closing_purchase_material_value_eur+closing_inbound_freight_value_eur",
+        "closing_purchase_material_value_eur = opening_purchase_material_value_eur+receipt_purchase_material_value_eur-issued_purchase_material_value_eur",
+        "closing_inbound_freight_value_eur = opening_inbound_freight_value_eur+receipt_inbound_freight_value_eur-issued_inbound_freight_value_eur"
+      ]
+    },
+    "manufacturing_costs": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempted_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "labor_hours",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "hourly_rate_eur",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "energy_kwh",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "energy_tariff_eur",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "manufacturing_overhead_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "total_conversion_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "idle_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_labor_hours",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "support_labor_hours",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "activity_energy_kwh",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "base_energy_kwh",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "production_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "support_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "activity_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "standby_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "idle_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "idle_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "idle_overhead_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id",
+        "line_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "month_id",
+            "line_id"
+          ],
+          "parent": "line_month_capacity",
+          "references": [
+            "month_id",
+            "line_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(line_id)) > 0",
+        "attempted_units >= 0",
+        "labor_hours >= 0 AND labor_hours < 'Infinity'::numeric",
+        "hourly_rate_eur >= 0 AND hourly_rate_eur < 'Infinity'::numeric",
+        "energy_kwh >= 0 AND energy_kwh < 'Infinity'::numeric",
+        "energy_tariff_eur >= 0 AND energy_tariff_eur < 'Infinity'::numeric",
+        "labor_cost_eur >= 0 AND labor_cost_eur < 'Infinity'::numeric",
+        "energy_cost_eur >= 0 AND energy_cost_eur < 'Infinity'::numeric",
+        "manufacturing_overhead_eur >= 0 AND manufacturing_overhead_eur < 'Infinity'::numeric",
+        "total_conversion_cost_eur >= 0 AND total_conversion_cost_eur < 'Infinity'::numeric",
+        "idle_cost_eur >= 0 AND idle_cost_eur < 'Infinity'::numeric",
+        "production_labor_hours >= 0 AND production_labor_hours < 'Infinity'::numeric",
+        "support_labor_hours >= 0 AND support_labor_hours < 'Infinity'::numeric",
+        "activity_energy_kwh >= 0 AND activity_energy_kwh < 'Infinity'::numeric",
+        "base_energy_kwh >= 0 AND base_energy_kwh < 'Infinity'::numeric",
+        "production_labor_cost_eur >= 0 AND production_labor_cost_eur < 'Infinity'::numeric",
+        "support_labor_cost_eur >= 0 AND support_labor_cost_eur < 'Infinity'::numeric",
+        "activity_energy_cost_eur >= 0 AND activity_energy_cost_eur < 'Infinity'::numeric",
+        "standby_energy_cost_eur >= 0 AND standby_energy_cost_eur < 'Infinity'::numeric",
+        "idle_labor_cost_eur >= 0 AND idle_labor_cost_eur < 'Infinity'::numeric",
+        "idle_energy_cost_eur >= 0 AND idle_energy_cost_eur < 'Infinity'::numeric",
+        "idle_overhead_cost_eur >= 0 AND idle_overhead_cost_eur < 'Infinity'::numeric",
+        "labor_hours = production_labor_hours+support_labor_hours",
+        "energy_kwh = activity_energy_kwh+base_energy_kwh",
+        "(labor_cost_eur = round(labor_hours*hourly_rate_eur,2) OR (mod(labor_hours*hourly_rate_eur*100,1)=0.5 AND labor_cost_eur=round(labor_hours*hourly_rate_eur,2)-0.01))",
+        "(energy_cost_eur = round(energy_kwh*energy_tariff_eur,2) OR (mod(energy_kwh*energy_tariff_eur*100,1)=0.5 AND energy_cost_eur=round(energy_kwh*energy_tariff_eur,2)-0.01))",
+        "labor_cost_eur = production_labor_cost_eur+support_labor_cost_eur",
+        "energy_cost_eur = activity_energy_cost_eur+standby_energy_cost_eur",
+        "total_conversion_cost_eur = labor_cost_eur+energy_cost_eur+manufacturing_overhead_eur",
+        "idle_cost_eur = idle_labor_cost_eur+idle_energy_cost_eur+idle_overhead_cost_eur",
+        "idle_cost_eur = CASE WHEN attempted_units=0 THEN total_conversion_cost_eur ELSE 0 END"
+      ]
+    },
+    "production_cost_allocation": {
+      "columns": [
+        {
+          "name": "production_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "attempted_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "good_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "material_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "manufacturing_overhead_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "total_manufacturing_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_production_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "good_unit_manufacturing_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "production_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "support_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "activity_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "standby_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "purchase_material_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_material_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_inbound_freight_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_labor_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_energy_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "capitalized_overhead_cost_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "material_production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "labor_production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "energy_production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "overhead_production_loss_expense_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "production_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "production_id",
+            "month_id",
+            "product_id"
+          ],
+          "parent": "production",
+          "references": [
+            "production_id",
+            "month_id",
+            "product_id"
+          ]
+        },
+        {
+          "columns": [
+            "product_id",
+            "line_id"
+          ],
+          "parent": "products",
+          "references": [
+            "product_id",
+            "line_id"
+          ]
+        },
+        {
+          "columns": [
+            "month_id",
+            "line_id"
+          ],
+          "parent": "manufacturing_costs",
+          "references": [
+            "month_id",
+            "line_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(production_id)) > 0",
+        "length(btrim(product_id)) > 0",
+        "length(btrim(line_id)) > 0",
+        "attempted_units >= 0",
+        "good_units >= 0",
+        "material_cost_eur >= 0 AND material_cost_eur < 'Infinity'::numeric",
+        "labor_cost_eur >= 0 AND labor_cost_eur < 'Infinity'::numeric",
+        "energy_cost_eur >= 0 AND energy_cost_eur < 'Infinity'::numeric",
+        "manufacturing_overhead_eur >= 0 AND manufacturing_overhead_eur < 'Infinity'::numeric",
+        "total_manufacturing_cost_eur >= 0 AND total_manufacturing_cost_eur < 'Infinity'::numeric",
+        "capitalized_production_cost_eur >= 0 AND capitalized_production_cost_eur < 'Infinity'::numeric",
+        "production_loss_expense_eur >= 0 AND production_loss_expense_eur < 'Infinity'::numeric",
+        "good_unit_manufacturing_cost_eur >= 0 AND good_unit_manufacturing_cost_eur < 'Infinity'::numeric",
+        "production_labor_cost_eur >= 0 AND production_labor_cost_eur < 'Infinity'::numeric",
+        "support_labor_cost_eur >= 0 AND support_labor_cost_eur < 'Infinity'::numeric",
+        "activity_energy_cost_eur >= 0 AND activity_energy_cost_eur < 'Infinity'::numeric",
+        "standby_energy_cost_eur >= 0 AND standby_energy_cost_eur < 'Infinity'::numeric",
+        "purchase_material_cost_eur >= 0 AND purchase_material_cost_eur < 'Infinity'::numeric",
+        "inbound_freight_cost_eur >= 0 AND inbound_freight_cost_eur < 'Infinity'::numeric",
+        "capitalized_material_cost_eur >= 0 AND capitalized_material_cost_eur < 'Infinity'::numeric",
+        "capitalized_inbound_freight_cost_eur >= 0 AND capitalized_inbound_freight_cost_eur < 'Infinity'::numeric",
+        "capitalized_labor_cost_eur >= 0 AND capitalized_labor_cost_eur < 'Infinity'::numeric",
+        "capitalized_energy_cost_eur >= 0 AND capitalized_energy_cost_eur < 'Infinity'::numeric",
+        "capitalized_overhead_cost_eur >= 0 AND capitalized_overhead_cost_eur < 'Infinity'::numeric",
+        "material_production_loss_expense_eur >= 0 AND material_production_loss_expense_eur < 'Infinity'::numeric",
+        "inbound_freight_production_loss_expense_eur >= 0 AND inbound_freight_production_loss_expense_eur < 'Infinity'::numeric",
+        "labor_production_loss_expense_eur >= 0 AND labor_production_loss_expense_eur < 'Infinity'::numeric",
+        "energy_production_loss_expense_eur >= 0 AND energy_production_loss_expense_eur < 'Infinity'::numeric",
+        "overhead_production_loss_expense_eur >= 0 AND overhead_production_loss_expense_eur < 'Infinity'::numeric",
+        "good_units <= attempted_units",
+        "material_cost_eur = purchase_material_cost_eur+inbound_freight_cost_eur",
+        "labor_cost_eur = production_labor_cost_eur+support_labor_cost_eur",
+        "energy_cost_eur = activity_energy_cost_eur+standby_energy_cost_eur",
+        "total_manufacturing_cost_eur = purchase_material_cost_eur+inbound_freight_cost_eur+labor_cost_eur+energy_cost_eur+manufacturing_overhead_eur",
+        "total_manufacturing_cost_eur = capitalized_production_cost_eur+production_loss_expense_eur",
+        "capitalized_production_cost_eur = capitalized_material_cost_eur+capitalized_inbound_freight_cost_eur+capitalized_labor_cost_eur+capitalized_energy_cost_eur+capitalized_overhead_cost_eur",
+        "production_loss_expense_eur = material_production_loss_expense_eur+inbound_freight_production_loss_expense_eur+labor_production_loss_expense_eur+energy_production_loss_expense_eur+overhead_production_loss_expense_eur",
+        "abs(good_unit_manufacturing_cost_eur-coalesce(total_manufacturing_cost_eur/nullif(good_units,0),0)) <= 0.0000000051",
+        "capitalized_material_cost_eur = CASE WHEN good_units>0 THEN purchase_material_cost_eur ELSE 0 END",
+        "material_production_loss_expense_eur = CASE WHEN good_units=0 THEN purchase_material_cost_eur ELSE 0 END",
+        "capitalized_inbound_freight_cost_eur = CASE WHEN good_units>0 THEN inbound_freight_cost_eur ELSE 0 END",
+        "inbound_freight_production_loss_expense_eur = CASE WHEN good_units=0 THEN inbound_freight_cost_eur ELSE 0 END",
+        "capitalized_labor_cost_eur = CASE WHEN good_units>0 THEN labor_cost_eur ELSE 0 END",
+        "labor_production_loss_expense_eur = CASE WHEN good_units=0 THEN labor_cost_eur ELSE 0 END",
+        "capitalized_energy_cost_eur = CASE WHEN good_units>0 THEN energy_cost_eur ELSE 0 END",
+        "energy_production_loss_expense_eur = CASE WHEN good_units=0 THEN energy_cost_eur ELSE 0 END",
+        "capitalized_overhead_cost_eur = CASE WHEN good_units>0 THEN manufacturing_overhead_eur ELSE 0 END",
+        "overhead_production_loss_expense_eur = CASE WHEN good_units=0 THEN manufacturing_overhead_eur ELSE 0 END"
+      ]
+    },
+    "finished_goods_inventory": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "opening_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "good_production_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "demand_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "shipped_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "unfulfilled_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "closing_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "opening_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "opening_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "opening_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "opening_labor_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "opening_energy_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "opening_overhead_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_labor_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_energy_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "production_overhead_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_material_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_inbound_freight_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_labor_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_energy_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "closing_overhead_value_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "material_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "labor_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "energy_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "overhead_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id",
+        "product_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "month_id",
+            "product_id"
+          ],
+          "parent": "production",
+          "references": [
+            "month_id",
+            "product_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(product_id)) > 0",
+        "opening_units >= 0",
+        "good_production_units >= 0",
+        "demand_units >= 0",
+        "shipped_units >= 0",
+        "unfulfilled_units >= 0",
+        "closing_units >= 0",
+        "opening_value_eur >= 0 AND opening_value_eur < 'Infinity'::numeric",
+        "production_value_eur >= 0 AND production_value_eur < 'Infinity'::numeric",
+        "cogs_eur >= 0 AND cogs_eur < 'Infinity'::numeric",
+        "closing_value_eur >= 0 AND closing_value_eur < 'Infinity'::numeric",
+        "weighted_average_unit_cost_eur >= 0 AND weighted_average_unit_cost_eur < 'Infinity'::numeric",
+        "opening_material_value_eur >= 0 AND opening_material_value_eur < 'Infinity'::numeric",
+        "opening_inbound_freight_value_eur >= 0 AND opening_inbound_freight_value_eur < 'Infinity'::numeric",
+        "opening_labor_value_eur >= 0 AND opening_labor_value_eur < 'Infinity'::numeric",
+        "opening_energy_value_eur >= 0 AND opening_energy_value_eur < 'Infinity'::numeric",
+        "opening_overhead_value_eur >= 0 AND opening_overhead_value_eur < 'Infinity'::numeric",
+        "production_material_value_eur >= 0 AND production_material_value_eur < 'Infinity'::numeric",
+        "production_inbound_freight_value_eur >= 0 AND production_inbound_freight_value_eur < 'Infinity'::numeric",
+        "production_labor_value_eur >= 0 AND production_labor_value_eur < 'Infinity'::numeric",
+        "production_energy_value_eur >= 0 AND production_energy_value_eur < 'Infinity'::numeric",
+        "production_overhead_value_eur >= 0 AND production_overhead_value_eur < 'Infinity'::numeric",
+        "closing_material_value_eur >= 0 AND closing_material_value_eur < 'Infinity'::numeric",
+        "closing_inbound_freight_value_eur >= 0 AND closing_inbound_freight_value_eur < 'Infinity'::numeric",
+        "closing_labor_value_eur >= 0 AND closing_labor_value_eur < 'Infinity'::numeric",
+        "closing_energy_value_eur >= 0 AND closing_energy_value_eur < 'Infinity'::numeric",
+        "closing_overhead_value_eur >= 0 AND closing_overhead_value_eur < 'Infinity'::numeric",
+        "material_cogs_eur >= 0 AND material_cogs_eur < 'Infinity'::numeric",
+        "inbound_freight_cogs_eur >= 0 AND inbound_freight_cogs_eur < 'Infinity'::numeric",
+        "labor_cogs_eur >= 0 AND labor_cogs_eur < 'Infinity'::numeric",
+        "energy_cogs_eur >= 0 AND energy_cogs_eur < 'Infinity'::numeric",
+        "overhead_cogs_eur >= 0 AND overhead_cogs_eur < 'Infinity'::numeric",
+        "closing_units = opening_units+good_production_units-shipped_units",
+        "shipped_units = least(demand_units,opening_units+good_production_units)",
+        "unfulfilled_units = demand_units-shipped_units",
+        "closing_value_eur = opening_value_eur+production_value_eur-cogs_eur",
+        "opening_value_eur = opening_material_value_eur+opening_inbound_freight_value_eur+opening_labor_value_eur+opening_energy_value_eur+opening_overhead_value_eur",
+        "production_value_eur = production_material_value_eur+production_inbound_freight_value_eur+production_labor_value_eur+production_energy_value_eur+production_overhead_value_eur",
+        "closing_value_eur = closing_material_value_eur+closing_inbound_freight_value_eur+closing_labor_value_eur+closing_energy_value_eur+closing_overhead_value_eur",
+        "cogs_eur = material_cogs_eur+inbound_freight_cogs_eur+labor_cogs_eur+energy_cogs_eur+overhead_cogs_eur",
+        "closing_material_value_eur = opening_material_value_eur+production_material_value_eur-material_cogs_eur",
+        "closing_inbound_freight_value_eur = opening_inbound_freight_value_eur+production_inbound_freight_value_eur-inbound_freight_cogs_eur",
+        "closing_labor_value_eur = opening_labor_value_eur+production_labor_value_eur-labor_cogs_eur",
+        "closing_energy_value_eur = opening_energy_value_eur+production_energy_value_eur-energy_cogs_eur",
+        "closing_overhead_value_eur = opening_overhead_value_eur+production_overhead_value_eur-overhead_cogs_eur"
+      ]
+    },
+    "sales": {
+      "columns": [
+        {
+          "name": "sales_line_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "shipment_date",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "product_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "customer_id",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "requested_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "unfulfilled_units",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "units_shipped",
+          "type": "integer",
+          "nullable": false
+        },
+        {
+          "name": "list_unit_price_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "discount_pct",
+          "type": "numeric(9,4)",
+          "nullable": false
+        },
+        {
+          "name": "gross_revenue_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "discount_amount_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "net_revenue_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "weighted_average_unit_cost_eur",
+          "type": "numeric(18,8)",
+          "nullable": false
+        },
+        {
+          "name": "cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "material_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "inbound_freight_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "labor_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "energy_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "overhead_cogs_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "outbound_freight_rate_eur_per_unit",
+          "type": "numeric(18,4)",
+          "nullable": false
+        },
+        {
+          "name": "outbound_freight_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "sales_line_id"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        },
+        {
+          "columns": [
+            "month_id",
+            "product_id"
+          ],
+          "parent": "finished_goods_inventory",
+          "references": [
+            "month_id",
+            "product_id"
+          ]
+        },
+        {
+          "columns": [
+            "customer_id"
+          ],
+          "parent": "customers",
+          "references": [
+            "customer_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(sales_line_id)) > 0",
+        "length(btrim(product_id)) > 0",
+        "length(btrim(customer_id)) > 0",
+        "requested_units >= 0",
+        "unfulfilled_units >= 0",
+        "units_shipped >= 0",
+        "list_unit_price_eur >= 0 AND list_unit_price_eur < 'Infinity'::numeric",
+        "discount_pct >= 0 AND discount_pct < 'Infinity'::numeric",
+        "gross_revenue_eur >= 0 AND gross_revenue_eur < 'Infinity'::numeric",
+        "discount_amount_eur >= 0 AND discount_amount_eur < 'Infinity'::numeric",
+        "net_revenue_eur >= 0 AND net_revenue_eur < 'Infinity'::numeric",
+        "weighted_average_unit_cost_eur >= 0 AND weighted_average_unit_cost_eur < 'Infinity'::numeric",
+        "cogs_eur >= 0 AND cogs_eur < 'Infinity'::numeric",
+        "material_cogs_eur >= 0 AND material_cogs_eur < 'Infinity'::numeric",
+        "inbound_freight_cogs_eur >= 0 AND inbound_freight_cogs_eur < 'Infinity'::numeric",
+        "labor_cogs_eur >= 0 AND labor_cogs_eur < 'Infinity'::numeric",
+        "energy_cogs_eur >= 0 AND energy_cogs_eur < 'Infinity'::numeric",
+        "overhead_cogs_eur >= 0 AND overhead_cogs_eur < 'Infinity'::numeric",
+        "outbound_freight_rate_eur_per_unit >= 0 AND outbound_freight_rate_eur_per_unit < 'Infinity'::numeric",
+        "outbound_freight_eur >= 0 AND outbound_freight_eur < 'Infinity'::numeric",
+        "units_shipped > 0",
+        "requested_units = units_shipped+unfulfilled_units",
+        "discount_pct <= 100",
+        "gross_revenue_eur = units_shipped*list_unit_price_eur",
+        "discount_amount_eur = round(gross_revenue_eur*discount_pct/100,2)",
+        "net_revenue_eur = gross_revenue_eur-discount_amount_eur",
+        "date_trunc('month',shipment_date)::date = month_id",
+        "shipment_date = (month_id+interval '1 month - 1 day')::date",
+        "cogs_eur = material_cogs_eur+inbound_freight_cogs_eur+labor_cogs_eur+energy_cogs_eur+overhead_cogs_eur",
+        "outbound_freight_eur = round(units_shipped*outbound_freight_rate_eur_per_unit,2)"
+      ]
+    },
+    "operating_expenses": {
+      "columns": [
+        {
+          "name": "month_id",
+          "type": "date",
+          "nullable": false
+        },
+        {
+          "name": "expense_category",
+          "type": "text",
+          "nullable": false
+        },
+        {
+          "name": "amount_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "fixed_amount_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "variable_rate_pct",
+          "type": "numeric(9,4)",
+          "nullable": false
+        },
+        {
+          "name": "variable_driver_amount_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        },
+        {
+          "name": "variable_amount_eur",
+          "type": "numeric(18,2)",
+          "nullable": false
+        }
+      ],
+      "primary_key": [
+        "month_id",
+        "expense_category"
+      ],
+      "unique": [],
+      "foreign_keys": [
+        {
+          "columns": [
+            "month_id"
+          ],
+          "parent": "months",
+          "references": [
+            "month_id"
+          ]
+        }
+      ],
+      "checks": [
+        "length(btrim(expense_category)) > 0",
+        "amount_eur >= 0 AND amount_eur < 'Infinity'::numeric",
+        "fixed_amount_eur >= 0 AND fixed_amount_eur < 'Infinity'::numeric",
+        "variable_rate_pct >= 0 AND variable_rate_pct < 'Infinity'::numeric",
+        "variable_driver_amount_eur >= 0 AND variable_driver_amount_eur < 'Infinity'::numeric",
+        "variable_amount_eur >= 0 AND variable_amount_eur < 'Infinity'::numeric",
+        "expense_category IN ('selling','administration')",
+        "variable_rate_pct <= 100",
+        "amount_eur = fixed_amount_eur+variable_amount_eur",
+        "variable_amount_eur = round(variable_driver_amount_eur*variable_rate_pct/100,2)",
+        "expense_category <> 'administration' OR (variable_rate_pct=0 AND variable_driver_amount_eur=0 AND variable_amount_eur=0)"
+      ]
+    }
+  }
+}

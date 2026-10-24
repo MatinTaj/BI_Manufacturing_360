@@ -1,0 +1,16 @@
+supplier_id,supplier_name,lead_time_days,on_time_delivery_target
+S001,Supplier 01,9,0.95
+S002,Supplier 02,21,0.95
+S003,Supplier 03,14,0.95
+S004,Supplier 04,21,0.95
+S005,Supplier 05,7,0.95
+S006,Supplier 06,12,0.95
+S007,Supplier 07,14,0.95
+S008,Supplier 08,20,0.95
+S009,Supplier 09,17,0.95
+S010,Supplier 10,4,0.95
+S011,Supplier 11,14,0.95
+S012,Supplier 12,19,0.95
+S013,Supplier 13,9,0.95
+S014,Supplier 14,20,0.95
+S015,Supplier 15,12,0.95

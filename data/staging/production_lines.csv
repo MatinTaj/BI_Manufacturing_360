@@ -1,0 +1,4 @@
+line_id,line_name,monthly_capacity_units,support_labor_hours_per_month,base_energy_kwh_per_month
+L01,Production Line 1,6500,120.00000000,2400.00000000
+L02,Production Line 2,6500,135.00000000,2800.00000000
+L03,Production Line 3,6500,150.00000000,3200.00000000

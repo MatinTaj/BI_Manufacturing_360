@@ -1,0 +1,9 @@
+{
+  "monthly_ledgers": 480,
+  "sales_rows": 2596,
+  "python_sql_agreement": true,
+  "original_sales_columns_preserved": true,
+  "direct_cogs": "6889576.65",
+  "support_cogs": "330027.76",
+  "allocation": "Two-level deterministic largest remainder; monthly direct/support first, then sale-line labor COGS weights."
+}

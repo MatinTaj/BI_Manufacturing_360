@@ -1,0 +1,349 @@
+{
+  "phase7_report": "reports\\phase7_20261024T141247792082+0200",
+  "phase7_financial_sha256": "964356eebbe14cd2894feda2913801b66eab89babf5633f3add6298e9b5cc2e9",
+  "datasets": {
+    "months": {
+      "file": "months.csv",
+      "sha256": "4d89d8745aecfecfae5e4cc44bc2fe4bd6f934d091ccfc0e58ac98becd9eb806",
+      "rows": 24,
+      "columns": [
+        "month_id",
+        "year",
+        "quarter",
+        "month_number",
+        "days_in_month"
+      ]
+    },
+    "production_lines": {
+      "file": "production_lines.csv",
+      "sha256": "a13d3319d6df690c3d52e6d119907171cf590f35f1809492771050a5b149d47f",
+      "rows": 3,
+      "columns": [
+        "line_id",
+        "line_name",
+        "monthly_capacity_units",
+        "support_labor_hours_per_month",
+        "base_energy_kwh_per_month"
+      ]
+    },
+    "materials": {
+      "file": "materials.csv",
+      "sha256": "40e84b2d8cf8653e27940def905fd1810d82dfc172d67f493cbed53fde072450",
+      "rows": 10,
+      "columns": [
+        "material_id",
+        "material_name",
+        "unit",
+        "base_unit_cost_eur"
+      ]
+    },
+    "suppliers": {
+      "file": "suppliers.csv",
+      "sha256": "a5d73ab42070312e8c3d7dce1c4dccdc9836f72f3e8cf6d5f1711c573ecedba1",
+      "rows": 15,
+      "columns": [
+        "supplier_id",
+        "supplier_name",
+        "lead_time_days",
+        "on_time_delivery_target"
+      ]
+    },
+    "customers": {
+      "file": "customers.csv",
+      "sha256": "08ac4c09a4b56bb825da0bcf06b9c0615ef1e395c4dbdf11e82bc57bbcb0ec1f",
+      "rows": 25,
+      "columns": [
+        "customer_id",
+        "customer_name",
+        "segment"
+      ]
+    },
+    "products": {
+      "file": "products.csv",
+      "sha256": "9abeb77857ec9e5dea395bca6f3530a59e2cdefe84d816d21ba19db4029c0dac",
+      "rows": 20,
+      "columns": [
+        "product_id",
+        "product_name",
+        "category",
+        "line_id",
+        "base_selling_price_eur",
+        "standard_labor_hours_per_attempt",
+        "standard_energy_kwh_per_attempt"
+      ]
+    },
+    "material_suppliers": {
+      "file": "material_suppliers.csv",
+      "sha256": "5c660c38194903b5b63c3bd3c4491ef671c49e655d7a4c023070d0e0bd245978",
+      "rows": 30,
+      "columns": [
+        "material_id",
+        "supplier_id"
+      ]
+    },
+    "bom": {
+      "file": "bom.csv",
+      "sha256": "30f126e0bd0a02cc25b6f3ccbfcdb86e8a548a97dedc0807e9e08d505df34228",
+      "rows": 64,
+      "columns": [
+        "product_id",
+        "material_id",
+        "quantity_kg_per_unit"
+      ]
+    },
+    "line_month_capacity": {
+      "file": "line_month_capacity.csv",
+      "sha256": "6e2bb28a18ae4e47d046cdca0d51f47419a4f5f94c929c6443e11a3e86a1b7d4",
+      "rows": 72,
+      "columns": [
+        "month_id",
+        "line_id",
+        "nominal_capacity_units",
+        "downtime_pct",
+        "effective_capacity_units"
+      ]
+    },
+    "production": {
+      "file": "production.csv",
+      "sha256": "81b66c0bc8e267fe1186f75a302d7bc7c5702f522a7d1cbc26e13b3cf8824abc",
+      "rows": 480,
+      "columns": [
+        "production_id",
+        "month_id",
+        "product_id",
+        "attempted_units",
+        "defective_units",
+        "good_units"
+      ]
+    },
+    "purchase_order_lines": {
+      "file": "purchase_order_lines.csv",
+      "sha256": "57474754beb2ee72bad297e28aa08268287d42aeb113a36760868eda4fa1d2e3",
+      "rows": 144,
+      "columns": [
+        "po_line_id",
+        "material_id",
+        "supplier_id",
+        "order_date",
+        "expected_receipt_date",
+        "ordered_kg",
+        "agreed_unit_cost_eur"
+      ]
+    },
+    "material_receipts": {
+      "file": "material_receipts.csv",
+      "sha256": "1271eeb91d0c53d6d659a24de9c03f7a8ea2e9d79aea2877b2d4bdd38341415f",
+      "rows": 144,
+      "columns": [
+        "receipt_id",
+        "po_line_id",
+        "receipt_date",
+        "received_kg",
+        "landed_unit_cost_eur",
+        "receipt_value_eur",
+        "purchase_unit_cost_eur",
+        "purchase_value_eur",
+        "inbound_freight_rate_eur_per_kg",
+        "inbound_freight_eur",
+        "landed_receipt_value_eur"
+      ]
+    },
+    "material_consumption": {
+      "file": "material_consumption.csv",
+      "sha256": "f53d14634cffe6fba0accd06755c5373235d30fe4cf42d0be2534e2bfe031c27",
+      "rows": 1536,
+      "columns": [
+        "production_id",
+        "material_id",
+        "required_kg",
+        "extra_waste_kg",
+        "consumed_kg",
+        "issued_material_value_eur",
+        "weighted_average_unit_cost_eur",
+        "issued_purchase_material_value_eur",
+        "issued_inbound_freight_eur",
+        "weighted_average_purchase_unit_cost_eur",
+        "weighted_average_inbound_freight_unit_cost_eur"
+      ]
+    },
+    "raw_material_inventory": {
+      "file": "raw_material_inventory.csv",
+      "sha256": "00a7f91e27bb7f40227d383191b952c964c1ee0f8158978a9b1a0ac6f7964cf6",
+      "rows": 240,
+      "columns": [
+        "month_id",
+        "material_id",
+        "opening_kg",
+        "received_kg",
+        "consumed_kg",
+        "closing_kg",
+        "opening_value_eur",
+        "receipt_value_eur",
+        "issued_material_value_eur",
+        "closing_value_eur",
+        "weighted_average_unit_cost_eur",
+        "opening_purchase_material_value_eur",
+        "opening_inbound_freight_value_eur",
+        "receipt_purchase_material_value_eur",
+        "receipt_inbound_freight_value_eur",
+        "issued_purchase_material_value_eur",
+        "issued_inbound_freight_value_eur",
+        "closing_purchase_material_value_eur",
+        "closing_inbound_freight_value_eur",
+        "landed_receipt_value_eur",
+        "weighted_average_purchase_unit_cost_eur",
+        "weighted_average_inbound_freight_unit_cost_eur"
+      ]
+    },
+    "manufacturing_costs": {
+      "file": "manufacturing_costs.csv",
+      "sha256": "a6e6d27f6a11a2febce0e36ee39700bc9c6a3433e73d110346ca25fb26058bde",
+      "rows": 72,
+      "columns": [
+        "month_id",
+        "line_id",
+        "attempted_units",
+        "labor_hours",
+        "hourly_rate_eur",
+        "energy_kwh",
+        "energy_tariff_eur",
+        "labor_cost_eur",
+        "energy_cost_eur",
+        "manufacturing_overhead_eur",
+        "total_conversion_cost_eur",
+        "idle_cost_eur",
+        "production_labor_hours",
+        "support_labor_hours",
+        "activity_energy_kwh",
+        "base_energy_kwh",
+        "production_labor_cost_eur",
+        "support_labor_cost_eur",
+        "activity_energy_cost_eur",
+        "standby_energy_cost_eur",
+        "idle_labor_cost_eur",
+        "idle_energy_cost_eur",
+        "idle_overhead_cost_eur"
+      ]
+    },
+    "production_cost_allocation": {
+      "file": "production_cost_allocation.csv",
+      "sha256": "3c5d9d92fa093d7a81361cb09434638cb17916636e7a5ce031ea99c57b1fd0ee",
+      "rows": 480,
+      "columns": [
+        "production_id",
+        "month_id",
+        "product_id",
+        "line_id",
+        "attempted_units",
+        "good_units",
+        "material_cost_eur",
+        "labor_cost_eur",
+        "energy_cost_eur",
+        "manufacturing_overhead_eur",
+        "total_manufacturing_cost_eur",
+        "capitalized_production_cost_eur",
+        "production_loss_expense_eur",
+        "good_unit_manufacturing_cost_eur",
+        "production_labor_cost_eur",
+        "support_labor_cost_eur",
+        "activity_energy_cost_eur",
+        "standby_energy_cost_eur",
+        "purchase_material_cost_eur",
+        "inbound_freight_cost_eur",
+        "capitalized_material_cost_eur",
+        "capitalized_inbound_freight_cost_eur",
+        "capitalized_labor_cost_eur",
+        "capitalized_energy_cost_eur",
+        "capitalized_overhead_cost_eur",
+        "material_production_loss_expense_eur",
+        "inbound_freight_production_loss_expense_eur",
+        "labor_production_loss_expense_eur",
+        "energy_production_loss_expense_eur",
+        "overhead_production_loss_expense_eur"
+      ]
+    },
+    "finished_goods_inventory": {
+      "file": "finished_goods_inventory.csv",
+      "sha256": "a289b5d12a09f0b510f0205f724008efa054dd2191a5e46626ad03877658a41e",
+      "rows": 480,
+      "columns": [
+        "month_id",
+        "product_id",
+        "opening_units",
+        "good_production_units",
+        "demand_units",
+        "shipped_units",
+        "unfulfilled_units",
+        "closing_units",
+        "opening_value_eur",
+        "production_value_eur",
+        "cogs_eur",
+        "closing_value_eur",
+        "weighted_average_unit_cost_eur",
+        "opening_material_value_eur",
+        "opening_inbound_freight_value_eur",
+        "opening_labor_value_eur",
+        "opening_energy_value_eur",
+        "opening_overhead_value_eur",
+        "production_material_value_eur",
+        "production_inbound_freight_value_eur",
+        "production_labor_value_eur",
+        "production_energy_value_eur",
+        "production_overhead_value_eur",
+        "closing_material_value_eur",
+        "closing_inbound_freight_value_eur",
+        "closing_labor_value_eur",
+        "closing_energy_value_eur",
+        "closing_overhead_value_eur",
+        "material_cogs_eur",
+        "inbound_freight_cogs_eur",
+        "labor_cogs_eur",
+        "energy_cogs_eur",
+        "overhead_cogs_eur"
+      ]
+    },
+    "sales": {
+      "file": "sales.csv",
+      "sha256": "aa28c7e00c26ac7998af326d4af70339b2f621564540c533ad32351eb741ce96",
+      "rows": 2596,
+      "columns": [
+        "sales_line_id",
+        "month_id",
+        "shipment_date",
+        "product_id",
+        "customer_id",
+        "requested_units",
+        "unfulfilled_units",
+        "units_shipped",
+        "list_unit_price_eur",
+        "discount_pct",
+        "gross_revenue_eur",
+        "discount_amount_eur",
+        "net_revenue_eur",
+        "weighted_average_unit_cost_eur",
+        "cogs_eur",
+        "material_cogs_eur",
+        "inbound_freight_cogs_eur",
+        "labor_cogs_eur",
+        "energy_cogs_eur",
+        "overhead_cogs_eur",
+        "outbound_freight_rate_eur_per_unit",
+        "outbound_freight_eur"
+      ]
+    },
+    "operating_expenses": {
+      "file": "operating_expenses.csv",
+      "sha256": "b9e6d4a41230fb080eb24d3946b0d34af98f622acc4ac971db3c45d449c790c0",
+      "rows": 48,
+      "columns": [
+        "month_id",
+        "expense_category",
+        "amount_eur",
+        "fixed_amount_eur",
+        "variable_rate_pct",
+        "variable_driver_amount_eur",
+        "variable_amount_eur"
+      ]
+    }
+  }
+}

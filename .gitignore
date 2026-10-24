@@ -1,0 +1,82 @@
+# Secrets and local authentication (keep PostgreSQL credentials outside the project)
+.env
+.env.*
+!.env.example
+**/pgpass.conf
+**/.pgpass
+**/pg_service.conf
+**/.pg_service.conf
+**/credentials*
+**/secrets*
+*.pem
+*.pfx
+*.p12
+*.key
+id_rsa*
+id_ed25519*
+# Python/editor/tool caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.idea/
+.vscode/
+.codex/
+.agents/
+*.tmp
+*.temp
+*.bak
+*~
+~$*
+*.log
+# Keep approved staging AND legacy processed CSVs: tests need both.
+/data/backups/
+/data/staging_repro_*/
+# External raw data: provenance/licensing not established for redistribution.
+/data/raw/
+# Existing binary/report files are local artifacts, not proof of a completed v2 dashboard.
+*.pbix
+*.pbit
+*.pbip.cache
+*.abf
+*.dmp
+*.dump
+*.backup
+/handover/
+**/report_path.txt
+# Retain compact human findings/financial evidence; exclude verbose local snapshots.
+/reports/*
+!/reports/*/
+/reports/*/*
+!/reports/*/*.md
+!/reports/*/*.csv
+!/reports/*/query_results.json
+!/reports/*/execution_summary.json
+!/reports/*/reference_validation_summary.json
+!/reports/*/static_audit_results.json
+!/reports/*/static_validation_results.json
+!/reports/*/live_schema_columns.json
+!/reports/*/approved_financial_reference.json
+!/reports/*/scenario_definitions.json
+!/reports/*/scenario_results_full_precision.json
+!/reports/*/baseline_inputs.json
+!/reports/*/exposure_validation.json
+!/reports/*/source_checks.json
+!/reports/*/relationship_checks.json
+!/reports/*/source_sql_checks.json
+!/reports/*/source_baseline_comparisons.json
+!/reports/*/sql_model_checks.json
+!/reports/*/sql_baseline_checks.json
+!/reports/*/calendar_check.json
+!/reports/*/unit_test_results.txt
+!/reports/*/audit_summary.json
+!/reports/*/acceptance_results.json
+/reports/**/original_*
+/reports/**/FILE_INVENTORY.md
+/reports/local/
+
+# Original Phase 7 run index links private machine-local logs; public summary is docs/FINAL_ACCEPTANCE.md.
+/reports/phase7_20261024T141247792082+0200/README.md

@@ -1,0 +1,146 @@
+[
+  {
+    "check_name": "expected_file_catalog",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "row_counts",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "calendar",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "allocation_source_quantities",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "bom_consumption",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "missing_bom_consumption",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "allocation_material_sources",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "line_capacity_and_cost_attempts",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "conversion_pool_conservation",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "activity_allocation_cents",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "production_activity_drivers",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "conversion_subpool_valuation",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "receipt_po_terms",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "orders_fully_received",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_receipt_flows",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_issue_flows",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_wac_purchase_material",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_wac_inbound_freight",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_carry_forward",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "raw_issue_cent_allocation",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_capitalized_sources",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_carry_and_initial_zero",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_wac_material",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_wac_inbound_freight",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_wac_labor",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_wac_energy",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "fg_wac_overhead",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "sales_fg_quantity_component_totals",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "sales_component_cent_allocation",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "sales_segment_discount",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "outbound_rate_envelope",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "opex_resource_revenue_drivers",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "complete_opex_categories",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "monthly_pnl_no_fanout",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "product_profit_no_fanout",
+    "failed_rows": 0
+  },
+  {
+    "check_name": "phase7_pnl_baseline",
+    "failed_rows": 0
+  }
+]

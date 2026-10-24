@@ -1,0 +1,15 @@
+// Run after upgrading FactSales, parameters and measures. No DAX execution claimed here.
+EVALUATE
+SUMMARIZECOLUMNS('DimDate'[Year],
+    "Labor decomposition difference", [Labor Exposure Difference],
+    "Base OP", [Operating Profit], "Scenario OP", [Scenario Operating Profit],
+    "Scenario GP margin", [Scenario Gross Margin %], "Scenario OP margin", [Scenario Operating Margin %])
+
+EVALUATE
+CALCULATETABLE(ROW("Test", "Product-filtered company scenario OP and OP change are blank",
+    "Passed", ISBLANK([Scenario Operating Profit]) && ISBLANK([Scenario OP Change]) && ISBLANK([Scenario OP Change %])),
+    TREATAS({"P001"}, 'DimProduct'[product_id]))
+
+EVALUATE
+CALCULATETABLE(ROW("Test", "Labor parameter changes direct only", "Support remains base", [Support Labor COGS Exposure]),
+    TREATAS({CURRENCY(0.10)}, 'ParamLabor'[Value]))

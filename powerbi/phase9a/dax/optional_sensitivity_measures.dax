@@ -1,0 +1,30 @@
+// Query-scoped DEFINE library for DAX Studio. For persisted Desktop measures, use individual formulas or optional Tabular Editor script.
+DEFINE
+    MEASURE 'FactSales'[Material Change %] =
+        SELECTEDVALUE('ParamMaterial'[Value], 0)
+    MEASURE 'FactSales'[Inbound Change %] =
+        SELECTEDVALUE('ParamInbound'[Value], 0)
+    MEASURE 'FactSales'[Outbound Change %] =
+        SELECTEDVALUE('ParamOutbound'[Value], 0)
+    MEASURE 'FactSales'[Labor Change %] =
+        SELECTEDVALUE('ParamLabor'[Value], 0)
+    MEASURE 'FactSales'[Energy Change %] =
+        SELECTEDVALUE('ParamEnergy'[Value], 0)
+    MEASURE 'FactSales'[Price Change %] =
+        SELECTEDVALUE('ParamPrice'[Value], 0)
+    MEASURE 'FactSales'[Scenario Revenue] =
+        [Net Revenue] * (1 + [Price Change %])
+    MEASURE 'FactSales'[Scenario Manufacturing COGS] =
+        [Material COGS] * (1 + [Material Change %]) + [Inbound Freight COGS] * (1 + [Inbound Change %]) + [Labor COGS] * (1 + [Labor Change %]) + [Energy COGS] * (1 + [Energy Change %]) + [Overhead COGS]
+    MEASURE 'FactSales'[Scenario Outbound Freight] =
+        [Outbound Freight] * (1 + [Outbound Change %])
+    MEASURE 'FactSales'[Scenario Gross Profit] =
+        [Scenario Revenue] - [Scenario Manufacturing COGS]
+    MEASURE 'FactSales'[Scenario Selling Expenses] =
+        IF([Company Context Valid], [Fixed Selling Expenses] + [Variable Selling Expenses] * (1 + [Price Change %]))
+    MEASURE 'FactSales'[Scenario Operating Profit] =
+        IF([Company Context Valid], [Scenario Gross Profit] - [Scenario Outbound Freight] - [Scenario Selling Expenses] - [Administrative Expenses] - [Separately Expensed Production Costs])
+    MEASURE 'FactSales'[Scenario Operating Margin %] =
+        DIVIDE([Scenario Operating Profit], IF([Company Context Valid], [Scenario Revenue]))
+    MEASURE 'FactSales'[Scenario OP Change] =
+        [Scenario Operating Profit] - [Operating Profit]

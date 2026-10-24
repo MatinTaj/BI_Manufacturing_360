@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "scope": "Pattern-based text scan and prospective Git/public profile; not a forensic secret or binary/history certification",
+  "files_scanned": 379,
+  "total_bytes": 7485439,
+  "public_file_count": 292,
+  "excluded_file_count": 87,
+  "credential_candidates": 0,
+  "personal_home_paths_in_public": 0,
+  "broken_local_markdown_links": 0,
+  "links_to_excluded_public_targets": 0,
+  "large_files_50mib": [],
+  "binary_files_not_text_inspected": [
+    "powerbi/dash1.pbix",
+    "reports/Production_Analysis.xlsx"
+  ],
+  "git": {
+    "initialized": false,
+    "branch": null,
+    "remote": null,
+    "tracked_file_count": null,
+    "untracked_file_count": null
+  },
+  "ignore_probe_count": 11,
+  "database_touched": false,
+  "project_git_initialized": false
+}

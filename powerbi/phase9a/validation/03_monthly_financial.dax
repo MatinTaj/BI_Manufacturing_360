@@ -1,0 +1,7 @@
+EVALUATE
+SUMMARIZECOLUMNS('DimDate'[YearMonth],
+    "Revenue Difference", [Monthly PnL Revenue Difference],
+    "OP Difference", [Monthly PnL OP Difference],
+    "COGS Component Difference", [COGS Component Difference],
+    "Inbound Bridge Difference", [Inbound Freight Bridge Difference])
+ORDER BY 'DimDate'[YearMonth]
